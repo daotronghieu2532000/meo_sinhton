@@ -1,0 +1,200 @@
+[
+  {
+    "id": "scenario-fire-kitchen",
+    "title": "Cháy nhỏ trong bếp",
+    "titleEn": "Small Kitchen Fire",
+    "description": "Bạn đang nấu ăn thì dầu trên chảo bốc lửa. Chọn cách xử lý an toàn nhất.",
+    "descriptionEn": "You are cooking and oil in the pan catches fire. Choose the safest response.",
+    "difficulty": "Dễ",
+    "difficultyEn": "Easy",
+    "estimatedMinutes": 2,
+    "steps": [
+      {
+        "question": "Hành động đầu tiên nên làm là gì?",
+        "questionEn": "What should you do first?",
+        "options": [
+          {
+            "label": "Tắt bếp ngay và giữ bình tĩnh",
+            "labelEn": "Turn off the heat immediately and stay calm",
+            "isCorrect": true,
+            "explanation": "Nguồn nhiệt bị cắt sẽ giúp lửa không bùng thêm.",
+            "explanationEn": "Cutting the heat source helps prevent the fire from growing."
+          },
+          {
+            "label": "Đổ nước vào chảo cho nhanh",
+            "labelEn": "Pour water into the pan quickly",
+            "isCorrect": false,
+            "explanation": "Nước gặp dầu nóng có thể gây bùng lửa mạnh và bắn dầu.",
+            "explanationEn": "Water on burning oil can cause a violent flare-up and splatter."
+          },
+          {
+            "label": "Bê chảo chạy ra ngoài",
+            "labelEn": "Carry the pan outside",
+            "isCorrect": false,
+            "explanation": "Di chuyển chảo đang cháy rất nguy hiểm, dễ bỏng và cháy lan.",
+            "explanationEn": "Moving a burning pan is dangerous and can spread fire."
+          }
+        ]
+      },
+      {
+        "question": "Sau khi tắt bếp, bạn nên làm gì tiếp theo?",
+        "questionEn": "After turning off the heat, what should you do next?",
+        "options": [
+          {
+            "label": "Dùng nắp kim loại đậy kín chảo",
+            "labelEn": "Cover the pan tightly with a metal lid",
+            "isCorrect": true,
+            "explanation": "Thiếu oxy sẽ giúp lửa tắt dần.",
+            "explanationEn": "Removing oxygen helps smother the fire."
+          },
+          {
+            "label": "Dùng khăn giấy phủ lên",
+            "labelEn": "Cover it with paper towels",
+            "isCorrect": false,
+            "explanation": "Khăn giấy dễ bắt lửa và làm tình hình tệ hơn.",
+            "explanationEn": "Paper towels can ignite and worsen the fire."
+          },
+          {
+            "label": "Mở to quạt để thổi lửa đi",
+            "labelEn": "Turn on a strong fan to blow it away",
+            "isCorrect": false,
+            "explanation": "Gió có thể làm lửa cháy mạnh và lan rộng.",
+            "explanationEn": "Airflow can intensify and spread the flames."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scenario-lost-night",
+    "title": "Lạc đường khi trời tối",
+    "titleEn": "Lost at Night",
+    "description": "Bạn đi trekking và trời sắp tối, pin điện thoại còn ít. Hãy chọn quyết định hợp lý.",
+    "descriptionEn": "You are trekking and night is coming, with low phone battery. Choose the best decisions.",
+    "difficulty": "Trung bình",
+    "difficultyEn": "Medium",
+    "estimatedMinutes": 3,
+    "steps": [
+      {
+        "question": "Khi nhận ra lạc đường, lựa chọn tốt nhất là?",
+        "questionEn": "When you realize you are lost, what is the best choice?",
+        "options": [
+          {
+            "label": "Dừng lại, xác định vị trí, tránh đi tiếp vô hướng",
+            "labelEn": "Stop, assess your location, avoid wandering",
+            "isCorrect": true,
+            "explanation": "Di chuyển vô hướng trong đêm làm tăng nguy cơ tai nạn và lạc sâu hơn.",
+            "explanationEn": "Wandering at night increases injury risk and can get you more lost."
+          },
+          {
+            "label": "Chạy nhanh tìm đường ra trước khi tối hẳn",
+            "labelEn": "Run quickly to find a way out before dark",
+            "isCorrect": false,
+            "explanation": "Hoảng loạn và chạy trong địa hình khó dễ gây chấn thương.",
+            "explanationEn": "Panic running on rough terrain can cause injury."
+          },
+          {
+            "label": "Tắt điện thoại hẳn và không dùng nữa",
+            "labelEn": "Turn your phone fully off and do nothing with it",
+            "isCorrect": false,
+            "explanation": "Bạn vẫn cần pin cho tình huống SOS hoặc định vị ngắn.",
+            "explanationEn": "You still need battery for SOS and brief location checks."
+          }
+        ]
+      },
+      {
+        "question": "Cách dùng pin điện thoại hiệu quả nhất là?",
+        "questionEn": "What is the most effective way to use your phone battery?",
+        "options": [
+          {
+            "label": "Bật tiết kiệm pin, chỉ mở GPS theo đợt ngắn",
+            "labelEn": "Enable battery saver and use GPS in short bursts",
+            "isCorrect": true,
+            "explanation": "Tiết kiệm pin giúp duy trì liên lạc lâu hơn khi cần cứu hộ.",
+            "explanationEn": "Battery conservation keeps communication available longer."
+          },
+          {
+            "label": "Bật đèn flash liên tục để soi đường",
+            "labelEn": "Keep flashlight on continuously",
+            "isCorrect": false,
+            "explanation": "Flash liên tục tiêu hao pin rất nhanh.",
+            "explanationEn": "Continuous flashlight drains battery very fast."
+          },
+          {
+            "label": "Mở video hướng dẫn sinh tồn để xem",
+            "labelEn": "Stream survival videos for guidance",
+            "isCorrect": false,
+            "explanation": "Dữ liệu + màn hình sáng cao sẽ làm cạn pin nhanh.",
+            "explanationEn": "Data and bright screen usage quickly drain battery."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scenario-earthquake-home",
+    "title": "Động đất khi ở trong nhà",
+    "titleEn": "Earthquake at Home",
+    "description": "Bạn đang trong căn hộ và cảm nhận rung lắc mạnh. Chọn hành động an toàn.",
+    "descriptionEn": "You are in an apartment and feel strong shaking. Pick the safest actions.",
+    "difficulty": "Trung bình",
+    "difficultyEn": "Medium",
+    "estimatedMinutes": 3,
+    "steps": [
+      {
+        "question": "Trong lúc rung lắc mạnh, bạn nên làm gì?",
+        "questionEn": "During strong shaking, what should you do?",
+        "options": [
+          {
+            "label": "Núp dưới bàn chắc, che đầu và cổ",
+            "labelEn": "Drop under sturdy furniture, cover head and neck",
+            "isCorrect": true,
+            "explanation": "Đây là nguyên tắc Drop-Cover-Hold giúp giảm chấn thương do vật rơi.",
+            "explanationEn": "Drop-Cover-Hold reduces injuries from falling objects."
+          },
+          {
+            "label": "Chạy ngay ra cầu thang máy",
+            "labelEn": "Run immediately to the elevator",
+            "isCorrect": false,
+            "explanation": "Thang máy rất nguy hiểm khi động đất.",
+            "explanationEn": "Elevators are dangerous during earthquakes."
+          },
+          {
+            "label": "Đứng sát cửa kính để quan sát",
+            "labelEn": "Stand near glass windows to observe",
+            "isCorrect": false,
+            "explanation": "Kính có thể vỡ và gây thương tích nặng.",
+            "explanationEn": "Glass can shatter and cause serious injury."
+          }
+        ]
+      },
+      {
+        "question": "Ngay sau khi rung lắc dừng lại, nên ưu tiên gì?",
+        "questionEn": "Right after the shaking stops, what is the priority?",
+        "options": [
+          {
+            "label": "Di chuyển ra khu vực trống an toàn theo lối thoát bộ",
+            "labelEn": "Move to an open safe area using stairs",
+            "isCorrect": true,
+            "explanation": "Có thể có dư chấn, nên rời khu vực có nguy cơ đổ sập.",
+            "explanationEn": "Aftershocks may occur, so leave risky structures safely."
+          },
+          {
+            "label": "Vào bếp kiểm tra ngay bếp gas",
+            "labelEn": "Go to the kitchen immediately to check the gas stove",
+            "isCorrect": false,
+            "explanation": "Nếu còn dư chấn, ở lại trong nhà sẽ nguy hiểm hơn.",
+            "explanationEn": "Staying inside during potential aftershocks is riskier."
+          },
+          {
+            "label": "Đăng lên mạng xã hội trước để báo tin",
+            "labelEn": "Post on social media first",
+            "isCorrect": false,
+            "explanation": "Ưu tiên an toàn cá nhân trước, sau đó mới liên lạc.",
+            "explanationEn": "Personal safety comes first, communication later."
+          }
+        ]
+      }
+    ]
+  }
+]

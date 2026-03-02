@@ -1,0 +1,2720 @@
+[
+  {
+    "id": "desert-orientation-sun",
+    "title": "Lạc ở sa mạc: định hướng bằng mặt trời",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Sa mạc",
+    "difficulty": "Trung bình",
+    "tags": [
+      "sa mạc",
+      "định hướng",
+      "khẩn cấp"
+    ],
+    "summary": "Ưu tiên giữ sức và xác định hướng đi ngắn, tránh di chuyển lúc nắng gắt.",
+    "steps": [
+      "Tìm bóng râm trước, giảm mất nước và bình tĩnh đánh giá khu vực.",
+      "Dùng hướng mặt trời buổi sáng/chiều để xác định Đông - Tây tương đối.",
+      "Đánh dấu lộ trình bằng đá hoặc cành để tránh đi vòng.",
+      "Di chuyển vào sáng sớm hoặc chiều muộn, nghỉ khi nắng đỉnh điểm.",
+      "Nếu có điện thoại, bật tiết kiệm pin và chỉ dùng khi cần định vị/liên lạc."
+    ],
+    "estimatedMinutes": 15,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/lacgiua_xamac.png",
+    "titleEn": "Lost in the desert: navigate by the sun",
+    "summaryEn": "Conserve energy first and find a short, safe direction before moving under harsh heat.",
+    "stepsEn": [
+      "Find shade first, reduce water loss, and calmly assess your surroundings.",
+      "Use the sun in the morning/afternoon to estimate East and West.",
+      "Mark your route with stones or branches to avoid walking in circles.",
+      "Move in early morning or late afternoon; rest during peak heat.",
+      "If you have a phone, enable battery saver and use it only for location/contact when needed."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Desert",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "desert",
+      "navigation",
+      "emergency"
+    ]
+  },
+  {
+    "id": "desert-water-ration",
+    "title": "Lạc ở sa mạc: chia nước hợp lý",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Sa mạc",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "sa mạc",
+      "nước uống",
+      "sinh tồn"
+    ],
+    "summary": "Không uống dồn dập, chia nhỏ theo chu kỳ để giữ tỉnh táo lâu hơn.",
+    "steps": [
+      "Ước lượng tổng lượng nước còn lại và thời gian có thể chịu đựng.",
+      "Chia nước thành nhiều lần nhỏ theo mốc 30-45 phút.",
+      "Tránh nói nhiều, vận động mạnh để giảm mất nước.",
+      "Che đầu/cổ bằng khăn sáng màu để giảm hấp thụ nhiệt.",
+      "Tìm điểm cao quan sát dấu hiệu dân cư hoặc đường đi."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/xamac_chianuoc.png",
+    "titleEn": "Lost in the desert: ration water wisely",
+    "summaryEn": "Do not drink all at once; split small portions to stay alert longer.",
+    "stepsEn": [
+      "Estimate total remaining water and how long it can last.",
+      "Divide water into small portions every 30-45 minutes.",
+      "Avoid excessive talking and heavy movement to reduce dehydration.",
+      "Cover your head/neck with a light-colored cloth to reduce heat absorption.",
+      "Find a high point to look for roads, settlements, or signs of people."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Desert",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "desert",
+      "drinking water",
+      "survival"
+    ]
+  },
+  {
+    "id": "forest-lost-first-hour",
+    "title": "Lạc trong rừng: xử lý trong 60 phút đầu",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Rừng núi",
+    "difficulty": "Trung bình",
+    "tags": [
+      "rừng",
+      "định hướng",
+      "khẩn cấp"
+    ],
+    "summary": "Đứng yên, ổn định tinh thần, lập kế hoạch trước khi di chuyển.",
+    "steps": [
+      "Dừng lại và thực hiện nguyên tắc STOP: Stop, Think, Observe, Plan.",
+      "Kiểm tra vật dụng: nước, áo khoác, pin, còi, điện thoại.",
+      "Đánh dấu vị trí hiện tại bằng ruy băng hoặc ký hiệu dễ nhận biết.",
+      "Nếu trời sắp tối, ưu tiên chỗ trú an toàn thay vì đi xa.",
+      "Phát tín hiệu theo nhịp 3 tiếng còi/3 lần đèn để cầu cứu."
+    ],
+    "estimatedMinutes": 20,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/lactrongrung_60pdau.png",
+    "titleEn": "Lost in the forest: actions for the first 60 minutes",
+    "summaryEn": "Stop, stabilize your mind, and make a plan before moving.",
+    "stepsEn": [
+      "Stop and apply STOP: Stop, Think, Observe, Plan.",
+      "Check your essentials: water, jacket, battery, whistle, phone.",
+      "Mark your current location with ribbon or visible signs.",
+      "If sunset is near, prioritize safe shelter instead of going farther.",
+      "Send distress signals in groups of three (whistle/light)."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Forest & Mountains",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "forest",
+      "navigation",
+      "emergency"
+    ]
+  },
+  {
+    "id": "forest-water-safe",
+    "title": "Lấy nước ở rừng núi an toàn hơn",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Rừng núi",
+    "difficulty": "Trung bình",
+    "tags": [
+      "rừng",
+      "nước",
+      "lọc nước"
+    ],
+    "summary": "Ưu tiên nguồn chảy và xử lý nước trước khi uống.",
+    "steps": [
+      "Chọn nước chảy thay vì nước tù để giảm nguy cơ nhiễm bẩn.",
+      "Lọc thô bằng vải sạch để loại cặn lớn.",
+      "Đun sôi ít nhất 1 phút (hoặc lâu hơn ở vùng cao).",
+      "Nếu có viên lọc/ống lọc, dùng theo đúng hướng dẫn.",
+      "Không uống trực tiếp từ vũng có dấu hiệu ô nhiễm động vật."
+    ],
+    "estimatedMinutes": 25,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/lactrongrung_laynuoctrongrung.png",
+    "titleEn": "Collect safer water in the forest",
+    "summaryEn": "Prioritize flowing sources and treat water before drinking.",
+    "stepsEn": [
+      "Choose running water over stagnant pools to lower contamination risk.",
+      "Pre-filter with clean cloth to remove large debris.",
+      "Boil for at least 1 minute (longer at high altitude).",
+      "If you have purification tablets/filters, follow instructions exactly.",
+      "Do not drink directly from pools with signs of animal contamination."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Forest & Mountains",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "forest",
+      "water",
+      "water filtration"
+    ]
+  },
+  {
+    "id": "mountain-storm-shelter",
+    "title": "Gặp mưa giông trên núi: tìm chỗ trú đúng",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Rừng núi",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "núi",
+      "mưa giông",
+      "an toàn"
+    ],
+    "summary": "Tránh vị trí dễ sét đánh, giữ thân nhiệt ổn định.",
+    "steps": [
+      "Rời ngay đỉnh trống, cây cao đơn lẻ và khu vực gần kim loại.",
+      "Tìm địa hình thấp vừa phải, khô ráo, không sát suối lũ quét.",
+      "Mặc thêm lớp chống gió/mưa để giữ nhiệt cơ thể.",
+      "Ngồi thu gọn người trên vật cách điện nếu không có chỗ trú tốt.",
+      "Chờ giông qua hẳn rồi mới tiếp tục di chuyển."
+    ],
+    "estimatedMinutes": 12,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/muatrennui.png",
+    "titleEn": "Mountain thunderstorm: choose shelter correctly",
+    "summaryEn": "Avoid lightning-prone spots and maintain body heat.",
+    "stepsEn": [
+      "Leave exposed peaks, isolated tall trees, and metal areas immediately.",
+      "Find moderately low, dry ground away from flash-flood streams.",
+      "Add wind/rain layers to retain body warmth.",
+      "If no good shelter exists, crouch on an insulating surface.",
+      "Resume moving only after the storm has fully passed."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Forest & Mountains",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "mountain",
+      "thunderstorm",
+      "safety"
+    ]
+  },
+  {
+    "id": "knot-square",
+    "title": "Thắt nút vuông để buộc gói đồ",
+    "category": "Kỹ năng thực hành",
+    "subCategory": "Nút dây",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "nút dây",
+      "buộc đồ",
+      "outdoor"
+    ],
+    "summary": "Nút vuông phù hợp nối hai đầu dây cùng cỡ trong tình huống nhẹ.",
+    "steps": [
+      "Cầm hai đầu dây, đặt đầu phải chồng lên đầu trái và siết nhẹ.",
+      "Đổi chiều: đặt đầu trái chồng lên đầu phải.",
+      "Kéo đều hai đầu để nút nằm phẳng, đối xứng.",
+      "Kiểm tra độ chắc bằng cách giật nhẹ theo hai hướng.",
+      "Không dùng nút này cho tải nặng hoặc cứu hộ."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/thatnutvuong.png",
+    "titleEn": "Tie a square knot for bundling",
+    "summaryEn": "A square knot works for joining equal-size ropes in light-duty situations.",
+    "stepsEn": [
+      "Hold both rope ends, cross right over left, and snug lightly.",
+      "Reverse direction: cross left over right.",
+      "Pull both ends evenly so the knot sits flat and symmetric.",
+      "Check security with a light pull in opposite directions.",
+      "Do not use this knot for heavy loads or rescue."
+    ],
+    "categoryEn": "Practical Skills",
+    "subCategoryEn": "Knots",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "knots",
+      "bundling",
+      "outdoor"
+    ]
+  },
+  {
+    "id": "knot-clove-hitch",
+    "title": "Thắt nút cọc (clove hitch) buộc dây vào trụ",
+    "category": "Kỹ năng thực hành",
+    "subCategory": "Nút dây",
+    "difficulty": "Trung bình",
+    "tags": [
+      "nút dây",
+      "lều trại",
+      "buộc cọc"
+    ],
+    "summary": "Nút cọc thao tác nhanh khi cần cố định dây vào cột/cành.",
+    "steps": [
+      "Quấn dây một vòng quanh trụ.",
+      "Quấn vòng thứ hai chéo lên vòng đầu.",
+      "Luồn đầu dây dưới vòng chéo vừa tạo.",
+      "Kéo chặt hai đầu để nút ôm trụ.",
+      "Thêm nút khóa phụ nếu dây chịu lực lâu."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/thatnutcocc.png",
+    "titleEn": "Tie a clove hitch to secure rope to a pole",
+    "summaryEn": "A clove hitch is quick for fixing rope to a post or branch.",
+    "stepsEn": [
+      "Wrap the rope once around the pole.",
+      "Wrap a second turn crossing over the first.",
+      "Tuck the working end under the crossed loop.",
+      "Tighten both ends so the knot grips the pole.",
+      "Add a backup knot for prolonged load-bearing use."
+    ],
+    "categoryEn": "Practical Skills",
+    "subCategoryEn": "Knots",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "knots",
+      "camping",
+      "anchor tie"
+    ]
+  },
+  {
+    "id": "knot-trucker-hitch",
+    "title": "Nút siết dây chặt khi chằng đồ xe",
+    "category": "Kỹ năng thực hành",
+    "subCategory": "Nút dây",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "nút dây",
+      "siết chặt",
+      "chằng hàng"
+    ],
+    "summary": "Dùng cơ chế ròng rọc đơn giản để siết mạnh và giữ ổn định.",
+    "steps": [
+      "Tạo một vòng giữa thân dây (slip loop).",
+      "Luồn đầu dây tự do qua điểm neo đối diện rồi quay lại qua vòng giữa.",
+      "Kéo mạnh đầu dây để tạo lực siết.",
+      "Giữ lực và khóa bằng 2-3 nút nửa chạc liên tiếp.",
+      "Kiểm tra sau 5-10 phút di chuyển để siết lại nếu lỏng."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/nutsietdaychatkhichangdoxe.png",
+    "titleEn": "Trucker's hitch for tight cargo lashing",
+    "summaryEn": "Use a simple pulley effect to tighten strongly and keep cargo stable.",
+    "stepsEn": [
+      "Create a slip loop in the standing part of the rope.",
+      "Pass the free end through the opposite anchor and back through the loop.",
+      "Pull hard on the free end to tension.",
+      "Maintain tension and lock with 2-3 half hitches.",
+      "Recheck after 5-10 minutes of movement and retighten if needed."
+    ],
+    "categoryEn": "Practical Skills",
+    "subCategoryEn": "Knots",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "knots",
+      "tightening",
+      "cargo lashing"
+    ]
+  },
+  {
+    "id": "fold-shirt-wrinkle-free",
+    "title": "Gấp áo thun nhanh, hạn chế nhăn",
+    "category": "Mẹo cuộc sống",
+    "subCategory": "Sắp xếp đồ đạc",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "gấp quần áo",
+      "ngăn nắp",
+      "du lịch"
+    ],
+    "summary": "Gấp theo nếp vai và thân giúp áo phẳng, dễ xếp vali.",
+    "steps": [
+      "Trải áo trên mặt phẳng, vuốt phẳng nếp gấp.",
+      "Gập hai bên tay áo vào trong theo đường dọc vai.",
+      "Gập đôi từ dưới lên, canh mép đều nhau.",
+      "Nếu đi xa, cuộn nhẹ thay vì ép phẳng để giảm nếp gãy.",
+      "Xếp áo nặng ở dưới, áo mỏng ở trên để tránh đè nhăn."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/gapaothun.png",
+    "titleEn": "Fold a T-shirt quickly with fewer wrinkles",
+    "summaryEn": "Folding along shoulder/body lines keeps shirts flatter and suitcase-ready.",
+    "stepsEn": [
+      "Lay the shirt on a flat surface and smooth it out.",
+      "Fold both sleeves inward along the shoulder line.",
+      "Fold in half from bottom to top, aligning edges.",
+      "For travel, roll gently instead of pressing flat to reduce crease lines.",
+      "Pack heavier items below and lighter shirts above to avoid compression wrinkles."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Organization",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "folding clothes",
+      "organized",
+      "travel"
+    ]
+  },
+  {
+    "id": "fold-pants-travel",
+    "title": "Gấp quần dài đi du lịch không bị nhàu",
+    "category": "Mẹo cuộc sống",
+    "subCategory": "Sắp xếp đồ đạc",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "gấp quần áo",
+      "du lịch",
+      "vali"
+    ],
+    "summary": "Giữ nếp ly đúng trục rồi cuộn vừa phải để tiết kiệm diện tích.",
+    "steps": [
+      "Đặt quần theo chiều dọc, chồng hai ống thật thẳng.",
+      "Gập phần đáy quần vào trong để tạo khối gọn.",
+      "Gập đôi từ gấu lên đầu gối rồi tiếp tục lên cạp.",
+      "Cuộn lỏng nếu cần tiết kiệm chỗ, tránh cuộn quá chặt.",
+      "Lấy ra khỏi vali và treo sớm khi đến nơi."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/gapquandai.png",
+    "titleEn": "Fold pants for travel with less wrinkling",
+    "summaryEn": "Keep crease lines aligned, then roll lightly to save space.",
+    "stepsEn": [
+      "Lay pants lengthwise and align both legs neatly.",
+      "Fold the crotch area inward to create a clean block.",
+      "Fold from hem to knee, then up to the waistband.",
+      "Roll loosely if needed; avoid rolling too tight.",
+      "Unpack and hang early when you arrive."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Organization",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "folding clothes",
+      "travel",
+      "suitcase"
+    ]
+  },
+  {
+    "id": "unlock-door-safe",
+    "title": "Mở khóa khi mất chìa an toàn",
+    "category": "Mẹo cuộc sống",
+    "subCategory": "Gia đình",
+    "difficulty": "Trung bình",
+    "tags": [
+      "khóa cửa",
+      "gia đình",
+      "an toàn"
+    ],
+    "summary": "Ưu tiên phương án hợp pháp và hạn chế hư hại tài sản.",
+    "steps": [
+      "Xác nhận quyền sử dụng hợp pháp đối với căn nhà/phòng.",
+      "Liên hệ người thân giữ chìa dự phòng trước khi thử cách khác.",
+      "Không cố phá khóa chống trộm vì rủi ro cao và tốn kém.",
+      "Gọi thợ khóa uy tín, yêu cầu báo giá rõ trước khi làm.",
+      "Sau khi mở được, làm thêm chìa dự phòng và lưu vị trí an toàn."
+    ],
+    "estimatedMinutes": 15,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/mokhoakhimatchia.png",
+    "titleEn": "Unlock safely when you lose your key",
+    "summaryEn": "Prioritize legal methods and minimize property damage.",
+    "stepsEn": [
+      "Confirm legal right to access the house/room.",
+      "Contact family members with a spare key first.",
+      "Avoid forcing anti-theft locks due to high risk and cost.",
+      "Call a trusted locksmith and ask for clear pricing before work.",
+      "After access is restored, make a spare key and store it securely."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Household",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "door lock",
+      "family",
+      "safety"
+    ]
+  },
+  {
+    "id": "toilet-clog-fix",
+    "title": "Sửa bồn cầu tắc bằng dụng cụ cơ bản",
+    "category": "Mẹo cuộc sống",
+    "subCategory": "Sửa chữa nhà",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "bồn cầu",
+      "thông tắc",
+      "sửa chữa"
+    ],
+    "summary": "Xử lý từng bước để tránh tràn nước và hạn chế mùi.",
+    "steps": [
+      "Ngừng xả nước, đeo găng tay và mở cửa thông gió.",
+      "Dùng pittong đúng kích cỡ, đẩy kéo nhịp đều 15-20 lần.",
+      "Đổ nước ấm và chờ vài phút trước khi thử lại.",
+      "Dùng dây lò xo nếu tắc sâu, tránh dùng vật sắc nhọn.",
+      "Gọi thợ nếu nước rút rất chậm sau nhiều lần xử lý."
+    ],
+    "estimatedMinutes": 20,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/suaboncautac.png",
+    "titleEn": "Fix a clogged toilet with basic tools",
+    "summaryEn": "Handle step-by-step to avoid overflow and reduce odor.",
+    "stepsEn": [
+      "Stop flushing, wear gloves, and ventilate the bathroom.",
+      "Use a proper plunger size and pump 15-20 steady strokes.",
+      "Pour warm water and wait a few minutes before retrying.",
+      "Use a drain snake for deep clogs; avoid sharp objects.",
+      "Call a plumber if draining remains very slow after several attempts."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Home Repair",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "toilet",
+      "unclogging",
+      "repair"
+    ]
+  },
+  {
+    "id": "gas-leak-home",
+    "title": "Nghi rò gas trong nhà: xử lý ngay",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "An toàn gia đình",
+    "difficulty": "Trung bình",
+    "tags": [
+      "gas",
+      "cháy nổ",
+      "khẩn cấp"
+    ],
+    "summary": "Cắt nguồn nguy cơ cháy nổ và rời khỏi khu vực nhanh, trật tự.",
+    "steps": [
+      "Không bật/tắt công tắc điện và không dùng lửa.",
+      "Mở cửa sổ, cửa chính để khí thoát ra tự nhiên.",
+      "Khóa van gas nếu có thể tiếp cận an toàn.",
+      "Đưa mọi người ra khỏi nhà và gọi đơn vị hỗ trợ kỹ thuật.",
+      "Chỉ quay lại khi đã xác nhận khu vực an toàn."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/nghirogas.png",
+    "titleEn": "Suspected gas leak at home: act immediately",
+    "summaryEn": "Eliminate ignition risks and evacuate quickly but calmly.",
+    "stepsEn": [
+      "Do not switch electrical devices on/off and do not use flame.",
+      "Open windows and doors to ventilate naturally.",
+      "Close the gas valve if safely reachable.",
+      "Move everyone outside and call technical support services.",
+      "Return only after the area is confirmed safe."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Home Safety",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "gas",
+      "fire/explosion",
+      "emergency"
+    ]
+  },
+  {
+    "id": "earthquake-indoor",
+    "title": "Động đất khi đang trong nhà",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Thiên tai",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "động đất",
+      "an toàn",
+      "thiên tai"
+    ],
+    "summary": "Áp dụng nguyên tắc cúi thấp - che chắn - bám chắc.",
+    "steps": [
+      "Cúi thấp xuống, tránh cửa kính và đồ có thể rơi.",
+      "Che đầu/cổ bằng tay hoặc vật mềm gần nhất.",
+      "Núp dưới bàn chắc chắn và bám chặt đến khi rung dừng.",
+      "Không dùng thang máy trong và ngay sau rung chấn.",
+      "Sau đó di chuyển có trật tự đến điểm tập kết an toàn."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/dongdat.png",
+    "titleEn": "Earthquake while indoors",
+    "summaryEn": "Apply the rule: drop, cover, and hold on.",
+    "stepsEn": [
+      "Drop low and stay away from glass and falling objects.",
+      "Protect your head/neck with your arms or nearby soft items.",
+      "Take cover under sturdy furniture and hold on until shaking stops.",
+      "Do not use elevators during or immediately after shaking.",
+      "Then evacuate calmly to a safe assembly point."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Natural Disasters",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "earthquake",
+      "safety",
+      "natural disaster"
+    ]
+  },
+  {
+    "id": "flood-evacuation-bag",
+    "title": "Chuẩn bị túi sơ tán mùa mưa lũ",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Thiên tai",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "mưa lũ",
+      "sơ tán",
+      "chuẩn bị"
+    ],
+    "summary": "Có sẵn túi 24-48 giờ giúp phản ứng nhanh khi cần rời nhà.",
+    "steps": [
+      "Để sẵn giấy tờ bản sao trong túi chống nước.",
+      "Chuẩn bị đèn pin, pin dự phòng, thuốc cá nhân, nước uống.",
+      "Thêm áo mưa nhẹ, quần áo khô, khẩu trang, còi cứu hộ.",
+      "Cập nhật số điện thoại khẩn cấp và điểm tập kết gia đình.",
+      "Đặt túi ở vị trí dễ lấy, ai trong nhà cũng biết."
+    ],
+    "estimatedMinutes": 30,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/chuanbituisotan.png",
+    "titleEn": "Prepare an evacuation bag for flood season",
+    "summaryEn": "A ready 24-48 hour bag helps rapid response when evacuation is needed.",
+    "stepsEn": [
+      "Keep document copies in a waterproof pouch.",
+      "Pack flashlight, power bank, personal medicines, and drinking water.",
+      "Add light rain gear, dry clothes, masks, and an emergency whistle.",
+      "Update emergency phone numbers and family meeting points.",
+      "Store the bag where everyone can quickly access it."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Natural Disasters",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "flood",
+      "evacuation",
+      "preparedness"
+    ]
+  },
+  {
+    "id": "minor-burn-first-aid",
+    "title": "Sơ cứu bỏng nhẹ đúng cách",
+    "category": "Sức khỏe",
+    "subCategory": "Sơ cứu",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "bỏng",
+      "sơ cứu",
+      "y tế"
+    ],
+    "summary": "Làm mát sớm và che phủ sạch để giảm tổn thương da.",
+    "steps": [
+      "Đưa vùng bỏng dưới vòi nước mát sạch 15-20 phút.",
+      "Tháo nhẫn/đồng hồ gần vùng bỏng trước khi sưng.",
+      "Không chọc bóng nước và không bôi mẹo dân gian chưa kiểm chứng.",
+      "Che bằng gạc vô trùng hoặc khăn sạch không dính.",
+      "Đi khám nếu vùng bỏng rộng hoặc có dấu hiệu nhiễm trùng."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/socuubongnhe.png",
+    "titleEn": "Proper first aid for minor burns",
+    "summaryEn": "Cool early and cover cleanly to reduce skin damage.",
+    "stepsEn": [
+      "Cool the burn under clean running water for 15-20 minutes.",
+      "Remove rings/watches near the area before swelling starts.",
+      "Do not pop blisters or apply unverified home remedies.",
+      "Cover with sterile gauze or a clean non-stick cloth.",
+      "Seek medical care if burn area is large or infection signs appear."
+    ],
+    "categoryEn": "Health",
+    "subCategoryEn": "First Aid",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "burn",
+      "first aid",
+      "medical"
+    ]
+  },
+  {
+    "id": "nosebleed-control",
+    "title": "Cầm máu cam tại chỗ",
+    "category": "Sức khỏe",
+    "subCategory": "Sơ cứu",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "máu cam",
+      "sơ cứu"
+    ],
+    "summary": "Ngồi đúng tư thế và ép cánh mũi để cầm máu hiệu quả.",
+    "steps": [
+      "Ngồi thẳng, hơi cúi đầu về trước.",
+      "Dùng ngón tay bóp nhẹ phần mềm cánh mũi 10 phút liên tục.",
+      "Chườm mát vùng sống mũi nếu có.",
+      "Không ngửa đầu ra sau vì có thể nuốt máu.",
+      "Đi khám nếu chảy máu kéo dài trên 20 phút hoặc tái diễn nhiều lần."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/cammaucam.png",
+    "titleEn": "Control a nosebleed on the spot",
+    "summaryEn": "Use correct posture and steady pressure for effective bleeding control.",
+    "stepsEn": [
+      "Sit upright and lean slightly forward.",
+      "Pinch the soft part of the nose continuously for 10 minutes.",
+      "Apply a cool compress to the bridge of the nose if available.",
+      "Do not tilt your head back to avoid swallowing blood.",
+      "See a doctor if bleeding lasts over 20 minutes or recurs frequently."
+    ],
+    "categoryEn": "Health",
+    "subCategoryEn": "First Aid",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "nosebleed",
+      "first aid"
+    ]
+  },
+  {
+    "id": "food-storage-no-fridge",
+    "title": "Bảo quản thực phẩm khi mất điện",
+    "category": "Mẹo cuộc sống",
+    "subCategory": "Nhà bếp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "mất điện",
+      "thực phẩm",
+      "an toàn"
+    ],
+    "summary": "Giữ nhiệt lạnh lâu hơn và ưu tiên dùng thực phẩm dễ hỏng trước.",
+    "steps": [
+      "Hạn chế mở cửa tủ lạnh/tủ đông liên tục.",
+      "Gom thực phẩm lạnh vào khu vực trung tâm tủ.",
+      "Dùng đá gel hoặc đá cây bọc kín để duy trì nhiệt độ.",
+      "Nấu và dùng trước các món thịt/cá/sữa dễ hỏng.",
+      "Loại bỏ thực phẩm có mùi lạ hoặc nghi hỏng."
+    ],
+    "estimatedMinutes": 12,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/baoquanthucpham.png",
+    "titleEn": "Store food safely during a power outage",
+    "summaryEn": "Keep cold temperatures longer and use perishable food first.",
+    "stepsEn": [
+      "Limit opening the fridge/freezer repeatedly.",
+      "Group chilled items in the center of the fridge.",
+      "Use sealed ice packs or wrapped ice blocks to maintain temperature.",
+      "Cook and consume meat/fish/dairy first.",
+      "Discard food with unusual odor or spoilage signs."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "power outage",
+      "food",
+      "safety"
+    ]
+  },
+  {
+    "id": "phone-battery-emergency",
+    "title": "Kéo dài pin điện thoại khi khẩn cấp",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Liên lạc",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "điện thoại",
+      "pin",
+      "khẩn cấp"
+    ],
+    "summary": "Giữ pin cho liên lạc quan trọng trong tình huống mất điện/mất sóng.",
+    "steps": [
+      "Bật chế độ tiết kiệm pin và giảm sáng màn hình.",
+      "Tắt Bluetooth, GPS, đồng bộ nền khi không cần.",
+      "Ưu tiên nhắn tin ngắn thay vì gọi video.",
+      "Đóng ứng dụng nặng và bật chế độ máy bay khi sóng yếu kéo dài.",
+      "Dự phòng pin sạc ngoài đã nạp trước đó."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/keodaipin.png",
+    "titleEn": "Extend phone battery in emergencies",
+    "summaryEn": "Preserve battery for critical communication during outages or poor signal.",
+    "stepsEn": [
+      "Enable battery saver and reduce screen brightness.",
+      "Turn off Bluetooth, GPS, and background sync when not needed.",
+      "Prefer short text messages over video calls.",
+      "Close heavy apps and use airplane mode during prolonged weak signal.",
+      "Keep a precharged power bank as backup."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Communication",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "phone",
+      "battery",
+      "emergency"
+    ]
+  },
+  {
+    "id": "campfire-safe",
+    "title": "Đốt lửa trại an toàn và dập tắt đúng",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Rừng núi",
+    "difficulty": "Trung bình",
+    "tags": [
+      "lửa trại",
+      "an toàn",
+      "outdoor"
+    ],
+    "summary": "Chọn điểm đốt hợp lý và dập lửa triệt để trước khi rời đi.",
+    "steps": [
+      "Chọn bãi đất trống, cách xa lá khô và tán cây thấp.",
+      "Tạo vòng đá nhỏ quanh vị trí lửa để hạn chế lan.",
+      "Giữ lửa vừa đủ dùng, không đổ xăng/dầu để nhóm.",
+      "Khi rời đi, dội nước, đảo tro, dội lại đến khi nguội hẳn.",
+      "Chạm tay gần tro kiểm tra không còn nhiệt nóng."
+    ],
+    "estimatedMinutes": 18,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/dotluatraiantoan.png",
+    "titleEn": "Build and extinguish a campfire safely",
+    "summaryEn": "Choose a proper fire spot and fully extinguish before leaving.",
+    "stepsEn": [
+      "Choose open bare ground away from dry leaves and low branches.",
+      "Build a small stone ring around the fire area.",
+      "Keep fire size only as needed; never use fuel liquids to ignite.",
+      "Before leaving, pour water, stir ashes, and soak again until cool.",
+      "Check near the ashes by hand for any remaining heat."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Forest & Mountains",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "campfire",
+      "safety",
+      "outdoor"
+    ]
+  },
+  {
+    "id": "river-crossing-basic",
+    "title": "Qua suối an toàn khi trekking",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Rừng núi",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "trekking",
+      "suối",
+      "an toàn"
+    ],
+    "summary": "Đánh giá dòng chảy trước, ưu tiên điểm nông và bám chắc.",
+    "steps": [
+      "Quan sát dòng nước và chọn đoạn rộng, nông, chảy êm hơn.",
+      "Nới lỏng quai balo để có thể tháo nhanh khi cần.",
+      "Dùng gậy chống giữ 3 điểm tiếp xúc khi bước.",
+      "Đi chéo dòng, từng bước ngắn, không quay lưng hoàn toàn với dòng chảy.",
+      "Không cố qua nếu nước quá xiết hoặc cao quá đầu gối."
+    ],
+    "estimatedMinutes": 14,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/quasuoi_antoan.png",
+    "titleEn": "Cross a stream safely while trekking",
+    "summaryEn": "Assess current first, choose shallower sections, and maintain stable footing.",
+    "stepsEn": [
+      "Observe flow and choose wider, shallower, slower sections.",
+      "Loosen backpack straps so you can remove it quickly if needed.",
+      "Use a trekking pole and keep three points of contact.",
+      "Cross diagonally with short steps; do not fully turn your back to the current.",
+      "Do not attempt crossing if current is too strong or above knee level."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Forest & Mountains",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "trekking",
+      "stream",
+      "safety"
+    ]
+  },
+  {
+    "id": "rainwater-collection",
+    "title": "Thu nước mưa tạm thời khi thiếu nước",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Nguồn nước",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "nước mưa",
+      "sinh tồn",
+      "thiếu nước"
+    ],
+    "summary": "Dùng bề mặt sạch để hứng nước, rồi xử lý trước khi uống.",
+    "steps": [
+      "Tận dụng bạt, áo mưa, lá lớn tạo mặt hứng.",
+      "Dẫn nước về chai/hộp sạch có nắp.",
+      "Loại bỏ cặn thô bằng vải lọc.",
+      "Đun sôi hoặc khử khuẩn theo dụng cụ có sẵn.",
+      "Bảo quản kín, dùng trong ngày nếu điều kiện nóng ẩm."
+    ],
+    "estimatedMinutes": 16,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/thunuocmua_tamthoi.png",
+    "titleEn": "Collect rainwater temporarily when water is scarce",
+    "summaryEn": "Use clean catch surfaces, then treat water before drinking.",
+    "stepsEn": [
+      "Use tarps, raincoats, or large leaves as catch surfaces.",
+      "Channel water into clean containers with lids.",
+      "Remove coarse particles with cloth filtration.",
+      "Boil or disinfect using available tools.",
+      "Store sealed and consume within the day in hot/humid conditions."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Water Sources",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "rainwater",
+      "survival",
+      "water shortage"
+    ]
+  },
+  {
+    "id": "backpack-weight-balance",
+    "title": "Sắp balo đi rừng đỡ mỏi vai",
+    "category": "Kỹ năng thực hành",
+    "subCategory": "Trang bị",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "balo",
+      "trekking",
+      "tối ưu"
+    ],
+    "summary": "Phân bổ trọng lượng đúng để đi xa an toàn hơn.",
+    "steps": [
+      "Đặt vật nặng sát lưng và gần giữa balo.",
+      "Đồ hay dùng để ngăn trên hoặc túi ngoài.",
+      "Đồ mềm (áo, túi ngủ) chèn đáy và khe hở.",
+      "Siết đai hông trước, rồi chỉnh dây vai sau.",
+      "Tổng tải nên phù hợp thể trạng, thường không quá 20-25% trọng lượng cơ thể."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/sapbalo_moivai.png",
+    "titleEn": "Pack a hiking backpack to reduce shoulder strain",
+    "summaryEn": "Distribute weight correctly for safer long-distance movement.",
+    "stepsEn": [
+      "Place heavy items close to your back and near the center.",
+      "Keep frequently used items in top or outer pockets.",
+      "Use soft items (clothes, sleeping bag) to fill bottom and gaps.",
+      "Tighten hip belt first, then adjust shoulder straps.",
+      "Total load should match fitness, usually not over 20-25% body weight."
+    ],
+    "categoryEn": "Practical Skills",
+    "subCategoryEn": "Gear",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "backpack",
+      "trekking",
+      "optimization"
+    ]
+  },
+  {
+    "id": "lifehack-21-freeze-plastic-wrap",
+    "title": "Để màng bọc thực phẩm trong tủ đá",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Nhà bếp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "màng bọc",
+      "nhà bếp",
+      "tiết kiệm thời gian"
+    ],
+    "summary": "Làm lạnh cuộn màng bọc để dễ kéo và ít dính rối khi sử dụng.",
+    "steps": [
+      "Đặt cuộn màng bọc vào ngăn đá khoảng 20-30 phút.",
+      "Lấy ra và kéo màng theo chiều thẳng để tách dễ hơn.",
+      "Bảo quản lại nơi khô ráo sau khi dùng."
+    ],
+    "estimatedMinutes": 3,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/21.png",
+    "titleEn": "Store plastic wrap in the freezer",
+    "summaryEn": "Chill the plastic wrap roll so it pulls out easier and tangles less.",
+    "stepsEn": [
+      "Place the plastic wrap roll in the freezer for about 20-30 minutes.",
+      "Take it out and pull the wrap straight for easier separation.",
+      "Store it back in a dry place after use."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "plastic wrap",
+      "kitchen",
+      "time-saving"
+    ]
+  },
+  {
+    "id": "lifehack-22-revive-dry-lemon",
+    "title": "\"Tái sinh\" chanh khô khi để ở ngoài",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Thực phẩm",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "chanh",
+      "thực phẩm",
+      "bảo quản"
+    ],
+    "summary": "Ngâm chanh khô trong nước để phục hồi độ mọng nước.",
+    "steps": [
+      "Cho chanh vào bát nước sạch.",
+      "Ngâm khoảng 2 giờ.",
+      "Lấy ra lau khô và dùng như bình thường."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/22png.png",
+    "titleEn": "Revive dried lemons left outside",
+    "summaryEn": "Soak dried lemons in water to restore juiciness.",
+    "stepsEn": [
+      "Put the lemon in a bowl of clean water.",
+      "Soak for about 2 hours.",
+      "Take it out, pat dry, and use as usual."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Food",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "lemon",
+      "food",
+      "storage"
+    ]
+  },
+  {
+    "id": "lifehack-23-store-avocado-with-onion",
+    "title": "Bảo quản bơ trong tủ lạnh",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Thực phẩm",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "bơ",
+      "tủ lạnh",
+      "bảo quản"
+    ],
+    "summary": "Giữ phần bơ còn lại chậm thâm bằng cách bảo quản chung với hành tây.",
+    "steps": [
+      "Cho nửa quả bơ chưa dùng vào hộp kín.",
+      "Đặt thêm một miếng hành tây vào hộp.",
+      "Bảo quản trong ngăn mát và dùng sớm."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/23.png",
+    "titleEn": "Store avocado in the fridge",
+    "summaryEn": "Keep leftover avocado from browning too quickly by storing it with onion.",
+    "stepsEn": [
+      "Place the unused avocado half in an airtight container.",
+      "Add a small piece of onion into the container.",
+      "Keep in the fridge and consume soon."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Food",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "avocado",
+      "refrigerator",
+      "storage"
+    ]
+  },
+  {
+    "id": "lifehack-24-deodorize-shoes-teabag",
+    "title": "Bảo quản giày khỏi mùi hôi",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Giày dép",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "giày",
+      "khử mùi",
+      "túi trà"
+    ],
+    "summary": "Dùng túi trà khô để hút ẩm và giảm mùi trong giày.",
+    "steps": [
+      "Đặt một túi trà khô vào mỗi chiếc giày qua đêm.",
+      "Nếu giày ẩm, thêm gạo và baking soda.",
+      "Để 1-2 ngày rồi đổ bỏ hỗn hợp."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/24.jpg",
+    "titleEn": "Keep shoes odor-free",
+    "summaryEn": "Use dry tea bags to absorb moisture and reduce shoe odor.",
+    "stepsEn": [
+      "Place one dry tea bag in each shoe overnight.",
+      "If shoes are damp, add rice and baking soda.",
+      "Leave for 1-2 days, then discard the mixture."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Footwear",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "shoes",
+      "deodorize",
+      "tea bag"
+    ]
+  },
+  {
+    "id": "lifehack-25-charge-phone-faster",
+    "title": "Sạc điện thoại nhanh hơn",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Điện thoại",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "điện thoại",
+      "sạc pin",
+      "máy bay"
+    ],
+    "summary": "Bật chế độ máy bay khi sạc để rút ngắn thời gian nạp pin.",
+    "steps": [
+      "Cắm sạc đúng công suất.",
+      "Bật chế độ máy bay trong lúc sạc.",
+      "Tắt chế độ máy bay sau khi pin đủ dùng."
+    ],
+    "estimatedMinutes": 3,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/25jpg.jpg",
+    "titleEn": "Charge your phone faster",
+    "summaryEn": "Turn on airplane mode while charging to reduce charging time.",
+    "stepsEn": [
+      "Plug in a charger with proper power output.",
+      "Enable airplane mode while charging.",
+      "Turn airplane mode off when battery is sufficient."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Mobile Phone",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "phone",
+      "charging",
+      "airplane mode"
+    ]
+  },
+  {
+    "id": "lifehack-26-remove-gum-from-hair",
+    "title": "Gỡ kẹo cao su dính vào tóc",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Chăm sóc cá nhân",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "kẹo cao su",
+      "tóc",
+      "đá lạnh"
+    ],
+    "summary": "Làm cứng kẹo cao su bằng đá để bóc ra dễ hơn, hạn chế cắt tóc.",
+    "steps": [
+      "Lấy một viên đá lạnh chà trực tiếp lên phần kẹo dính.",
+      "Khi kẹo cứng lại, gỡ nhẹ từng phần khỏi tóc.",
+      "Gội lại tóc để làm sạch phần còn sót."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/26.jpg",
+    "titleEn": "Remove gum stuck in hair",
+    "summaryEn": "Harden gum with ice so it can be removed more easily without cutting hair.",
+    "stepsEn": [
+      "Rub an ice cube directly on the gum-stuck hair area.",
+      "Once the gum hardens, gently peel it off in small parts.",
+      "Wash hair again to clean residue."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Personal Care",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "gum",
+      "hair",
+      "ice"
+    ]
+  },
+  {
+    "id": "lifehack-27-open-stuck-jar-lid",
+    "title": "Mở nắp lọ bị kẹt",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Nhà bếp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "nắp lọ",
+      "nước nóng",
+      "nhà bếp"
+    ],
+    "summary": "Làm nóng nắp lọ để giãn nở và mở dễ hơn.",
+    "steps": [
+      "Làm nóng nắp lọ bằng nước nóng 1-2 phút.",
+      "Lau khô phần nắp để tăng độ bám.",
+      "Vặn mở nhẹ nhàng, tránh dùng lực quá mạnh."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/27.jpg",
+    "titleEn": "Open a stuck jar lid",
+    "summaryEn": "Warm the jar lid to expand it and make opening easier.",
+    "stepsEn": [
+      "Warm the lid with hot water for 1-2 minutes.",
+      "Dry the lid surface to improve grip.",
+      "Twist open gently and avoid excessive force."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "jar lid",
+      "hot water",
+      "kitchen"
+    ]
+  },
+  {
+    "id": "lifehack-28-peel-garlic-microwave",
+    "title": "Cách bóc tỏi nhanh mà không bị cay mắt",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Nhà bếp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "tỏi",
+      "lò vi sóng",
+      "nhà bếp"
+    ],
+    "summary": "Hâm tỏi ngắn trong lò vi sóng để vỏ bong dễ bóc.",
+    "steps": [
+      "Cho củ tỏi vào lò vi sóng khoảng 10 giây ở mức cao.",
+      "Nếu chưa bong vỏ, tăng thêm vài giây.",
+      "Lấy ra để nguội bớt rồi bóc vỏ bằng tay."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/28.jpg",
+    "titleEn": "Peel garlic quickly without eye irritation",
+    "summaryEn": "Microwave garlic briefly so the skin loosens and peels off more easily.",
+    "stepsEn": [
+      "Microwave a garlic bulb for about 10 seconds on high.",
+      "If skin does not loosen, add a few more seconds.",
+      "Let it cool slightly and peel by hand."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "garlic",
+      "microwave",
+      "kitchen"
+    ]
+  },
+  {
+    "id": "lifehack-29-even-potato-slices",
+    "title": "Cắt khoai tây nướng thành những lát đều nhau",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Nấu ăn",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "khoai tây",
+      "nấu ăn",
+      "đũa"
+    ],
+    "summary": "Dùng hai chiếc đũa làm chặn để cắt khoai đều và đẹp mắt.",
+    "steps": [
+      "Đặt củ khoai giữa hai chiếc đũa.",
+      "Cắt lát mỏng đều tay đến khi dao chạm đũa.",
+      "Nướng và chế biến theo món mong muốn."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/29.png",
+    "titleEn": "Cut evenly sliced potatoes for baking",
+    "summaryEn": "Use two chopsticks as guides to slice potatoes evenly and neatly.",
+    "stepsEn": [
+      "Place the potato between two chopsticks.",
+      "Slice thinly until the knife touches the chopsticks.",
+      "Bake and cook according to your recipe."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Cooking",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "potato",
+      "cooking",
+      "chopsticks"
+    ]
+  },
+  {
+    "id": "lifehack-30-anti-fog-mirror",
+    "title": "Giữ gương không bị mờ",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Phòng tắm",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "gương",
+      "phòng tắm",
+      "hơi nước"
+    ],
+    "summary": "Giảm mờ gương trong lúc tắm bằng một mẹo đơn giản trước khi vào phòng tắm.",
+    "steps": [
+      "Thắp một ngọn nến nhỏ trước khi tắm.",
+      "Đặt nến ở vị trí an toàn, tránh gần vật dễ cháy.",
+      "Tắt nến sau khi sử dụng."
+    ],
+    "estimatedMinutes": 3,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/30.jpg",
+    "titleEn": "Keep bathroom mirrors from fogging",
+    "summaryEn": "Reduce mirror fog during showers with a simple pre-shower trick.",
+    "stepsEn": [
+      "Light a small candle before showering.",
+      "Place it in a safe spot away from flammable items.",
+      "Blow it out after use."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Bathroom",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "mirror",
+      "bathroom",
+      "steam"
+    ]
+  },
+  {
+    "id": "lifehack-31-clean-spilled-nail-polish",
+    "title": "Sơn móng tay bị đổ ra sàn",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Dọn dẹp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "sơn móng",
+      "dọn dẹp",
+      "đường"
+    ],
+    "summary": "Rắc đường lên vết sơn đổ để dễ gom và quét sạch.",
+    "steps": [
+      "Rắc một lớp đường lên vết sơn vừa đổ.",
+      "Chờ vài phút để đường hút và kết dính.",
+      "Quét và lau lại sàn."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/31.jpg",
+    "titleEn": "Clean spilled nail polish on the floor",
+    "summaryEn": "Sprinkle sugar over fresh nail polish spill to gather and sweep it more easily.",
+    "stepsEn": [
+      "Sprinkle a layer of sugar over the fresh spill.",
+      "Wait a few minutes for sugar to absorb and bind.",
+      "Sweep up and wipe the floor clean."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Cleaning",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "nail polish",
+      "cleaning",
+      "sugar"
+    ]
+  },
+  {
+    "id": "lifehack-32-open-vacuum-sealed-jar",
+    "title": "Mở nắp hộp bị kẹt",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Nhà bếp",
+    "difficulty": "Trung bình",
+    "tags": [
+      "nắp hộp",
+      "chân không",
+      "nhà bếp"
+    ],
+    "summary": "Phá nhẹ lớp chân không ở nắp để mở hộp dễ hơn.",
+    "steps": [
+      "Dùng dao cạy nhẹ ở nếp gấp nắp.",
+      "Xoay nhẹ để phá lớp chân không.",
+      "Mở nắp bằng lực vừa phải."
+    ],
+    "estimatedMinutes": 4,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/32.webp",
+    "titleEn": "Open a vacuum-sealed jar lid",
+    "summaryEn": "Release the vacuum seal at the lid edge to open the jar more easily.",
+    "stepsEn": [
+      "Use a knife to gently pry at the folded edge of the lid.",
+      "Twist lightly to break the vacuum seal.",
+      "Open the lid with moderate force."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "jar lid",
+      "vacuum",
+      "kitchen"
+    ]
+  },
+  {
+    "id": "lifehack-33-clean-greasy-pot-lid",
+    "title": "Làm sạch vung nồi bị dính dầu mỡ",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Dọn dẹp",
+    "difficulty": "Trung bình",
+    "tags": [
+      "vung nồi",
+      "dầu mỡ",
+      "làm sạch"
+    ],
+    "summary": "Dùng hơi nóng và nước rửa bát để làm tan dầu mỡ bám trên vung nồi.",
+    "steps": [
+      "Xoa nước rửa bát đều hai mặt vung.",
+      "Đậy vung lên nồi nước đang sôi 1-2 phút để hơi nóng làm mềm mỡ.",
+      "Lật mặt và tiếp tục đun thêm, sau đó rửa sạch."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/33.webp",
+    "titleEn": "Clean greasy pot lids",
+    "summaryEn": "Use steam and dish soap to loosen and remove stubborn grease from pot lids.",
+    "stepsEn": [
+      "Rub dish soap on both sides of the lid.",
+      "Cover a pot of boiling water with the lid for 1-2 minutes so steam softens grease.",
+      "Flip and repeat briefly, then wash thoroughly."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Cleaning",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "pot lid",
+      "grease",
+      "cleaning"
+    ]
+  },
+  {
+    "id": "lifehack-34-remove-odor-thermos",
+    "title": "Khử mùi hôi của cốc giữ nhiệt",
+    "category": "Mẹo vặt cuộc sống",
+    "subCategory": "Dọn dẹp",
+    "difficulty": "Cơ bản",
+    "tags": [
+      "cốc giữ nhiệt",
+      "khử mùi",
+      "vỏ cam"
+    ],
+    "summary": "Dùng vỏ cam và nước sôi để khử mùi hôi trong bình giữ nhiệt.",
+    "steps": [
+      "Cho sợi vỏ cam vào bình giữ nhiệt.",
+      "Đổ nước sôi, đậy kín và ngâm 2-3 giờ.",
+      "Đổ bỏ và tráng lại nước sạch 2 lần."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/34.webp",
+    "titleEn": "Remove odor from a thermos cup",
+    "summaryEn": "Use orange peel and hot water to deodorize a smelly insulated bottle.",
+    "stepsEn": [
+      "Put orange peel strips into the thermos.",
+      "Pour in boiling water, seal, and soak for 2-3 hours.",
+      "Discard and rinse with clean water twice."
+    ],
+    "categoryEn": "Life Hacks",
+    "subCategoryEn": "Cleaning",
+    "difficultyEn": "Basic",
+    "tagsEn": [
+      "thermos cup",
+      "deodorize",
+      "orange peel"
+    ]
+  },
+  {
+    "id": "lifehack-35-escape-rip-current",
+    "title": "Thoát khỏi dòng nước xiết ở bờ biển",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Biển",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "rip current",
+      "biển",
+      "an toàn"
+    ],
+    "summary": "Không bơi thẳng vào bờ khi gặp rip current; cần thoát ngang hoặc chéo dòng.",
+    "steps": [
+      "Giữ bình tĩnh, không cố bơi ngược dòng nước xiết.",
+      "Bơi song song bờ hoặc chéo để thoát vùng dòng chảy.",
+      "Sau khi thoát dòng, bơi chéo vào bờ và kêu gọi hỗ trợ nếu cần."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/35.jpg",
+    "titleEn": "Escape a rip current at the beach",
+    "summaryEn": "Do not swim straight to shore in a rip current; move parallel or diagonally out first.",
+    "stepsEn": [
+      "Stay calm and do not fight directly against the current.",
+      "Swim parallel to shore or diagonally to exit the current channel.",
+      "After escaping, swim diagonally to shore and signal for help if needed."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Sea",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "rip current",
+      "sea",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-36-escape-crocodile",
+    "title": "Trốn chạy khỏi cá sấu truy đuổi",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "cá sấu",
+      "thoát hiểm",
+      "hoang dã"
+    ],
+    "summary": "Tránh vùng có cá sấu; khi bị đuổi nên di chuyển khó đoán để tăng cơ hội thoát.",
+    "steps": [
+      "Rời xa ngay khu vực có cá sấu nếu có thể.",
+      "Nếu bị truy đuổi ở cự ly gần, chạy theo hướng đổi hướng liên tục.",
+      "Ưu tiên tìm vị trí cao, vật cản và nơi an toàn có người hỗ trợ."
+    ],
+    "estimatedMinutes": 9,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/36.jpg",
+    "titleEn": "Escape from a chasing crocodile",
+    "summaryEn": "Avoid crocodile areas; if chased, move unpredictably to increase escape chances.",
+    "stepsEn": [
+      "Leave crocodile habitat immediately if possible.",
+      "If chased at close range, run while changing direction unpredictably.",
+      "Head toward higher ground, obstacles, or places with people for help."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "crocodile",
+      "escape",
+      "wildlife"
+    ]
+  },
+  {
+    "id": "lifehack-37-jellyfish-sting-first-aid",
+    "title": "Bị sứa \"tấn công\" phải làm gì để không bị buốt",
+    "category": "Y tế cơ bản",
+    "subCategory": "Sơ cứu",
+    "difficulty": "Trung bình",
+    "tags": [
+      "sứa",
+      "sơ cứu",
+      "biển"
+    ],
+    "summary": "Làm sạch đúng cách và dùng nước muối để hạn chế độc tố lan rộng.",
+    "steps": [
+      "Gỡ xúc tu còn sót bằng dụng cụ hoặc găng tay, không chạm tay trần.",
+      "Rửa vết thương bằng nước muối, không dùng nước ngọt.",
+      "Có thể dùng giấm/rượu theo hướng dẫn sơ cứu và đi khám sớm."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/37.jpg",
+    "titleEn": "What to do after a jellyfish sting",
+    "summaryEn": "Clean properly and rinse with seawater to limit toxin spread.",
+    "stepsEn": [
+      "Remove remaining tentacles with a tool or gloves, not bare hands.",
+      "Rinse the wound with seawater, not fresh water.",
+      "Use vinegar/alcohol as first-aid guidance allows and seek medical care early."
+    ],
+    "categoryEn": "Basic Medical Care",
+    "subCategoryEn": "First Aid",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "jellyfish",
+      "first aid",
+      "sea"
+    ]
+  },
+  {
+    "id": "lifehack-38-do-not-eat-snow",
+    "title": "Khát khô cổ nhưng nơi đó chỉ có tuyết cũng tuyệt đối không ăn",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Thời tiết lạnh",
+    "difficulty": "Trung bình",
+    "tags": [
+      "tuyết",
+      "mất nước",
+      "sinh tồn"
+    ],
+    "summary": "Không ăn tuyết trực tiếp vì làm giảm thân nhiệt và tốn năng lượng cơ thể.",
+    "steps": [
+      "Tránh ăn tuyết trực tiếp khi khát.",
+      "Hứng tuyết để tan chảy thành nước trước khi uống.",
+      "Giữ ấm cơ thể để giảm mất nhiệt."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/38.jpg",
+    "titleEn": "Do not eat snow directly when thirsty",
+    "summaryEn": "Eating snow directly lowers body temperature and consumes more body energy.",
+    "stepsEn": [
+      "Avoid eating snow directly when thirsty.",
+      "Collect snow and melt it into water before drinking.",
+      "Keep your body warm to reduce heat loss."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Cold Weather",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "snow",
+      "dehydration",
+      "survival"
+    ]
+  },
+  {
+    "id": "lifehack-39-pan-fire-extinguish",
+    "title": "Dập tắt 1 chiếc chảo đang cháy",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Bếp",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "cháy bếp",
+      "an toàn",
+      "hỏa hoạn"
+    ],
+    "summary": "Không đổ nước vào chảo dầu đang cháy; cần dập lửa đúng cách để tránh bùng phát.",
+    "steps": [
+      "Tuyệt đối không đổ nước vào chảo dầu cháy.",
+      "Có thể rắc baking soda hoặc phủ kín bằng khăn/vung phù hợp chịu nhiệt.",
+      "Ngắt nguồn nhiệt và gọi cứu hỏa nếu lửa vượt tầm kiểm soát."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/39.jpg",
+    "titleEn": "Extinguish a burning pan safely",
+    "summaryEn": "Never pour water on burning oil; use proper methods to avoid flare-up.",
+    "stepsEn": [
+      "Never pour water on an oil pan fire.",
+      "Use baking soda or cover with a proper heat-resistant lid/cloth.",
+      "Turn off heat and call fire services if flames are beyond control."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Kitchen",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "kitchen fire",
+      "safety",
+      "fire"
+    ]
+  },
+  {
+    "id": "lifehack-40-deep-cut-first-aid",
+    "title": "Khi bị 1 vết cắt quá sâu",
+    "category": "Y tế cơ bản",
+    "subCategory": "Sơ cứu",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "vết cắt sâu",
+      "sơ cứu",
+      "cấp cứu"
+    ],
+    "summary": "Với vết cắt sâu, không tự lấy dị vật; cần xử lý cầm máu và gọi hỗ trợ y tế ngay.",
+    "steps": [
+      "Không tự rút dị vật hoặc can thiệp sâu vào vết thương.",
+      "Dùng gạc sạch ép cầm máu và giữ chi bị thương ở tư thế phù hợp.",
+      "Đến bệnh viện hoặc gọi cấp cứu càng sớm càng tốt."
+    ],
+    "estimatedMinutes": 12,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/40.jpg",
+    "titleEn": "When dealing with a deep cut",
+    "summaryEn": "For deep cuts, do not remove embedded objects; control bleeding and seek urgent care.",
+    "stepsEn": [
+      "Do not pull out embedded objects or probe deeply.",
+      "Use clean gauze to apply pressure and keep the injured limb positioned properly.",
+      "Go to hospital or call emergency services as soon as possible."
+    ],
+    "categoryEn": "Basic Medical Care",
+    "subCategoryEn": "First Aid",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "deep cut",
+      "first aid",
+      "emergency care"
+    ]
+  },
+  {
+    "id": "lifehack-41-break-car-window-emergency",
+    "title": "Đập vỡ kính xe trong trường hợp khẩn cấp",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Ô tô",
+    "difficulty": "Trung bình",
+    "tags": [
+      "ô tô",
+      "thoát hiểm",
+      "kính xe"
+    ],
+    "summary": "Khi cần thoát hiểm khỏi xe, tác động vào rìa kính bằng vật nhọn để hiệu quả hơn.",
+    "steps": [
+      "Dùng vật có đầu nhỏ như tua-vít hoặc bút kim loại cứng.",
+      "Nhắm vào rìa cửa kính, tránh đập chính giữa.",
+      "Đập dứt khoát nhiều lần tại một điểm để tạo vết nứt và thoát ra."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/41.jpg",
+    "titleEn": "Break a car window in an emergency",
+    "summaryEn": "To escape a vehicle, strike the window edge with a pointed tool for better effect.",
+    "stepsEn": [
+      "Use a pointed object like a screwdriver or hard metal pen.",
+      "Aim at the window edge, not the center.",
+      "Strike firmly at one point multiple times to crack and escape."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Car",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "car",
+      "escape",
+      "car window"
+    ]
+  },
+  {
+    "id": "lifehack-42-encounter-bear",
+    "title": "Khi phải chạm mặt một con gấu",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "gấu",
+      "hoang dã",
+      "thoát hiểm"
+    ],
+    "summary": "Giữ bình tĩnh, không khiêu khích và rút lui chậm để giảm nguy cơ bị tấn công.",
+    "steps": [
+      "Đứng yên, tránh chạy và tránh hành vi đe dọa.",
+      "Lùi chậm, luôn quan sát con gấu và tìm vật cản lớn.",
+      "Nếu gấu chưa tấn công, cho nó khoảng cách để rời đi."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/42.jpg",
+    "titleEn": "When encountering a bear",
+    "summaryEn": "Stay calm, avoid provoking it, and retreat slowly to reduce attack risk.",
+    "stepsEn": [
+      "Stand still, do not run, and avoid threatening behavior.",
+      "Back away slowly while watching the bear and looking for large cover.",
+      "If the bear is not attacking, give it space to leave."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "bear",
+      "wildlife",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-43-fall-into-cold-water",
+    "title": "Rơi xuống nước lạnh",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Nước lạnh",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "hạ thân nhiệt",
+      "nước lạnh",
+      "sinh tồn"
+    ],
+    "summary": "Ưu tiên giảm thất thoát nhiệt cơ thể trong lúc chờ cứu hộ.",
+    "steps": [
+      "Nếu có áo phao, giữ nổi và hạn chế vùng nước tiếp xúc cơ thể.",
+      "Co chân và khoanh tay trước ngực theo tư thế H.E.L.P.",
+      "Tiết kiệm năng lượng, chờ cứu hộ thay vì bơi vô định."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/43.jpg",
+    "titleEn": "Falling into cold water",
+    "summaryEn": "Prioritize reducing heat loss while waiting for rescue.",
+    "stepsEn": [
+      "If you have a life jacket, stay afloat and reduce exposed body area.",
+      "Draw knees up and cross arms in H.E.L.P. position.",
+      "Save energy and wait for rescue instead of swimming randomly."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Cold Water",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "hypothermia",
+      "cold water",
+      "survival"
+    ]
+  },
+  {
+    "id": "lifehack-44-earthquake-actions",
+    "title": "Gặp động đất",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Thiên tai",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "động đất",
+      "an toàn",
+      "sơ tán"
+    ],
+    "summary": "Nằm thấp, trú ẩn chắc chắn, tránh cửa sổ và không dùng thang máy.",
+    "steps": [
+      "Thực hiện nguyên tắc cúi thấp - che chắn - bám giữ.",
+      "Trú dưới bàn chắc hoặc sát góc tường an toàn.",
+      "Sau rung chấn, di chuyển ra khu vực trống nếu an toàn."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/44.jpg",
+    "titleEn": "What to do during an earthquake",
+    "summaryEn": "Stay low, take solid cover, avoid windows, and do not use elevators.",
+    "stepsEn": [
+      "Apply the rule: drop, cover, and hold on.",
+      "Shelter under a sturdy table or by a safer interior corner.",
+      "After shaking stops, move to an open area if safe."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Natural Disasters",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "earthquake",
+      "safety",
+      "evacuation"
+    ]
+  },
+  {
+    "id": "lifehack-45-falling-elevator",
+    "title": "Khi ở trong thang máy đang rơi",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Tòa nhà",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "thang máy",
+      "va chạm",
+      "thoát hiểm"
+    ],
+    "summary": "Nằm ngửa hoặc ngồi thấp để phân tán lực thay vì cố nhảy.",
+    "steps": [
+      "Không cố căn thời gian để nhảy.",
+      "Ưu tiên nằm ngửa; nếu không thể thì ngồi thấp.",
+      "Dùng tay che gáy và mặt để giảm chấn thương."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/45.jpg",
+    "titleEn": "If an elevator is falling",
+    "summaryEn": "Lie on your back or crouch low to distribute impact force instead of jumping.",
+    "stepsEn": [
+      "Do not try timing a jump.",
+      "Prefer lying on your back; if impossible, crouch low.",
+      "Protect your neck and face with your arms."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Building",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "elevator",
+      "impact",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-46-fall-from-cliff",
+    "title": "Khi ngã xuống vực",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Địa hình hiểm trở",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "ngã vực",
+      "sinh tồn",
+      "chấn thương"
+    ],
+    "summary": "Bảo vệ đầu và giảm tốc bằng cách bám vật cản để tăng cơ hội sống sót.",
+    "steps": [
+      "Ôm đầu và gáy để giảm chấn thương nặng.",
+      "Cố bám vào đá/cành lớn để chia nhỏ cú rơi.",
+      "Sau khi dừng rơi, hạn chế di chuyển mạnh và gọi trợ giúp."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/46.jpg",
+    "titleEn": "If you fall off a cliff",
+    "summaryEn": "Protect your head and reduce fall speed by grabbing obstacles to improve survival chance.",
+    "stepsEn": [
+      "Shield your head and neck to reduce severe trauma.",
+      "Try to grab rocks/large branches to break the fall.",
+      "After stopping, limit movement and call for help."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Rugged Terrain",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "cliff fall",
+      "survival",
+      "injury"
+    ]
+  },
+  {
+    "id": "lifehack-47-safe-path-in-fire",
+    "title": "Đường an toàn khi có hỏa hoạn",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Hỏa hoạn",
+    "difficulty": "Trung bình",
+    "tags": [
+      "cháy",
+      "khói",
+      "thoát nạn"
+    ],
+    "summary": "Trong đám cháy, tránh khói bằng cách di chuyển thấp và che đường thở.",
+    "steps": [
+      "Cúi thấp hoặc bò khi di chuyển tới lối thoát.",
+      "Dùng khăn/vải ẩm che mũi miệng nếu có.",
+      "Thoát theo biển chỉ dẫn, không quay lại lấy đồ."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/47.jpg",
+    "titleEn": "Safe movement during a fire",
+    "summaryEn": "In fire conditions, stay low to avoid smoke and protect your airway.",
+    "stepsEn": [
+      "Crouch or crawl toward the nearest exit.",
+      "Use a damp cloth to cover nose and mouth if possible.",
+      "Follow exit signs and do not go back for belongings."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Fire",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "fire",
+      "smoke",
+      "evacuation"
+    ]
+  },
+  {
+    "id": "lifehack-48-fall-through-ice",
+    "title": "Rơi xuống hồ băng",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Thời tiết lạnh",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "hồ băng",
+      "hạ thân nhiệt",
+      "thoát hiểm"
+    ],
+    "summary": "Thoát khỏi nước nhanh bằng cách nổi ngang trên mép băng rồi lăn ra xa.",
+    "steps": [
+      "Bám mép băng và đạp chân để thân nổi ngang.",
+      "Trườn như hải cẩu lên băng, không chống dậy ngay.",
+      "Lăn người ra vùng băng dày an toàn hơn."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/48.jpg",
+    "titleEn": "Falling through lake ice",
+    "summaryEn": "Exit water quickly by floating onto the ice edge, then roll away to safer thickness.",
+    "stepsEn": [
+      "Grip the ice edge and kick to get your body horizontal.",
+      "Slide onto the ice like a seal; do not stand immediately.",
+      "Roll away to thicker, safer ice."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Cold Weather",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "ice lake",
+      "hypothermia",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-49-lightning-open-field",
+    "title": "Tránh bị sét đánh giữa đồng trống",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Mưa bão",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "sét",
+      "đồng trống",
+      "an toàn"
+    ],
+    "summary": "Hạ thấp cơ thể, tránh vật cao và tách nhóm để giảm nguy cơ truyền sét.",
+    "steps": [
+      "Ngồi xổm thấp, co người, che tai.",
+      "Tránh xa cây cao, cột kim loại và điểm cao.",
+      "Nếu đi nhóm, đứng tách nhau ra trong lúc chờ bão qua."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/49.jpg",
+    "titleEn": "Avoid lightning strike in open fields",
+    "summaryEn": "Lower your profile, avoid tall objects, and spread out to reduce lightning transfer risk.",
+    "stepsEn": [
+      "Crouch low, tuck your body, and cover your ears.",
+      "Stay away from tall trees, metal poles, and high points.",
+      "If in a group, spread out while waiting for the storm to pass."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Storm",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "lightning",
+      "open field",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-50-sea-whirlpool",
+    "title": "Phải làm gì khi thấy xoáy nước giữa biển?",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Biển",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "xoáy nước",
+      "biển",
+      "thoát hiểm"
+    ],
+    "summary": "Đi ngang dòng để thoát vùng xoáy, không cố bơi ngược dòng.",
+    "steps": [
+      "Giữ bình tĩnh và xác định hướng dòng chảy.",
+      "Bơi/chèo theo phương ngang để thoát khỏi vùng xoáy.",
+      "Nếu bị cuốn, chờ vùng đáy yếu hơn rồi bơi ra ngoài."
+    ],
+    "estimatedMinutes": 9,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/50.jpg",
+    "titleEn": "What to do if you see a sea whirlpool",
+    "summaryEn": "Move laterally to escape the whirlpool zone; do not swim directly against the flow.",
+    "stepsEn": [
+      "Stay calm and identify the flow direction.",
+      "Swim or paddle sideways to exit the whirlpool area.",
+      "If pulled in, wait for weaker pull at depth then move out."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Sea",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "whirlpool",
+      "sea",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-51-buried-alive",
+    "title": "Tình huống bị chôn sống",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Sập đổ",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "chôn vùi",
+      "dưỡng khí",
+      "thoát hiểm"
+    ],
+    "summary": "Giữ đường thở và tiết kiệm không khí là ưu tiên sống còn.",
+    "steps": [
+      "Dùng áo/vải che mũi miệng để giảm hít bụi.",
+      "Giữ bình tĩnh, thở chậm để tiết kiệm dưỡng khí.",
+      "Tạo khoảng trống nhỏ trước mặt và phát tín hiệu nếu có thể."
+    ],
+    "estimatedMinutes": 9,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/51.jpg",
+    "titleEn": "Buried alive scenario",
+    "summaryEn": "Preserving your airway and conserving oxygen are top survival priorities.",
+    "stepsEn": [
+      "Cover your nose and mouth with cloth to reduce dust inhalation.",
+      "Stay calm and breathe slowly to conserve oxygen.",
+      "Create a small air pocket in front of your face and signal if possible."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Collapse",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "buried",
+      "oxygen",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-52-anaconda-attack",
+    "title": "Bị trăn anaconda tấn công",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "anaconda",
+      "trăn",
+      "thoát hiểm"
+    ],
+    "summary": "Giữ nhịp thở và phản kháng vào điểm yếu để tăng cơ hội thoát.",
+    "steps": [
+      "Nếu bị quấn, hít sâu và hạn chế thở ra liên tục.",
+      "Tấn công vào điểm nhạy như đuôi/đầu khi có cơ hội.",
+      "Tìm vật cứng gần đó để tự vệ và thoát thân."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/52.jpg",
+    "titleEn": "If attacked by an anaconda",
+    "summaryEn": "Control breathing and counter at weak points to improve escape chances.",
+    "stepsEn": [
+      "If constricted, inhale deeply and avoid exhaling repeatedly.",
+      "Strike vulnerable points like the tail/head when possible.",
+      "Use nearby hard objects for self-defense and escape."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "anaconda",
+      "python",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-53-fast-river-fall",
+    "title": "Nếu không may rơi xuống sông chảy xiết",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Sông suối",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "sông xiết",
+      "bơi",
+      "thoát hiểm"
+    ],
+    "summary": "Bơi chéo vào bờ và thả nổi đúng tư thế để tiết kiệm sức.",
+    "steps": [
+      "Bơi theo góc chéo khoảng 45° vào bờ.",
+      "Không bơi ngược dòng chảy mạnh.",
+      "Khi mệt, nằm ngửa thả nổi với chân xuôi dòng để tránh va đập."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": null,
+    "titleEn": "If you fall into a fast-flowing river",
+    "summaryEn": "Swim diagonally toward shore and float correctly to conserve energy.",
+    "stepsEn": [
+      "Swim diagonally toward shore at about a 45° angle.",
+      "Do not try to swim straight against strong current.",
+      "When tired, float on your back with feet downstream to avoid impact."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Rivers & Streams",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "fast river",
+      "swimming",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-54-wolf-attack",
+    "title": "Khi bị sói tấn công",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "sói",
+      "tự vệ",
+      "hoang dã"
+    ],
+    "summary": "Không bỏ chạy; giữ bình tĩnh, tăng sự áp đảo và lùi an toàn.",
+    "steps": [
+      "Không quay lưng bỏ chạy, không nhìn chằm chằm thách thức.",
+      "Giơ tay tạo cảm giác to lớn, gây tiếng động lớn.",
+      "Lùi chậm và tìm vị trí cao/an toàn; tự vệ khi bắt buộc."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/54.jpg",
+    "titleEn": "When attacked by a wolf",
+    "summaryEn": "Do not run; stay calm, appear dominant, and retreat safely.",
+    "stepsEn": [
+      "Do not turn and run; avoid prolonged threatening eye contact.",
+      "Raise your arms to appear bigger and make loud noises.",
+      "Back away slowly toward higher/safer ground; defend yourself if necessary."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "wolf",
+      "self-defense",
+      "wildlife"
+    ]
+  },
+  {
+    "id": "lifehack-55-car-hanging-cliff",
+    "title": "Khi xe bị treo trên vách đá",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Ô tô",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "xe treo",
+      "vách đá",
+      "thoát hiểm"
+    ],
+    "summary": "Di chuyển tối thiểu, giữ cân bằng xe và thoát theo hướng an toàn hơn.",
+    "steps": [
+      "Bình tĩnh, giữ phanh và tránh cử động đột ngột.",
+      "Mở khóa cửa/kính để tạo phương án thoát.",
+      "Ưu tiên thoát từ phía đối diện bờ vực hoặc cửa sau nếu cần."
+    ],
+    "estimatedMinutes": 10,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/55.jpg",
+    "titleEn": "When a car is hanging over a cliff",
+    "summaryEn": "Minimize movement, keep vehicle balance, and exit toward the safer side.",
+    "stepsEn": [
+      "Stay calm, hold brakes, and avoid sudden movement.",
+      "Unlock doors/windows to prepare an exit option.",
+      "Prefer exiting from the side opposite the cliff or via rear door if needed."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Car",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "hanging car",
+      "cliff",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-56-shark-attack",
+    "title": "Khi bị cá mập tấn công",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Biển",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "cá mập",
+      "biển",
+      "tự vệ"
+    ],
+    "summary": "Giữ bình tĩnh, quan sát liên tục và phản kháng vào điểm nhạy khi bị tấn công.",
+    "steps": [
+      "Theo dõi vị trí cá, tránh hoảng loạn và bơi loạn.",
+      "Nếu bị tấn công, đánh mạnh vào mắt hoặc mang.",
+      "Sau khi thoát, bơi vào bờ chậm và kiểm soát."
+    ],
+    "estimatedMinutes": 9,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/56.jpg",
+    "titleEn": "When attacked by a shark",
+    "summaryEn": "Stay calm, keep visual contact, and strike sensitive areas if attacked.",
+    "stepsEn": [
+      "Track the shark and avoid panicked random swimming.",
+      "If attacked, strike the eyes or gills forcefully.",
+      "After escaping, swim to shore steadily and in control."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Sea",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "shark",
+      "sea",
+      "self-defense"
+    ]
+  },
+  {
+    "id": "lifehack-57-locked-in-trunk",
+    "title": "Bị nhốt trong thùng xe",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Ô tô",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "thùng xe",
+      "thoát hiểm",
+      "khẩn cấp"
+    ],
+    "summary": "Ưu tiên cơ chế mở khẩn cấp và tạo tín hiệu để được phát hiện.",
+    "steps": [
+      "Tìm cần mở khẩn cấp trong cốp xe.",
+      "Nếu không có, thử cạy lẫy khóa từ bên trong.",
+      "Tạo tín hiệu ánh sáng/âm thanh để người ngoài chú ý."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/57.jpg",
+    "titleEn": "Locked inside a car trunk",
+    "summaryEn": "Prioritize emergency release mechanisms and signaling to be found.",
+    "stepsEn": [
+      "Look for the emergency release lever inside the trunk.",
+      "If absent, try prying the latch from inside.",
+      "Create light/sound signals to attract attention outside."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Car",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "car trunk",
+      "escape",
+      "emergency"
+    ]
+  },
+  {
+    "id": "lifehack-58-pants-life-float",
+    "title": "Dùng quần dài để tạo thành phao cứu sinh",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Nước",
+    "difficulty": "Trung bình",
+    "tags": [
+      "phao tạm",
+      "nước",
+      "sinh tồn"
+    ],
+    "summary": "Tận dụng quần dài để giữ khí và nổi tạm thời khi chưa vào bờ được.",
+    "steps": [
+      "Cởi quần và buộc chặt hai ống quần.",
+      "Vung quần để hứng khí rồi choàng qua cổ.",
+      "Bổ sung khí định kỳ và bơi về vùng an toàn."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/58.jpg",
+    "titleEn": "Use pants as an emergency float",
+    "summaryEn": "Turn long pants into a temporary flotation aid when you cannot reach shore quickly.",
+    "stepsEn": [
+      "Take off your pants and tie both pant legs tightly.",
+      "Swing pants to trap air, then place around your neck.",
+      "Reinflate as needed and move toward safety."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Water",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "improvised float",
+      "water",
+      "survival"
+    ]
+  },
+  {
+    "id": "lifehack-59-break-door-emergency",
+    "title": "Cách phá cửa khi cần thiết",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Thoát nạn",
+    "difficulty": "Trung bình",
+    "tags": [
+      "phá cửa",
+      "hỏa hoạn",
+      "thoát hiểm"
+    ],
+    "summary": "Đá đúng vị trí gần ổ khóa giúp mở cửa hiệu quả hơn.",
+    "steps": [
+      "Xác định điểm yếu cạnh ổ khóa.",
+      "Dồn lực vào gót giày và đạp dứt khoát.",
+      "Mở đường thoát và rời khu vực nguy hiểm ngay."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/59.jpg",
+    "titleEn": "How to break a door when necessary",
+    "summaryEn": "Kicking near the lock area is usually more effective than the center panel.",
+    "stepsEn": [
+      "Identify the weak point near the lock.",
+      "Drive force through your heel and kick decisively.",
+      "Open an escape path and leave danger immediately."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Evacuation",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "break door",
+      "fire",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-60-sandstorm-wait",
+    "title": "Trong một trận bão cát: Hãy chờ đợi",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Sa mạc",
+    "difficulty": "Trung bình",
+    "tags": [
+      "bão cát",
+      "che chắn",
+      "sinh tồn"
+    ],
+    "summary": "Tìm vật chắn gió, che đường thở và chờ bão qua thay vì di chuyển mù.",
+    "steps": [
+      "Núp sau mỏm đá hoặc vật chắn lớn.",
+      "Che mũi miệng bằng khăn, ưu tiên khăn ẩm.",
+      "Giữ thấp người và chờ đến khi tầm nhìn ổn định."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/60.jpg",
+    "titleEn": "In a sandstorm: wait it out",
+    "summaryEn": "Find wind cover, protect your airway, and wait for visibility to improve.",
+    "stepsEn": [
+      "Shelter behind a rock outcrop or large obstacle.",
+      "Cover nose and mouth with a cloth, preferably damp.",
+      "Stay low and wait until visibility becomes stable."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Desert",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "sandstorm",
+      "cover",
+      "survival"
+    ]
+  },
+  {
+    "id": "lifehack-61-tornado-shelter",
+    "title": "Nơi phù hợp để trú ẩn khi có lốc xoáy",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Thiên tai",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "lốc xoáy",
+      "trú ẩn",
+      "an toàn"
+    ],
+    "summary": "Trú ở tầng thấp, phòng kín, tránh đồ nặng và vật treo trần.",
+    "steps": [
+      "Xuống tầng thấp nhất có thể, tránh cửa sổ.",
+      "Trú trong phòng nhỏ như phòng tắm, che người bằng vật dày.",
+      "Tránh gần tủ nặng, đèn trần và vật dễ rơi."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/61.jpg",
+    "titleEn": "Best shelter during a tornado",
+    "summaryEn": "Take shelter on the lowest level in a small enclosed room away from heavy/falling objects.",
+    "stepsEn": [
+      "Go to the lowest level possible, away from windows.",
+      "Shelter in a small room like a bathroom and cover yourself with sturdy materials.",
+      "Avoid heavy cabinets, ceiling lights, and falling hazards."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Natural Disasters",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "tornado",
+      "shelter",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-62-wildfire-low-ground",
+    "title": "Nếu kẹt trong một trận cháy rừng: Hãy xuống vùng đất thấp",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Cháy rừng",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "cháy rừng",
+      "địa hình",
+      "thoát nạn"
+    ],
+    "summary": "Lửa lan nhanh theo hướng lên dốc, vì vậy ưu tiên thoát xuống khu vực thấp.",
+    "steps": [
+      "Nhanh chóng rời khu vực sườn dốc cao.",
+      "Di chuyển về vùng đất thấp, ít thực bì khô.",
+      "Bảo vệ hô hấp và tìm điểm an toàn chờ cứu hộ."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/62.jpg",
+    "titleEn": "If trapped in wildfire: move to lower ground",
+    "summaryEn": "Wildfire spreads quickly uphill, so prioritize moving to lower terrain.",
+    "stepsEn": [
+      "Leave steep uphill areas as quickly as possible.",
+      "Move toward lower ground with less dry vegetation.",
+      "Protect breathing and find a safer area while waiting for rescue."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildfire",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "wildfire",
+      "terrain",
+      "evacuation"
+    ]
+  },
+  {
+    "id": "lifehack-63-flood-water-depth",
+    "title": "Khi kẹt trong vùng lũ: Đừng bước xuống nước sâu hơn 15 - 20cm",
+    "category": "Khẩn cấp đô thị",
+    "subCategory": "Lũ lụt",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "lũ",
+      "nước sâu",
+      "an toàn"
+    ],
+    "summary": "Dòng nước nông cũng có thể cuốn ngã, luôn đo độ sâu trước khi di chuyển.",
+    "steps": [
+      "Không chủ quan với nước chảy dù nhìn chậm.",
+      "Dùng gậy để dò độ sâu và nền đường.",
+      "Tránh đi qua vùng nước sâu hoặc chảy xiết."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/63.jpg",
+    "titleEn": "In flood zones: avoid water deeper than 15-20 cm",
+    "summaryEn": "Even shallow moving water can knock you down, so always assess depth first.",
+    "stepsEn": [
+      "Do not underestimate moving water, even if it looks slow.",
+      "Use a stick to probe depth and ground stability.",
+      "Avoid crossing deep or fast-flowing water."
+    ],
+    "categoryEn": "Urban Emergency",
+    "subCategoryEn": "Flood",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "flood",
+      "water depth",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-64-jump-into-water-safe",
+    "title": "Nhảy xuống nước cũng cần đúng cách",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Nước",
+    "difficulty": "Trung bình",
+    "tags": [
+      "nhảy nước",
+      "an toàn",
+      "khẩn cấp"
+    ],
+    "summary": "Chọn điểm nhảy an toàn và tư thế đúng để giảm rủi ro chấn thương.",
+    "steps": [
+      "Quan sát khu vực không có đá hoặc vật cản nguy hiểm.",
+      "Không lao đầu nếu không rõ độ sâu.",
+      "Giữ tay cao, chân hướng xuống và mở rộng tay chân sau khi chạm nước."
+    ],
+    "estimatedMinutes": 6,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/64.jpg",
+    "titleEn": "Jumping into water safely",
+    "summaryEn": "Choose a safe jump point and proper posture to reduce injury risk.",
+    "stepsEn": [
+      "Check that the area is clear of rocks or dangerous obstacles.",
+      "Do not dive headfirst if depth is unknown.",
+      "Keep arms high, feet down, and spread limbs after water entry."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Water",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "water jump",
+      "safety",
+      "emergency"
+    ]
+  },
+  {
+    "id": "lifehack-65-desalinate-seawater",
+    "title": "Cách để biến nước muối thành nước uống được",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Nguồn nước",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "nước muối",
+      "chưng cất",
+      "sinh tồn"
+    ],
+    "summary": "Dùng nguyên lý bay hơi - ngưng tụ để tách muối khỏi nước biển.",
+    "steps": [
+      "Cho nước muối vào lon và chuẩn bị chai nhựa làm bộ ngưng tụ.",
+      "Đặt hệ thống dưới nắng để nước bốc hơi và đọng lại ở vành.",
+      "Thu phần nước ngưng tụ để sử dụng."
+    ],
+    "estimatedMinutes": 12,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/65.jpg",
+    "titleEn": "How to turn seawater into drinkable water",
+    "summaryEn": "Use evaporation and condensation principles to separate salt from seawater.",
+    "stepsEn": [
+      "Pour seawater into a can and prepare a plastic bottle as a condenser.",
+      "Place the setup under sunlight so water evaporates and condenses.",
+      "Collect the condensed fresh water for use."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Water Sources",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "seawater",
+      "distillation",
+      "survival"
+    ]
+  },
+  {
+    "id": "lifehack-66-gorilla-encounter",
+    "title": "Đụng độ khỉ đột (Gorilla)",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "gorilla",
+      "khỉ đột",
+      "an toàn"
+    ],
+    "summary": "Giảm đe dọa bằng hành vi bình tĩnh, hạ thấp người và tránh cử động đột ngột.",
+    "steps": [
+      "Giữ bình tĩnh, không chạy hoặc la hét đột ngột.",
+      "Hạ thấp người, thu gọn tư thế để bớt gây đe dọa.",
+      "Lùi chậm và quan sát phản ứng của con vật."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/66.jpg",
+    "titleEn": "Encountering a gorilla",
+    "summaryEn": "Reduce threat signals by staying calm, lowering your posture, and avoiding sudden movements.",
+    "stepsEn": [
+      "Stay calm; do not run or shout suddenly.",
+      "Lower your body posture to appear less threatening.",
+      "Back away slowly while watching the animal's reaction."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "gorilla",
+      "wildlife",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-67-bull-encounter",
+    "title": "Đụng độ bò đực",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "bò đực",
+      "đối mặt",
+      "an toàn"
+    ],
+    "summary": "Giữ bình tĩnh, không quay lưng và không kích hoạt bản năng truy đuổi.",
+    "steps": [
+      "Đứng vững, tránh bỏ chạy đột ngột.",
+      "Không nhìn chằm chằm vào mắt con vật.",
+      "Lùi chậm có kiểm soát, luôn giữ khoảng cách an toàn."
+    ],
+    "estimatedMinutes": 7,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/67.jpg",
+    "titleEn": "Encountering a bull",
+    "summaryEn": "Stay calm, do not turn your back, and avoid triggering pursuit behavior.",
+    "stepsEn": [
+      "Hold your ground and avoid sudden running.",
+      "Do not stare directly into the animal's eyes.",
+      "Back away slowly in control while keeping safe distance."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "bull",
+      "encounter",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-68-elephant-encounter",
+    "title": "Đụng độ voi",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "voi",
+      "hoang dã",
+      "thoát hiểm"
+    ],
+    "summary": "Tận dụng vật cản lớn, lùi chậm và tránh khiêu khích để giảm nguy cơ tấn công.",
+    "steps": [
+      "Tìm vật chắn giữa bạn và voi (cây lớn, tảng đá).",
+      "Lùi từ từ, không quay lưng bỏ chạy nếu chưa cần.",
+      "Tạo tiếng động mạnh khi cần xua đuổi và tìm đường rút an toàn."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/68.jpg",
+    "titleEn": "Encountering an elephant",
+    "summaryEn": "Use large obstacles, retreat slowly, and avoid provoking behavior to reduce attack risk.",
+    "stepsEn": [
+      "Find a barrier between you and the elephant (large tree, boulder).",
+      "Back away slowly; do not turn and run unless necessary.",
+      "Make loud noise only if needed to deter and create an escape chance."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "elephant",
+      "wildlife",
+      "escape"
+    ]
+  },
+  {
+    "id": "lifehack-69-avoid-bees",
+    "title": "Trốn ong",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Côn trùng",
+    "difficulty": "Trung bình",
+    "tags": [
+      "ong",
+      "côn trùng",
+      "an toàn"
+    ],
+    "summary": "Giảm thu hút ong bằng trang phục sáng màu và tránh kích động đàn ong.",
+    "steps": [
+      "Ưu tiên mặc quần áo sáng màu khi ở khu vực có ong.",
+      "Tránh vung tay mạnh hoặc đập vào ong.",
+      "Rời khu vực từ từ theo hướng an toàn."
+    ],
+    "estimatedMinutes": 5,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/69.jpg",
+    "titleEn": "Avoid bee attacks",
+    "summaryEn": "Reduce bee attraction with light-colored clothing and avoid agitating the swarm.",
+    "stepsEn": [
+      "Wear light-colored clothing in areas with bees.",
+      "Avoid aggressive arm waving or swatting at bees.",
+      "Leave the area slowly toward safety."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Insects",
+    "difficultyEn": "Intermediate",
+    "tagsEn": [
+      "bees",
+      "insects",
+      "safety"
+    ]
+  },
+  {
+    "id": "lifehack-70-hippo-encounter",
+    "title": "Đụng độ hà mã",
+    "category": "Sinh tồn thiên nhiên",
+    "subCategory": "Động vật hoang dã",
+    "difficulty": "Nâng cao",
+    "tags": [
+      "hà mã",
+      "hoang dã",
+      "an toàn"
+    ],
+    "summary": "Không chắn đường về nước của hà mã và tránh khiêu khích vì chúng cực nhanh và hung dữ.",
+    "steps": [
+      "Giữ khoảng cách lớn, không chen giữa hà mã và nguồn nước.",
+      "Không trêu chọc hoặc tiếp cận gần.",
+      "Nếu nguy cấp, tìm vị trí cao hoặc vật chắn chắc để tránh né."
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": true,
+    "imageAsset": "assets/data_img/tips_img/70.jpg",
+    "titleEn": "Encountering a hippopotamus",
+    "summaryEn": "Do not block a hippo's path to water and avoid provoking one because they are very fast and aggressive.",
+    "stepsEn": [
+      "Keep a large distance and never stand between a hippo and water.",
+      "Do not tease or approach closely.",
+      "If danger rises, move to higher ground or behind strong cover."
+    ],
+    "categoryEn": "Wilderness Survival",
+    "subCategoryEn": "Wildlife",
+    "difficultyEn": "Advanced",
+    "tagsEn": [
+      "hippo",
+      "wildlife",
+      "safety"
+    ]
+  }
+]
