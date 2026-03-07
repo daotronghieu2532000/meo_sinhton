@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Code Go API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .info {
+            color: #2196F3;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Code Go API</h1>
+        
+        <div class="test-section">
+            <h2>0. Test Database Connection</h2>
+            <p class="info">Test kết nối database để xem chi tiết lỗi</p>
+            <button onclick="testConnection()">Test Connection</button>
+            <pre id="connectionResult">Click button để test kết nối database...</pre>
+        </div>
+        
+        <div class="test-section">
+            <h2>1. Test Get Token</h2>
+            <p class="info">Test API lấy token với api_key và api_secret</p>
+            <button onclick="testGetToken()">Test Get Token</button>
+            <pre id="tokenResult">Click button để test...</pre>
+        </div>
+        
+        <div class="test-section">
+            <h2>2. Test Register (cần token từ bước 1)</h2>
+            <p class="info">Test API đăng ký user mới</p>
+            <input type="text" id="username" placeholder="Username" style="padding: 8px; margin: 5px; width: 200px;">
+            <input type="password" id="password" placeholder="Password" style="padding: 8px; margin: 5px; width: 200px;">
+            <br>
+            <button onclick="testRegister()">Test Register</button>
+            <pre id="registerResult">Nhập username và password, sau đó click button...</pre>
+        </div>
+        
+        <div class="test-section">
+            <h2>3. Test Login (cần token từ bước 1)</h2>
+            <p class="info">Test API đăng nhập</p>
+            <input type="text" id="loginUsername" placeholder="Username" style="padding: 8px; margin: 5px; width: 200px;">
+            <input type="password" id="loginPassword" placeholder="Password" style="padding: 8px; margin: 5px; width: 200px;">
+            <br>
+            <button onclick="testLogin()">Test Login</button>
+            <pre id="loginResult">Nhập username và password, sau đó click button...</pre>
+        </div>
+        
+        <div class="test-section">
+            <h2>4. API Info</h2>
+            <p class="info">Base URL: <strong>https://codego.io.vn/api/</strong></p>
+            <p class="info">Endpoints:</p>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li><code>POST /get_token.php</code> - Lấy access token</li>
+                <li><code>POST /register.php</code> - Đăng ký user</li>
+                <li><code>POST /login.php</code> - Đăng nhập</li>
+            </ul>
+            <p class="info" style="color: #666; font-size: 14px;">
+                💡 <strong>Lưu ý:</strong> Tất cả API (trừ get_token) đều cần header: 
+                <code>Authorization: Bearer {access_token}</code>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        let currentToken = '';
+        
+        async function testConnection() {
+            const resultEl = document.getElementById('connectionResult');
+            resultEl.textContent = 'Đang test kết nối database...';
+            
+            try {
+                const response = await fetch('test_connection.php');
+                
+                // Kiểm tra response có phải JSON không
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    // Nếu không phải JSON, đọc text để xem lỗi gì
+                    const text = await response.text();
+                    resultEl.innerHTML = '<span class="error">❌ LỖI: Response không phải JSON</span>\n' +
+                        '<p>Status: ' + response.status + '</p>' +
+                        '<p>Content-Type: ' + (contentType || 'unknown') + '</p>' +
+                        '<p>Response (first 500 chars):</p>' +
+                        '<pre>' + text.substring(0, 500) + '</pre>';
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                let html = '<h3 style="color: #2196F3;">Kết quả Test Connection:</h3>';
+                
+                // Test 1: Primary
+                const test1 = data.test_1_primary;
+                html += '<h4>Test 1: Primary Connection</h4>';
+                html += '<p><strong>Status:</strong> <span class="' + (test1.status === 'SUCCESS' ? 'success' : 'error') + '">' + test1.status + '</span></p>';
+                html += '<p><strong>Host:</strong> ' + test1.host + '</p>';
+                html += '<p><strong>Username:</strong> ' + test1.username + '</p>';
+                html += '<p><strong>Database:</strong> ' + test1.database + '</p>';
+                if (test1.status === 'FAILED') {
+                    html += '<p><strong>Error Code:</strong> ' + test1.error_code + '</p>';
+                    html += '<p><strong>Error Message:</strong> <span class="error">' + test1.error_message + '</span></p>';
+                    if (test1.error_analysis) {
+                        html += '<p><strong>Phân tích:</strong></p><ul>';
+                        test1.error_analysis.forEach(err => {
+                            html += '<li class="error">' + err + '</li>';
+                        });
+                        html += '</ul>';
+                    }
+                }
+                
+                // Test 2: Fallback
+                const test2 = data.test_2_fallback;
+                html += '<h4>Test 2: Fallback Connection</h4>';
+                html += '<p><strong>Status:</strong> <span class="' + (test2.status === 'SUCCESS' ? 'success' : 'error') + '">' + test2.status + '</span></p>';
+                html += '<p><strong>Host:</strong> ' + test2.host + '</p>';
+                html += '<p><strong>Username:</strong> ' + test2.username + '</p>';
+                html += '<p><strong>Database:</strong> ' + test2.database + '</p>';
+                if (test2.status === 'SUCCESS') {
+                    if (test2.app_api_table) {
+                        html += '<p><strong>Bảng app_api:</strong> <span class="success">' + test2.app_api_table + '</span></p>';
+                        if (test2.api_keys_count !== undefined) {
+                            html += '<p><strong>Số lượng API keys:</strong> ' + test2.api_keys_count + '</p>';
+                        }
+                    }
+                } else {
+                    html += '<p><strong>Error Code:</strong> ' + test2.error_code + '</p>';
+                    html += '<p><strong>Error Message:</strong> <span class="error">' + test2.error_message + '</span></p>';
+                    if (test2.error_analysis) {
+                        html += '<p><strong>Phân tích:</strong></p><ul>';
+                        test2.error_analysis.forEach(err => {
+                            html += '<li class="error">' + err + '</li>';
+                        });
+                        html += '</ul>';
+                    }
+                }
+                
+                // Test 3: No Database
+                const test3 = data.test_3_no_database;
+                html += '<h4>Test 3: Username/Password (không chọn database)</h4>';
+                html += '<p><strong>Status:</strong> <span class="' + (test3.status === 'SUCCESS' ? 'success' : 'error') + '">' + test3.status + '</span></p>';
+                if (test3.status === 'SUCCESS') {
+                    html += '<p><strong>Message:</strong> ' + test3.message + '</p>';
+                    if (test3.available_databases) {
+                        html += '<p><strong>Databases có sẵn:</strong> ' + test3.available_databases.join(', ') + '</p>';
+                        html += '<p><strong>Database "' + data.test_1_primary.database + '" tồn tại:</strong> <span class="' + (test3.target_database_exists === 'YES' ? 'success' : 'error') + '">' + test3.target_database_exists + '</span></p>';
+                    }
+                } else {
+                    html += '<p><strong>Error:</strong> <span class="error">' + test3.error_message + '</span></p>';
+                }
+                
+                // Summary
+                html += '<h4 style="margin-top: 20px;">Tổng kết & Khuyến nghị</h4>';
+                if (data.summary && data.summary.recommendation) {
+                    html += '<ul>';
+                    data.summary.recommendation.forEach(rec => {
+                        html += '<li>' + rec + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                
+                html += '<pre style="margin-top: 20px;">' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                resultEl.innerHTML = html;
+            } catch (error) {
+                resultEl.innerHTML = '<span class="error">❌ LỖI KẾT NỐI:</span>\n' + error.message;
+            }
+        }
+        
+        async function testGetToken() {
+            const resultEl = document.getElementById('tokenResult');
+            resultEl.textContent = 'Đang test...';
+            
+            try {
+                const response = await fetch('get_token.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        api_key: 'codego_api_key_2025',
+                        api_secret: 'codego_secret_2025'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.access_token) {
+                    currentToken = data.data.access_token;
+                    resultEl.innerHTML = '<span class="success">✅ THÀNH CÔNG!</span>\n' + 
+                        '<p><strong>Access Token:</strong> ' + currentToken.substring(0, 50) + '...</p>' +
+                        '<p><strong>Token Type:</strong> ' + data.data.token_type + '</p>' +
+                        '<p><strong>Expires In:</strong> ' + data.data.expires_in + ' seconds</p>' +
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    let errorHtml = '<span class="error">❌ LỖI:</span>\n';
+                    errorHtml += '<p><strong>Message:</strong> ' + (data.message || 'Unknown error') + '</p>';
+                    
+                    // Hiển thị debug info nếu có
+                    if (data.debug) {
+                        errorHtml += '<h4 style="color: #f44336; margin-top: 15px;">Chi tiết lỗi Database Connection:</h4>';
+                        
+                        if (data.debug.primary_connection) {
+                            errorHtml += '<p><strong>Primary Connection:</strong></p>';
+                            errorHtml += '<ul>';
+                            errorHtml += '<li>Host: ' + data.debug.primary_connection.host + '</li>';
+                            errorHtml += '<li>Username: ' + data.debug.primary_connection.username + '</li>';
+                            errorHtml += '<li>Database: ' + data.debug.primary_connection.database + '</li>';
+                            errorHtml += '<li>Error Code: ' + data.debug.primary_connection.error_code + '</li>';
+                            errorHtml += '<li>Error: <span class="error">' + data.debug.primary_connection.error_message + '</span></li>';
+                            errorHtml += '</ul>';
+                        }
+                        
+                        if (data.debug.fallback_connection) {
+                            errorHtml += '<p><strong>Fallback Connection:</strong></p>';
+                            errorHtml += '<ul>';
+                            errorHtml += '<li>Host: ' + data.debug.fallback_connection.host + '</li>';
+                            errorHtml += '<li>Username: ' + data.debug.fallback_connection.username + '</li>';
+                            errorHtml += '<li>Database: ' + data.debug.fallback_connection.database + '</li>';
+                            errorHtml += '<li>Error Code: ' + data.debug.fallback_connection.error_code + '</li>';
+                            errorHtml += '<li>Error: <span class="error">' + data.debug.fallback_connection.error_message + '</span></li>';
+                            errorHtml += '</ul>';
+                        }
+                        
+                        if (data.debug.common_issues) {
+                            errorHtml += '<p><strong>Gợi ý kiểm tra:</strong></p>';
+                            errorHtml += '<ul>';
+                            Object.values(data.debug.common_issues).forEach(issue => {
+                                errorHtml += '<li>' + issue + '</li>';
+                            });
+                            errorHtml += '</ul>';
+                        }
+                        
+                        errorHtml += '<p style="margin-top: 15px;"><strong>💡 Tip:</strong> Click "Test Connection" ở trên để xem chi tiết hơn!</p>';
+                    }
+                    
+                    errorHtml += '<pre style="margin-top: 15px;">' + JSON.stringify(data, null, 2) + '</pre>';
+                    resultEl.innerHTML = errorHtml;
+                }
+            } catch (error) {
+                resultEl.innerHTML = '<span class="error">❌ LỖI KẾT NỐI:</span>\n' + error.message;
+            }
+        }
+        
+        async function testRegister() {
+            if (!currentToken) {
+                alert('Vui lòng test Get Token trước!');
+                return;
+            }
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                alert('Vui lòng nhập username và password!');
+                return;
+            }
+            
+            const resultEl = document.getElementById('registerResult');
+            resultEl.textContent = 'Đang test...';
+            
+            try {
+                const response = await fetch('register.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + currentToken
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        email: username + '@example.com',
+                        name: username,
+                        country: 'VN'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    resultEl.innerHTML = '<span class="success">✅ THÀNH CÔNG!</span>\n' + 
+                        '<p><strong>User ID:</strong> ' + data.data.user_id + '</p>' +
+                        '<p><strong>Username:</strong> ' + data.data.username + '</p>' +
+                        '<p><strong>Email:</strong> ' + (data.data.email || 'N/A') + '</p>' +
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    resultEl.innerHTML = '<span class="error">❌ LỖI:</span>\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultEl.innerHTML = '<span class="error">❌ LỖI KẾT NỐI:</span>\n' + error.message;
+            }
+        }
+        
+        async function testLogin() {
+            if (!currentToken) {
+                alert('Vui lòng test Get Token trước!');
+                return;
+            }
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!username || !password) {
+                alert('Vui lòng nhập username và password!');
+                return;
+            }
+            
+            const resultEl = document.getElementById('loginResult');
+            resultEl.textContent = 'Đang test...';
+            
+            try {
+                const response = await fetch('login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + currentToken
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const userData = data.data.user || {};
+                    const userToken = data.data.user_token || 'N/A';
+                    resultEl.innerHTML = '<span class="success">✅ THÀNH CÔNG!</span>\n' + 
+                        '<p><strong>User Token:</strong> ' + userToken.substring(0, 50) + '...</p>' +
+                        '<p><strong>User ID:</strong> ' + userData.user_id + '</p>' +
+                        '<p><strong>Username:</strong> ' + userData.username + '</p>' +
+                        '<p><strong>Name:</strong> ' + (userData.name || 'N/A') + '</p>' +
+                        '<p><strong>Total Points:</strong> ' + (userData.total_points || 0) + '</p>' +
+                        '<p><strong>Level:</strong> ' + (userData.level || 1) + '</p>' +
+                        '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    resultEl.innerHTML = '<span class="error">❌ LỖI:</span>\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultEl.innerHTML = '<span class="error">❌ LỖI KẾT NỐI:</span>\n' + error.message;
+            }
+        }
+        
+    </script>
+</body>
+</html>

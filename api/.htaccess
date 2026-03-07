@@ -1,0 +1,60 @@
+# ============================================
+# CODE GO API - HTACCESS CONFIGURATION
+# ============================================
+
+# Enable CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Enable Rewrite Engine (nếu cần)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+</IfModule>
+
+# Security: Disable directory listing
+Options -Indexes
+
+# Security: Protect config file
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Allow access to uploaded avatars
+<DirectoryMatch "^/api/uploads/avatars">
+    Options -Indexes
+    AllowOverride None
+    Require all granted
+</DirectoryMatch>
+
+# Security: Protect sensitive files
+# Cho phép test_connection.php để debug (có thể xóa sau khi production)
+<FilesMatch "^(config|update_config_paths)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# PHP Settings (tùy chọn - chỉ bật trong development)
+# php_flag display_errors Off
+# php_flag display_startup_errors Off
+# php_value error_reporting E_ALL
+# php_flag log_errors On
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Enable compression (nếu module có sẵn)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache control (tùy chọn)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>

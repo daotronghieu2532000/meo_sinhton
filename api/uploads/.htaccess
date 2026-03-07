@@ -1,0 +1,9 @@
+# Allow access to uploaded files
+Options -Indexes
+AllowOverride None
+Require all granted
+
+# Allow image files
+<FilesMatch "\.(jpg|jpeg|png|gif)$">
+    Require all granted
+</FilesMatch>

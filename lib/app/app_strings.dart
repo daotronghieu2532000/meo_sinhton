@@ -7,6 +7,8 @@ class AppStrings {
       AppI18n.text(isEnglish: isEnglish, vi: 'Trang chủ', en: 'Home');
   static String tabEmergency(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Khẩn cấp', en: 'Emergency');
+  static String tabCommunity(bool isEnglish) =>
+      AppI18n.text(isEnglish: isEnglish, vi: 'Góp ý', en: 'Community');
   static String tabCategories(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Danh mục', en: 'Categories');
   static String tabScenario(bool isEnglish) =>

@@ -8,6 +8,7 @@ import 'package:meo_sinhton/screens/saved_tips_page.dart';
 import 'package:meo_sinhton/screens/settings_screen.dart';
 import 'package:meo_sinhton/screens/tip_feed_view.dart';
 import 'package:meo_sinhton/screens/emergency_map_screen_improved.dart';
+import 'package:meo_sinhton/screens/community_page.dart';
 import 'package:meo_sinhton/widgets/logo_placeholder.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
@@ -95,7 +96,7 @@ class _AppShellState extends State<AppShell> {
         final isEnglish = widget.appController.isEnglish;
         final titles = [
           AppStrings.appName(),
-          AppStrings.tabEmergency(isEnglish),
+          AppStrings.tabCommunity(isEnglish),
           AppStrings.tabScenario(isEnglish),
           AppStrings.tabMap(isEnglish),
           AppStrings.tabSaved(isEnglish),
@@ -106,9 +107,8 @@ class _AppShellState extends State<AppShell> {
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
-          TipFeedView(
+          CommunityPage(
             appController: widget.appController,
-            emergencyOnly: true,
             isEnglish: isEnglish,
           ),
           ScenarioModePage(
@@ -187,9 +187,9 @@ class _AppShellState extends State<AppShell> {
                     label: AppStrings.tabHome(isEnglish),
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.warning_amber_outlined),
-                    activeIcon: const Icon(Icons.warning_amber),
-                    label: AppStrings.tabEmergency(isEnglish),
+                    icon: const Icon(Icons.forum_outlined),
+                    activeIcon: const Icon(Icons.forum),
+                    label: AppStrings.tabCommunity(isEnglish),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.quiz_outlined),
