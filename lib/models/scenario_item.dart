@@ -6,6 +6,7 @@ class ScenarioItem {
     required this.difficulty,
     required this.estimatedMinutes,
     required this.steps,
+    this.imageAsset,
     this.titleEn,
     this.descriptionEn,
     this.difficultyEn,
@@ -17,6 +18,7 @@ class ScenarioItem {
   final String difficulty;
   final int estimatedMinutes;
   final List<ScenarioStep> steps;
+  final String? imageAsset;
   final String? titleEn;
   final String? descriptionEn;
   final String? difficultyEn;
@@ -31,6 +33,7 @@ class ScenarioItem {
       steps: (json['steps'] as List<dynamic>? ?? const [])
           .map((item) => ScenarioStep.fromJson(item as Map<String, dynamic>))
           .toList(),
+      imageAsset: json['imageAsset'] as String?,
       titleEn: json['titleEn'] as String?,
       descriptionEn: json['descriptionEn'] as String?,
       difficultyEn: json['difficultyEn'] as String?,

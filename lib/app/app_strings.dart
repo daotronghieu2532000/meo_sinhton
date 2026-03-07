@@ -1,7 +1,7 @@
 import 'package:meo_sinhton/app/app_i18n.dart';
 
 class AppStrings {
-  static String appName() => 'LifeSpark (Life Hack)';
+  static String appName() => 'LifeSpark: Survival and Life Hacks';
 
   static String tabHome(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Trang chủ', en: 'Home');
@@ -11,6 +11,8 @@ class AppStrings {
       AppI18n.text(isEnglish: isEnglish, vi: 'Danh mục', en: 'Categories');
   static String tabScenario(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Tình huống', en: 'Scenarios');
+  static String tabMap(bool isEnglish) =>
+      AppI18n.text(isEnglish: isEnglish, vi: 'Bản đồ', en: 'Map');
   static String tabSaved(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Đã lưu', en: 'Saved');
   static String settings(bool isEnglish) =>
@@ -136,8 +138,8 @@ class AppStrings {
 
   static String aboutDesc(bool isEnglish) => AppI18n.text(
     isEnglish: isEnglish,
-    vi: 'LifeSpark (Life Hack) • Bản thử nghiệm',
-    en: 'LifeSpark (Life Hack) • Preview build',
+    vi: 'LifeSpark: Survival and Life Hacks • Bản thử nghiệm',
+    en: 'LifeSpark: Survival and Life Hacks • Preview build',
   );
 
   static String ads(bool isEnglish) =>

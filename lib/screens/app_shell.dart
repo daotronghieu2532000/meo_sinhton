@@ -7,6 +7,7 @@ import 'package:meo_sinhton/screens/scenario_mode_page.dart';
 import 'package:meo_sinhton/screens/saved_tips_page.dart';
 import 'package:meo_sinhton/screens/settings_screen.dart';
 import 'package:meo_sinhton/screens/tip_feed_view.dart';
+import 'package:meo_sinhton/screens/emergency_map_screen_improved.dart';
 import 'package:meo_sinhton/widgets/logo_placeholder.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
@@ -96,7 +97,7 @@ class _AppShellState extends State<AppShell> {
           AppStrings.appName(),
           AppStrings.tabEmergency(isEnglish),
           AppStrings.tabScenario(isEnglish),
-          AppStrings.tabCategories(isEnglish),
+          AppStrings.tabMap(isEnglish),
           AppStrings.tabSaved(isEnglish),
         ];
 
@@ -114,7 +115,7 @@ class _AppShellState extends State<AppShell> {
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
-          CategoryOverviewPage(
+          EmergencyMapScreen(
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
@@ -191,14 +192,14 @@ class _AppShellState extends State<AppShell> {
                     label: AppStrings.tabEmergency(isEnglish),
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.route_outlined),
-                    activeIcon: const Icon(Icons.route),
+                    icon: const Icon(Icons.quiz_outlined),
+                    activeIcon: const Icon(Icons.quiz),
                     label: AppStrings.tabScenario(isEnglish),
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.grid_view_outlined),
-                    activeIcon: const Icon(Icons.grid_view),
-                    label: AppStrings.tabCategories(isEnglish),
+                    icon: const Icon(Icons.map_outlined),
+                    activeIcon: const Icon(Icons.map),
+                    label: AppStrings.tabMap(isEnglish),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.bookmark_border),

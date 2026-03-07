@@ -69,14 +69,6 @@ class TipPreviewCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      IconButton(
-                        visualDensity: VisualDensity.compact,
-                        tooltip: isSaved ? unsaveTooltip : saveTooltip,
-                        onPressed: onToggleSaved,
-                        icon: Icon(
-                          isSaved ? Icons.bookmark : Icons.bookmark_border,
-                        ),
-                      ),
                       const Icon(Icons.chevron_right),
                     ],
                   ),
@@ -88,32 +80,48 @@ class TipPreviewCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      InfoPill(
-                        icon: Icons.folder_outlined,
-                        label: tip.categoryText(isEnglish),
-                      ),
-                      InfoPill(
-                        icon: Icons.sell_outlined,
-                        label: tip.subCategoryText(isEnglish),
-                      ),
-                      InfoPill(
-                        icon: Icons.schedule_outlined,
-                        label: AppStrings.minuteUnit(
-                          isEnglish,
-                          tip.estimatedMinutes,
-                          compact: true,
+                      Expanded(
+                        child: Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: [
+                            InfoPill(
+                              icon: Icons.folder_outlined,
+                              label: tip.categoryText(isEnglish),
+                            ),
+                            InfoPill(
+                              icon: Icons.sell_outlined,
+                              label: tip.subCategoryText(isEnglish),
+                            ),
+                            InfoPill(
+                              icon: Icons.schedule_outlined,
+                              label: AppStrings.minuteUnit(
+                                isEnglish,
+                                tip.estimatedMinutes,
+                                compact: true,
+                              ),
+                            ),
+                            if (tip.isEmergency)
+                              InfoPill(
+                                icon: Icons.warning_amber_rounded,
+                                label: AppStrings.emergencyChip(isEnglish),
+                                highlighted: true,
+                              ),
+                          ],
                         ),
                       ),
-                      if (tip.isEmergency)
-                        InfoPill(
-                          icon: Icons.warning_amber_rounded,
-                          label: AppStrings.emergencyChip(isEnglish),
-                          highlighted: true,
+                      const SizedBox(width: 6),
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        tooltip: isSaved ? unsaveTooltip : saveTooltip,
+                        onPressed: onToggleSaved,
+                        icon: Icon(
+                          isSaved ? Icons.bookmark : Icons.bookmark_border,
                         ),
+                      ),
                     ],
                   ),
                 ],

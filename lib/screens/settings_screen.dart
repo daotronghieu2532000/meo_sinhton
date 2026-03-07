@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/app/admob_config.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
 const _isFlutterTest = bool.fromEnvironment('FLUTTER_TEST');
@@ -146,6 +149,80 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Future<void> _openContactEmail() async {
+    final isEnglish = widget.appController.isEnglish;
+    final emailUri = Uri(
+      scheme: 'mailto',
+      path: 'trongh138@gmail.com',
+      queryParameters: {
+        'subject': isEnglish
+            ? 'Feedback for Meo Sinh Ton'
+            : 'Góp ý cho ứng dụng Mẹo Sinh Tồn',
+      },
+    );
+
+    try {
+      final canOpen = await canLaunchUrl(emailUri);
+      if (!canOpen) {
+        if (!mounted) {
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              isEnglish
+                  ? 'No email app found on this device.'
+                  : 'Thiết bị này chưa có ứng dụng email.',
+            ),
+          ),
+        );
+        return;
+      }
+
+      final launched = await launchUrl(
+        emailUri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              isEnglish
+                  ? 'Could not open email app on this device.'
+                  : 'Không mở được ứng dụng email trên thiết bị này.',
+            ),
+          ),
+        );
+      }
+    } on PlatformException {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isEnglish
+                ? 'Email feature is not ready yet. Please restart the app and try again.'
+                : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
+          ),
+        ),
+      );
+    } on MissingPluginException {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isEnglish
+                ? 'Email feature is not ready yet. Please restart the app and try again.'
+                : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -166,6 +243,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
           body: ListView(
             padding: const EdgeInsets.all(12),
             children: [
+              const SizedBox(height: 12),
+              Card(
+                child: ListTile(
+                  onTap: _openContactEmail,
+                  leading: Icon(Icons.mail_outline, color: Colors.red.shade500),
+                  title: Text(
+                    isEnglish ? 'Feedback & Contact' : 'Phản hồi & Liên hệ',
+                  ),
+                  subtitle: RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        height: 1.35,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: isEnglish
+                              ? 'Your feedback and app rating are very important to me. Please contact me at Gmail: '
+                              : 'Mọi ý kiến đóng góp và đánh giá app của bạn đều rất quan trọng với tôi. Hãy liên lạc qua Gmail: ',
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: GestureDetector(
+                            onTap: _openContactEmail,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red.shade50,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.red.shade200),
+                              ),
+                              child: Text(
+                                'trongh138@gmail.com',
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: Colors.red.shade700,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextSpan(
+                          text: isEnglish
+                              ? '. Sincerely ❤️'
+                              : '. Trân trọng ❤️',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
               _tileCard(
                 child: ListTile(
                   dense: true,
@@ -308,6 +442,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+class ReferenceHeroBanner extends StatelessWidget {
+  const ReferenceHeroBanner({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.height = 148,
+  });
+
+  final String title;
+  final String subtitle;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      height: height,
+      child: Card(
+        margin: EdgeInsets.zero,
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: scheme.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                subtitle,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

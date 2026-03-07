@@ -1,0 +1,82 @@
+[
+  {
+    "id": "life-motorbike-maintenance",
+    "title": "Bảo dưỡng xe máy đúng cách để tăng tuổi thọ",
+    "category": "Đời sống",
+    "subCategory": "Phương tiện cá nhân",
+    "difficulty": "Cơ bản",
+    "tags": ["bảo dưỡng", "xe máy", "an toàn"],
+    "summary": "Bảo dưỡng định kỳ giúp xe máy vận hành ổn định, tiết kiệm nhiên liệu và hạn chế hỏng vặt.",
+    "steps": [
+      "Thay dầu nhớt động cơ mỗi 1.500–2.000 km với xe số, 1.000–1.500 km với xe ga. Sử dụng loại dầu phù hợp khuyến nghị của nhà sản xuất.",
+      "Vệ sinh hoặc thay lọc gió sau mỗi 6.000–8.000 km. Nếu thường xuyên đi đường bụi, nên kiểm tra sớm hơn.",
+      "Kiểm tra, tra dầu xích mỗi 500–700 km, điều chỉnh độ căng xích đúng tiêu chuẩn.",
+      "Kiểm tra áp suất lốp mỗi tháng một lần, bơm đúng thông số ghi trên lốp.",
+      "Kiểm tra phanh, thay má phanh khi thấy mòn hoặc phát ra tiếng kêu lạ.",
+      "Bảo dưỡng tổng thể (bugi, nước làm mát, dây curoa…) mỗi 10.000–12.000 km hoặc theo khuyến nghị hãng."
+    ],
+    "estimatedMinutes": 60,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/baoduong_xemay.jpg"
+  },
+  {
+    "id": "life-car-maintenance",
+    "title": "Bảo dưỡng ô tô chi tiết theo từng loại xe",
+    "category": "Đời sống",
+    "subCategory": "Phương tiện cá nhân",
+    "difficulty": "Trung bình",
+    "tags": ["bảo dưỡng", "ô tô", "an toàn"],
+    "summary": "Bảo dưỡng ô tô đúng định kỳ giúp xe vận hành an toàn, tiết kiệm chi phí sửa chữa lớn.",
+    "steps": [
+      "Thay dầu động cơ mỗi 5.000–7.000 km với xe chạy xăng, 7.000–10.000 km với xe chạy dầu diesel. Sử dụng loại dầu phù hợp từng dòng xe (sedan, SUV, bán tải…).",
+      "Thay lọc dầu động cơ cùng lúc thay dầu.",
+      "Thay lọc gió động cơ mỗi 15.000–20.000 km hoặc sớm hơn nếu đi nhiều đường bụi.",
+      "Kiểm tra, thay lọc gió điều hòa mỗi 10.000–15.000 km để đảm bảo không khí trong xe sạch.",
+      "Kiểm tra nước làm mát, bổ sung hoặc thay mới mỗi 40.000 km.",
+      "Kiểm tra má phanh, thay khi mòn dưới 2 mm hoặc phát ra tiếng kêu lạ.",
+      "Bảo dưỡng hộp số tự động mỗi 40.000–60.000 km (tùy loại xe và hướng dẫn hãng).",
+      "Kiểm tra lốp, đảo lốp mỗi 10.000 km, thay lốp khi mòn hoặc xuất hiện vết nứt." 
+    ],
+    "estimatedMinutes": 120,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/baoduong_oto.jpg"
+  },
+  {
+    "id": "life-remove-rusty-screw",
+    "title": "Cách tháo ốc bị han gỉ không cần tua vít",
+    "category": "Đời sống",
+    "subCategory": "Sửa chữa nhà",
+    "difficulty": "Cơ bản",
+    "tags": ["sửa chữa", "ốc vít", "han gỉ"],
+    "summary": "Ốc bị han gỉ lâu ngày có thể tháo dễ dàng nếu áp dụng đúng cách.",
+    "steps": [
+      "Nhỏ dầu bôi trơn (hoặc dầu ăn) lên đầu ốc, chờ 5–10 phút cho dầu thấm vào các khe.",
+      "Dùng kìm mỏ quạ hoặc kìm thường kẹp chặt đầu ốc, xoay nhẹ nhàng để nới lỏng.",
+      "Nếu vẫn khó tháo, dùng búa gõ nhẹ quanh đầu ốc để làm bong lớp gỉ.",
+      "Có thể dùng nước coca hoặc giấm ăn nhỏ lên ốc để tăng hiệu quả làm mềm gỉ sét.",
+      "Sau khi tháo xong, vệ sinh sạch và bôi một lớp dầu mỏng để chống gỉ lại." 
+    ],
+    "estimatedMinutes": 15,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/thaooc_hangi.jpg"
+  },
+  {
+    "id": "life-shoelace-style",
+    "title": "Xỏ dây giày đẹp, chắc chắn và không bị tuột",
+    "category": "Đời sống",
+    "subCategory": "Trang phục",
+    "difficulty": "Cơ bản",
+    "tags": ["giày dép", "xỏ dây", "thời trang"],
+    "summary": "Xỏ dây giày đúng cách giúp giày vừa chân, tăng tính thẩm mỹ và hạn chế tuột dây khi vận động.",
+    "steps": [
+      "Chọn kiểu xỏ phù hợp: Kiểu ziczac truyền thống cho giày thể thao, kiểu thẳng hàng cho giày tây hoặc sneaker cá tính.",
+      "Bắt đầu xỏ từ lỗ dưới cùng, luồn dây đều hai bên, tránh để dây bị xoắn.",
+      "Sau khi xỏ xong, thắt nút đôi (double knot) để dây không bị tuột khi vận động mạnh.",
+      "Chọn dây giày có độ dài vừa phải, màu sắc hài hòa với giày và trang phục." 
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/xodaygiay_dep.jpg"
+  }
+]
+

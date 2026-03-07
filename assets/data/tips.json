@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "id": "desert-orientation-sun",
     "title": "Lạc ở sa mạc: định hướng bằng mặt trời",
@@ -20,7 +20,7 @@
     ],
     "estimatedMinutes": 15,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/lacgiua_xamac.png",
+    "imageAsset": "assets/data_img/tips_img/lacgiua_xamac.jpg",
     "titleEn": "Lost in the desert: navigate by the sun",
     "summaryEn": "Conserve energy first and find a short, safe direction before moving under harsh heat.",
     "stepsEn": [
@@ -60,7 +60,7 @@
     ],
     "estimatedMinutes": 10,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/xamac_chianuoc.png",
+    "imageAsset": "assets/data_img/tips_img/xamac_chianuoc.jpg",
     "titleEn": "Lost in the desert: ration water wisely",
     "summaryEn": "Do not drink all at once; split small portions to stay alert longer.",
     "stepsEn": [
@@ -100,7 +100,7 @@
     ],
     "estimatedMinutes": 20,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/lactrongrung_60pdau.png",
+    "imageAsset": "assets/data_img/tips_img/lactrongrung_60pdau.jpg",
     "titleEn": "Lost in the forest: actions for the first 60 minutes",
     "summaryEn": "Stop, stabilize your mind, and make a plan before moving.",
     "stepsEn": [
@@ -140,7 +140,7 @@
     ],
     "estimatedMinutes": 25,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/lactrongrung_laynuoctrongrung.png",
+    "imageAsset": "assets/data_img/tips_img/lactrongrung_laynuoctrongrung.jpg",
     "titleEn": "Collect safer water in the forest",
     "summaryEn": "Prioritize flowing sources and treat water before drinking.",
     "stepsEn": [
@@ -180,7 +180,7 @@
     ],
     "estimatedMinutes": 12,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/muatrennui.png",
+    "imageAsset": "assets/data_img/tips_img/muatrennui.jpg",
     "titleEn": "Mountain thunderstorm: choose shelter correctly",
     "summaryEn": "Avoid lightning-prone spots and maintain body heat.",
     "stepsEn": [
@@ -220,7 +220,7 @@
     ],
     "estimatedMinutes": 5,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/thatnutvuong.png",
+    "imageAsset": "assets/data_img/tips_img/thatnutvuong.jpg",
     "titleEn": "Tie a square knot for bundling",
     "summaryEn": "A square knot works for joining equal-size ropes in light-duty situations.",
     "stepsEn": [
@@ -260,7 +260,7 @@
     ],
     "estimatedMinutes": 6,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/thatnutcocc.png",
+    "imageAsset": "assets/data_img/tips_img/thatnutcocc.jpg",
     "titleEn": "Tie a clove hitch to secure rope to a pole",
     "summaryEn": "A clove hitch is quick for fixing rope to a post or branch.",
     "stepsEn": [
@@ -300,7 +300,7 @@
     ],
     "estimatedMinutes": 8,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/nutsietdaychatkhichangdoxe.png",
+    "imageAsset": "assets/data_img/tips_img/nutsietdaychatkhichangdoxe.jpg",
     "titleEn": "Trucker's hitch for tight cargo lashing",
     "summaryEn": "Use a simple pulley effect to tighten strongly and keep cargo stable.",
     "stepsEn": [
@@ -340,7 +340,7 @@
     ],
     "estimatedMinutes": 4,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/gapaothun.png",
+    "imageAsset": "assets/data_img/tips_img/gapaothun.jpg",
     "titleEn": "Fold a T-shirt quickly with fewer wrinkles",
     "summaryEn": "Folding along shoulder/body lines keeps shirts flatter and suitcase-ready.",
     "stepsEn": [
@@ -380,7 +380,7 @@
     ],
     "estimatedMinutes": 5,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/gapquandai.png",
+    "imageAsset": "assets/data_img/tips_img/gapquandai.jpg",
     "titleEn": "Fold pants for travel with less wrinkling",
     "summaryEn": "Keep crease lines aligned, then roll lightly to save space.",
     "stepsEn": [
@@ -420,7 +420,7 @@
     ],
     "estimatedMinutes": 15,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/mokhoakhimatchia.png",
+    "imageAsset": "assets/data_img/tips_img/mokhoakhimatchia.jpg",
     "titleEn": "Unlock safely when you lose your key",
     "summaryEn": "Prioritize legal methods and minimize property damage.",
     "stepsEn": [
@@ -460,7 +460,7 @@
     ],
     "estimatedMinutes": 20,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/suaboncautac.png",
+    "imageAsset": "assets/data_img/tips_img/suaboncautac.jpg",
     "titleEn": "Fix a clogged toilet with basic tools",
     "summaryEn": "Handle step-by-step to avoid overflow and reduce odor.",
     "stepsEn": [
@@ -500,7 +500,7 @@
     ],
     "estimatedMinutes": 7,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/nghirogas.png",
+    "imageAsset": "assets/data_img/tips_img/nghirogas.jpg",
     "titleEn": "Suspected gas leak at home: act immediately",
     "summaryEn": "Eliminate ignition risks and evacuate quickly but calmly.",
     "stepsEn": [
@@ -540,7 +540,7 @@
     ],
     "estimatedMinutes": 5,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/dongdat.png",
+    "imageAsset": "assets/data_img/tips_img/dongdat.jpg",
     "titleEn": "Earthquake while indoors",
     "summaryEn": "Apply the rule: drop, cover, and hold on.",
     "stepsEn": [
@@ -580,7 +580,7 @@
     ],
     "estimatedMinutes": 30,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/chuanbituisotan.png",
+    "imageAsset": "assets/data_img/tips_img/chuanbituisotan.jpg",
     "titleEn": "Prepare an evacuation bag for flood season",
     "summaryEn": "A ready 24-48 hour bag helps rapid response when evacuation is needed.",
     "stepsEn": [
@@ -620,7 +620,7 @@
     ],
     "estimatedMinutes": 10,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/socuubongnhe.png",
+    "imageAsset": "assets/data_img/tips_img/socuubongnhe.jpg",
     "titleEn": "Proper first aid for minor burns",
     "summaryEn": "Cool early and cover cleanly to reduce skin damage.",
     "stepsEn": [
@@ -659,7 +659,7 @@
     ],
     "estimatedMinutes": 8,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/cammaucam.png",
+    "imageAsset": "assets/data_img/tips_img/cammaucam.jpg",
     "titleEn": "Control a nosebleed on the spot",
     "summaryEn": "Use correct posture and steady pressure for effective bleeding control.",
     "stepsEn": [
@@ -698,7 +698,7 @@
     ],
     "estimatedMinutes": 12,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/baoquanthucpham.png",
+    "imageAsset": "assets/data_img/tips_img/baoquanthucpham.jpg",
     "titleEn": "Store food safely during a power outage",
     "summaryEn": "Keep cold temperatures longer and use perishable food first.",
     "stepsEn": [
@@ -738,7 +738,7 @@
     ],
     "estimatedMinutes": 5,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/keodaipin.png",
+    "imageAsset": "assets/data_img/tips_img/keodaipin.jpg",
     "titleEn": "Extend phone battery in emergencies",
     "summaryEn": "Preserve battery for critical communication during outages or poor signal.",
     "stepsEn": [
@@ -778,7 +778,7 @@
     ],
     "estimatedMinutes": 18,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/dotluatraiantoan.png",
+    "imageAsset": "assets/data_img/tips_img/dotluatraiantoan.jpg",
     "titleEn": "Build and extinguish a campfire safely",
     "summaryEn": "Choose a proper fire spot and fully extinguish before leaving.",
     "stepsEn": [
@@ -818,7 +818,7 @@
     ],
     "estimatedMinutes": 14,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/quasuoi_antoan.png",
+    "imageAsset": "assets/data_img/tips_img/quasuoi_antoan.jpg",
     "titleEn": "Cross a stream safely while trekking",
     "summaryEn": "Assess current first, choose shallower sections, and maintain stable footing.",
     "stepsEn": [
@@ -858,7 +858,7 @@
     ],
     "estimatedMinutes": 16,
     "isEmergency": true,
-    "imageAsset": "assets/data_img/tips_img/thunuocmua_tamthoi.png",
+    "imageAsset": "assets/data_img/tips_img/thunuocmua_tamthoi.jpg",
     "titleEn": "Collect rainwater temporarily when water is scarce",
     "summaryEn": "Use clean catch surfaces, then treat water before drinking.",
     "stepsEn": [
@@ -898,7 +898,7 @@
     ],
     "estimatedMinutes": 10,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/sapbalo_moivai.png",
+    "imageAsset": "assets/data_img/tips_img/sapbalo_moivai.jpg",
     "titleEn": "Pack a hiking backpack to reduce shoulder strain",
     "summaryEn": "Distribute weight correctly for safer long-distance movement.",
     "stepsEn": [
@@ -936,7 +936,7 @@
     ],
     "estimatedMinutes": 3,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/21.png",
+    "imageAsset": "assets/data_img/tips_img/21.jpg",
     "titleEn": "Store plastic wrap in the freezer",
     "summaryEn": "Chill the plastic wrap roll so it pulls out easier and tangles less.",
     "stepsEn": [
@@ -972,7 +972,7 @@
     ],
     "estimatedMinutes": 5,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/22png.png",
+    "imageAsset": "assets/data_img/tips_img/22png.jpg",
     "titleEn": "Revive dried lemons left outside",
     "summaryEn": "Soak dried lemons in water to restore juiciness.",
     "stepsEn": [
@@ -1008,7 +1008,7 @@
     ],
     "estimatedMinutes": 4,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/23.png",
+    "imageAsset": "assets/data_img/tips_img/23.jpg",
     "titleEn": "Store avocado in the fridge",
     "summaryEn": "Keep leftover avocado from browning too quickly by storing it with onion.",
     "stepsEn": [
@@ -1224,7 +1224,7 @@
     ],
     "estimatedMinutes": 6,
     "isEmergency": false,
-    "imageAsset": "assets/data_img/tips_img/29.png",
+    "imageAsset": "assets/data_img/tips_img/29.jpg",
     "titleEn": "Cut evenly sliced potatoes for baking",
     "summaryEn": "Use two chopsticks as guides to slice potatoes evenly and neatly.",
     "stepsEn": [
@@ -2716,5 +2716,84 @@
       "wildlife",
       "safety"
     ]
+  },
+   {
+    "id": "life-motorbike-maintenance",
+    "title": "Bảo dưỡng xe máy đúng cách để tăng tuổi thọ",
+    "category": "Đời sống",
+    "subCategory": "Phương tiện cá nhân",
+    "difficulty": "Cơ bản",
+    "tags": ["bảo dưỡng", "xe máy", "an toàn"],
+    "summary": "Bảo dưỡng định kỳ giúp xe máy vận hành ổn định, tiết kiệm nhiên liệu và hạn chế hỏng vặt.",
+    "steps": [
+      "Thay dầu nhớt động cơ mỗi 1.500–2.000 km với xe số, 1.000–1.500 km với xe ga. Sử dụng loại dầu phù hợp khuyến nghị của nhà sản xuất.",
+      "Vệ sinh hoặc thay lọc gió sau mỗi 6.000–8.000 km. Nếu thường xuyên đi đường bụi, nên kiểm tra sớm hơn.",
+      "Kiểm tra, tra dầu xích mỗi 500–700 km, điều chỉnh độ căng xích đúng tiêu chuẩn.",
+      "Kiểm tra áp suất lốp mỗi tháng một lần, bơm đúng thông số ghi trên lốp.",
+      "Kiểm tra phanh, thay má phanh khi thấy mòn hoặc phát ra tiếng kêu lạ.",
+      "Bảo dưỡng tổng thể (bugi, nước làm mát, dây curoa…) mỗi 10.000–12.000 km hoặc theo khuyến nghị hãng."
+    ],
+    "estimatedMinutes": 60,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/baoduong_xemay.jpg"
+  },
+  {
+    "id": "life-car-maintenance",
+    "title": "Bảo dưỡng ô tô chi tiết theo từng loại xe",
+    "category": "Đời sống",
+    "subCategory": "Phương tiện cá nhân",
+    "difficulty": "Trung bình",
+    "tags": ["bảo dưỡng", "ô tô", "an toàn"],
+    "summary": "Bảo dưỡng ô tô đúng định kỳ giúp xe vận hành an toàn, tiết kiệm chi phí sửa chữa lớn.",
+    "steps": [
+      "Thay dầu động cơ mỗi 5.000–7.000 km với xe chạy xăng, 7.000–10.000 km với xe chạy dầu diesel. Sử dụng loại dầu phù hợp từng dòng xe (sedan, SUV, bán tải…).",
+      "Thay lọc dầu động cơ cùng lúc thay dầu.",
+      "Thay lọc gió động cơ mỗi 15.000–20.000 km hoặc sớm hơn nếu đi nhiều đường bụi.",
+      "Kiểm tra, thay lọc gió điều hòa mỗi 10.000–15.000 km để đảm bảo không khí trong xe sạch.",
+      "Kiểm tra nước làm mát, bổ sung hoặc thay mới mỗi 40.000 km.",
+      "Kiểm tra má phanh, thay khi mòn dưới 2 mm hoặc phát ra tiếng kêu lạ.",
+      "Bảo dưỡng hộp số tự động mỗi 40.000–60.000 km (tùy loại xe và hướng dẫn hãng).",
+      "Kiểm tra lốp, đảo lốp mỗi 10.000 km, thay lốp khi mòn hoặc xuất hiện vết nứt." 
+    ],
+    "estimatedMinutes": 120,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/baoduong_oto.jpg"
+  },
+  {
+    "id": "life-remove-rusty-screw",
+    "title": "Cách tháo ốc bị han gỉ không cần tua vít",
+    "category": "Đời sống",
+    "subCategory": "Sửa chữa nhà",
+    "difficulty": "Cơ bản",
+    "tags": ["sửa chữa", "ốc vít", "han gỉ"],
+    "summary": "Ốc bị han gỉ lâu ngày có thể tháo dễ dàng nếu áp dụng đúng cách.",
+    "steps": [
+      "Nhỏ dầu bôi trơn (hoặc dầu ăn) lên đầu ốc, chờ 5–10 phút cho dầu thấm vào các khe.",
+      "Dùng kìm mỏ quạ hoặc kìm thường kẹp chặt đầu ốc, xoay nhẹ nhàng để nới lỏng.",
+      "Nếu vẫn khó tháo, dùng búa gõ nhẹ quanh đầu ốc để làm bong lớp gỉ.",
+      "Có thể dùng nước coca hoặc giấm ăn nhỏ lên ốc để tăng hiệu quả làm mềm gỉ sét.",
+      "Sau khi tháo xong, vệ sinh sạch và bôi một lớp dầu mỏng để chống gỉ lại." 
+    ],
+    "estimatedMinutes": 15,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/thaooc_hangi.jpg"
+  },
+  {
+    "id": "life-shoelace-style",
+    "title": "Xỏ dây giày đẹp, chắc chắn và không bị tuột",
+    "category": "Đời sống",
+    "subCategory": "Trang phục",
+    "difficulty": "Cơ bản",
+    "tags": ["giày dép", "xỏ dây", "thời trang"],
+    "summary": "Xỏ dây giày đúng cách giúp giày vừa chân, tăng tính thẩm mỹ và hạn chế tuột dây khi vận động.",
+    "steps": [
+      "Chọn kiểu xỏ phù hợp: Kiểu ziczac truyền thống cho giày thể thao, kiểu thẳng hàng cho giày tây hoặc sneaker cá tính.",
+      "Bắt đầu xỏ từ lỗ dưới cùng, luồn dây đều hai bên, tránh để dây bị xoắn.",
+      "Sau khi xỏ xong, thắt nút đôi (double knot) để dây không bị tuột khi vận động mạnh.",
+      "Chọn dây giày có độ dài vừa phải, màu sắc hài hòa với giày và trang phục." 
+    ],
+    "estimatedMinutes": 8,
+    "isEmergency": false,
+    "imageAsset": "assets/data_img/tips_img/xodaygiay_dep.jpg"
   }
 ]
