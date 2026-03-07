@@ -9,18 +9,17 @@ class WeatherService {
   static const String _baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
   static Future<WeatherData?> getWeather(double lat, double lon) async {
-    if (_apiKey == 'YOUR_OPENWEATHER_API_KEY') {
-      print('Chưa cấu hình Weather API Key');
-      return null;
-    }
-
     try {
-      final url = '$_baseUrl?lat=$lat&lon=$lon&appid=$_apiKey&units=metric&lang=vi';
-      final response = await http.get(Uri.parse(url));
+      final weatherUrl = '$_baseUrl?lat=$lat&lon=$lon&appid=$_apiKey&units=metric&lang=vi';
+      final response = await http.get(Uri.parse(weatherUrl));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return WeatherData.fromJson(data);
+        WeatherData weather = WeatherData.fromJson(data);
+        
+        // Fetch Air Pollution data
+        final airQuality = await getAirQuality(lat, lon);
+        return weather.copyWith(airQuality: airQuality);
       } else {
         print('Error fetching weather: ${response.statusCode}');
         return null;
@@ -29,6 +28,19 @@ class WeatherService {
       print('Exception fetching weather: $e');
       return null;
     }
+  }
+
+  static Future<AirQuality?> getAirQuality(double lat, double lon) async {
+    final airUrl = 'https://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$_apiKey';
+    try {
+      final response = await http.get(Uri.parse(airUrl));
+      if (response.statusCode == 200) {
+        return AirQuality.fromJson(json.decode(response.body));
+      }
+    } catch (e) {
+      print('Error fetching air quality: $e');
+    }
+    return null;
   }
 
   // Mock weather for testing if no API key

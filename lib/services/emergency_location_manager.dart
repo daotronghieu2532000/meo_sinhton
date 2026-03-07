@@ -3,6 +3,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/emergency_location_data.dart';
 import '../models/emergency_shelter.dart';
 import 'location_service.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class EmergencyLocationManager {
   static EmergencyLocationData? _lastKnownLocation;
@@ -85,36 +87,96 @@ ${location.locationMessage}
     }
   }
 
-  // Tìm nơi trú ẩn gần nhất
+  // Tìm nơi trú ẩn gần nhất (Sử dụng Overpass API để lấy dữ liệu thực tế xung quanh)
   static Future<List<EmergencyShelter>> findNearbyShelters({
-    double radiusKm = 10.0,
+    double radiusKm = 5.0,
   }) async {
     final position = await LocationService.getCurrentLocation();
     if (position == null) return [];
 
-    final shelters = await _getSheltersFromDatabase();
-    
-    // Tính khoảng cách và lọc các nơi trong bán kính
-    final nearbyShelters = shelters.where((shelter) {
-      final distance = Geolocator.distanceBetween(
-        position.latitude,
-        position.longitude,
-        shelter.latitude,
-        shelter.longitude,
+    try {
+      // 1. Lấy dữ liệu thực tế từ OpenStreetMap qua Overpass API
+      final dynamicData = await _fetchNearbyFromOSM(
+        position.latitude, 
+        position.longitude, 
+        radiusKm * 1000
       );
-      return distance <= (radiusKm * 1000); // Convert km to meters
-    }).toList();
 
-    // Sắp xếp theo khoảng cách
-    nearbyShelters.sort((a, b) {
-      final distA = Geolocator.distanceBetween(
-        position.latitude, position.longitude, a.latitude, a.longitude);
-      final distB = Geolocator.distanceBetween(
-        position.latitude, position.longitude, b.latitude, b.longitude);
-      return distA.compareTo(distB);
-    });
+      // 2. Lấy dữ liệu mẫu (hoặc dữ liệu riêng của app) 
+      final sampleData = await _getSheltersFromDatabase();
+      
+      // 3. Kết hợp và lọc theo bán kính
+      final combined = [...dynamicData, ...sampleData];
+      
+      final nearbyShelters = combined.where((shelter) {
+        final distance = Geolocator.distanceBetween(
+          position.latitude,
+          position.longitude,
+          shelter.latitude,
+          shelter.longitude,
+        );
+        return distance <= (radiusKm * 1000);
+      }).toList();
 
-    return nearbyShelters;
+      // Sắp xếp theo khoảng cách
+      nearbyShelters.sort((a, b) {
+        final distA = Geolocator.distanceBetween(
+          position.latitude, position.longitude, a.latitude, a.longitude);
+        final distB = Geolocator.distanceBetween(
+          position.latitude, position.longitude, b.latitude, b.longitude);
+        return distA.compareTo(distB);
+      });
+
+      return nearbyShelters;
+    } catch (e) {
+      print('Error finding nearby shelters: $e');
+      // Fallback về dữ liệu mẫu nếu API lỗi
+      return await _getSheltersFromDatabase();
+    }
+  }
+
+  // Lấy dữ liệu thực tế từ OpenStreetMap
+  static Future<List<EmergencyShelter>> _fetchNearbyFromOSM(double lat, double lon, double radius) async {
+    // Tối ưu query: chỉ lấy node và way trung tâm, giảm timeout xuống 10s
+    final query = '''
+    [out:json][timeout:10];
+    (
+      node["amenity"~"hospital|police|fire_station|clinic"](around:$radius,$lat,$lon);
+      way["amenity"~"hospital|police|fire_station|clinic"](around:$radius,$lat,$lon);
+    );
+    out center;
+    ''';
+    
+    final url = Uri.parse('https://overpass-api.de/api/interpreter');
+    try {
+      final response = await http.post(url, body: query);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final List elements = data['elements'] ?? [];
+        
+        return elements.map((e) {
+          final tags = e['tags'] ?? {};
+          final type = tags['amenity'] == 'police' ? 'police' : 'hospital';
+          final latVal = e['lat'] ?? e['center']?['lat'];
+          final lonVal = e['lon'] ?? e['center']?['lon'];
+          
+          return EmergencyShelter(
+            id: 'osm_${e['id']}',
+            name: tags['name'] ?? (tags['amenity'] == 'police' ? 'Đồn Công an' : 'Cơ sở Y tế'),
+            address: tags['addr:full'] ?? tags['addr:street'] ?? 'Địa chỉ đang cập nhật',
+            latitude: latVal.toDouble(),
+            longitude: lonVal.toDouble(),
+            type: type,
+            phone: tags['phone'] ?? tags['contact:phone'] ?? '',
+            description: tags['operator'] ?? 'Dữ liệu từ cộng đồng',
+            isAvailable24h: tags['opening_hours'] == '24/7',
+          );
+        }).toList();
+      }
+    } catch (e) {
+      print('OSM Fetch Error: $e');
+    }
+    return [];
   }
 
   // Tính khoảng cách đến nơi trú ẩn

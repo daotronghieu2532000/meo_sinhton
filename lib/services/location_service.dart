@@ -39,7 +39,14 @@ class LocationService {
       
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
-        return '${place.administrativeArea}, ${place.country}';
+        List<String> parts = [];
+        if (place.subLocality != null && place.subLocality!.isNotEmpty) parts.add(place.subLocality!);
+        if (place.locality != null && place.locality!.isNotEmpty) parts.add(place.locality!);
+        if (place.subAdministrativeArea != null && place.subAdministrativeArea!.isNotEmpty) parts.add(place.subAdministrativeArea!);
+        
+        if (parts.isEmpty && place.administrativeArea != null) parts.add(place.administrativeArea!);
+        
+        return parts.join(', ');
       }
     } catch (e) {
       print('Error getting address: $e');

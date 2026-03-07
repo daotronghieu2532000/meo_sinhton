@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
 import '../services/weather_service.dart';
 import '../models/weather_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyMapScreen extends StatefulWidget {
   const EmergencyMapScreen({
@@ -37,6 +38,7 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
   // New variables for Map and Weather
   final MapController _mapController = MapController();
   WeatherData? _weather;
+  String? _currentAddress;
   bool _showMap = true;
   bool _isWeatherLoading = false;
 
@@ -73,8 +75,12 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
         setState(() {
           _currentPosition = position;
         });
-        await _loadShelters();
-        await _loadWeather(); // Load weather data
+        
+        // Khởi chạy song song cả 2 tác vụ để tiết kiệm thời gian
+        await Future.wait([
+          _loadShelters(),
+          _loadWeather(),
+        ]);
       }
 
       setState(() {
@@ -109,8 +115,15 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
         );
       }
 
+      // Reverse geocoding for precise location name
+      final address = await LocationService.getAddressFromLocation(_currentPosition!);
+      if (weather != null && address != 'Unknown location') {
+        weather = weather.copyWith(locationName: address);
+      }
+
       setState(() {
         _weather = weather;
+        _currentAddress = address;
         _isWeatherLoading = false;
       });
     } catch (e) {
@@ -125,14 +138,22 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
     if (_currentPosition == null) return;
 
     try {
-      // Load all shelters
-      final allShelters = await EmergencyLocationManager.getAllShelters();
-      
-      // Load nearby shelters (trong bán kính 10km)
-      final nearby = await EmergencyLocationManager.findNearbyShelters();
-
+      // 1. Hiển thị ngay lập tức danh sách tĩnh để app không bị trắng xóa
+      final staticShelters = await EmergencyLocationManager.getAllShelters();
       setState(() {
-        _shelters = allShelters;
+        _shelters = staticShelters;
+      });
+
+      // 2. Load dữ liệu thực tế (OSM) từ mạng ở background
+      final nearby = await EmergencyLocationManager.findNearbyShelters(radiusKm: 8.0);
+      
+      setState(() {
+        // Gộp dữ liệu mới vào dữ liệu tĩnh một cách duy nhất
+        final Map<String, EmergencyShelter> combinedMap = {};
+        for (var s in staticShelters) combinedMap[s.id] = s;
+        for (var s in nearby) combinedMap[s.id] = s;
+        
+        _shelters = combinedMap.values.toList();
         _nearbyShelters = nearby;
       });
     } catch (e) {
@@ -521,11 +542,12 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
     );
   }
 
-  Widget _buildWeatherCard() {
+  Widget _buildWeatherCard({bool isCompact = false}) {
     if (_isWeatherLoading) {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(isCompact ? 12 : 16),
+        height: isCompact ? 60 : null,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
@@ -537,6 +559,76 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
     if (_weather == null) return const SizedBox.shrink();
 
     final isSevere = _weather!.isSevere;
+
+    if (isCompact) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isSevere 
+              ? [Colors.orange.shade800, Colors.red.shade900]
+              : [Colors.blue.shade700, Colors.blue.shade900],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: (isSevere ? Colors.red : Colors.blue).withAlpha(40),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Image.network(
+              'https://openweathermap.org/img/wn/${_weather!.icon}.png',
+              width: 32,
+              height: 32,
+              errorBuilder: (_, __, ___) => const Icon(Icons.wb_sunny, color: Colors.white, size: 24),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    _weather!.locationName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  Text(
+                    '${_weather!.description[0].toUpperCase()}${_weather!.description.substring(1)} • AQI: ${_weather!.airQuality?.aqi ?? "?"}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 11),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${_weather!.temperature.toStringAsFixed(1)}°C',
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(
+                  '${_weather!.windSpeed}m/s',
+                  style: TextStyle(color: Colors.white.withAlpha(180), fontSize: 10),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -575,36 +667,130 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                   children: [
                     Text(
                       _weather!.locationName,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white, 
+                        fontWeight: FontWeight.bold, 
+                        fontSize: 20,
+                        letterSpacing: 0.5,
+                      ),
                     ),
                     Text(
                       _weather!.description[0].toUpperCase() + _weather!.description.substring(1),
-                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14),
+                      style: TextStyle(
+                        color: Colors.white.withAlpha(210), 
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '${_weather!.temperature.toStringAsFixed(1)}°C',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Icons.air, color: Colors.white, size: 14),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${_weather!.windSpeed} m/s',
-                        style: const TextStyle(color: Colors.white, fontSize: 12),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(40),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '${_weather!.temperature.toStringAsFixed(1)}°C',
+                      style: const TextStyle(
+                        color: Colors.white, 
+                        fontWeight: FontWeight.bold, 
+                        fontSize: 26,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.air, color: Colors.white, size: 14),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${_weather!.windSpeed} m/s',
+                          style: const TextStyle(color: Colors.white, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
+          if (_weather!.airQuality != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(25),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white.withAlpha(30)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: (_weather!.airQuality!.aqi >= 4 ? Colors.orange : Colors.blue).withAlpha(40),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.air_rounded, 
+                          color: _weather!.airQuality!.aqi >= 4 ? Colors.orangeAccent : Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Chất lượng: ${_weather!.airQuality!.aqiStatus}',
+                        style: const TextStyle(
+                          color: Colors.white, 
+                          fontWeight: FontWeight.bold, 
+                          fontSize: 14
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        'AQI: ${_weather!.airQuality!.aqi}',
+                        style: TextStyle(
+                          color: Colors.white.withAlpha(180),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  // Grid of details
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildAirDetail('PM2.5', '${_weather!.airQuality!.pm2_5.toStringAsFixed(1)}'),
+                      _buildAirDetail('PM10', '${_weather!.airQuality!.pm10.toStringAsFixed(1)}'),
+                      _buildAirDetail('CO', '${(_weather!.airQuality!.co / 1000).toStringAsFixed(1)}mg'),
+                      _buildAirDetail('O₃', '${_weather!.airQuality!.o3.toStringAsFixed(1)}'),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '💡 ${_weather!.airQuality!.aqiAdvice}',
+                    style: TextStyle(
+                      color: Colors.white.withAlpha(210), 
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           if (isSevere && _weather!.alertMessage.isNotEmpty) ...[
             const SizedBox(height: 12),
             Container(
@@ -685,7 +871,7 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
           ),
         ),
         
-        _buildWeatherCard(),
+        _buildWeatherCard(isCompact: !_showMap),
         
         if (!_showMap) ...[
           // Location info card (chỉ hiện ở view danh sách)
@@ -694,12 +880,12 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
+                  color: Colors.black.withAlpha(15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
@@ -708,13 +894,13 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.my_location,
-                    color: Colors.white,
-                    size: 24,
+                  child: Icon(
+                    Icons.my_location_rounded,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    size: 28,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -722,60 +908,73 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.isEnglish ? 'Your Location' : 'Vị trí của bạn',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      _currentAddress ?? (widget.isEnglish ? 'Your Location' : 'Vị trí của bạn'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _currentPosition != null
-                            ? 'Lat: ${_currentPosition!.latitude.toStringAsFixed(6)}, Lng: ${_currentPosition!.longitude.toStringAsFixed(6)}'
-                            : 'Unknown',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontFamily: 'monospace',
-                          color: Colors.grey.shade600,
+                    ),
+                    const SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.radar_rounded,
+                          size: 14,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            _currentPosition != null
+                                ? 'GPS: ${_currentPosition!.latitude.toStringAsFixed(6)}, ${_currentPosition!.longitude.toStringAsFixed(6)}'
+                                : 'Finding GPS...',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontFamily: 'monospace',
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
 
           // Search bar
-          // Container(
-          //   margin: const EdgeInsets.symmetric(horizontal: 16),
-          //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          //   decoration: BoxDecoration(
-          //     color: Theme.of(context).colorScheme.surface,
-          //     borderRadius: BorderRadius.circular(12),
-          //     border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-          //   ),
-          //   // child: TextField(
-          //   //   decoration: InputDecoration(
-          //   //     hintText: widget.isEnglish ? 'Search shelters...' : 'Tìm kiếm nơi trú ẩn...',
-          //   //     prefixIcon: const Icon(Icons.search),
-          //   //     suffixIcon: _isSearching
-          //   //         ? const SizedBox(
-          //   //             width: 20,
-          //   //             height: 20,
-          //   //             child: CircularProgressIndicator(strokeWidth: 2),
-          //   //           )
-          //   //         : null,
-          //   //     border: InputBorder.none,
-          //   //     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          //   //   ),
-          //   //   onChanged: (value) {
-          //   //     setState(() {
-          //   //       _searchQuery = value.toLowerCase();
-          //   //       _isSearching = value.isNotEmpty;
-          //   //     });
-          //   //   },
-          //   // ),
-          // ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withAlpha(100),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: widget.isEnglish ? 'Search shelters...' : 'Tìm kiếm nơi trú ẩn...',
+                prefixIcon: const Icon(Icons.search_rounded),
+                suffixIcon: _isSearching
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : null,
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value.toLowerCase();
+                  _isSearching = value.isNotEmpty;
+                });
+              },
+            ),
+          ),
           
           const SizedBox(height: 8),
           
@@ -828,55 +1027,116 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                   ),
                 ],
               ),
-              child: FlutterMap(
-                mapController: _mapController,
-                options: MapOptions(
-                  initialCenter: LatLng(
-                    _currentPosition!.latitude, 
-                    _currentPosition!.longitude
-                  ),
-                  initialZoom: 14.0,
-                ),
+              child: Stack(
                 children: [
-                  TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.trong.meo_sinhton',
-                  ),
-                  MarkerLayer(
-                    markers: [
-                      // User Marker
-                      Marker(
-                        point: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-                        width: 80,
-                        height: 80,
-                        child: const Icon(
-                          Icons.my_location,
-                          color: Colors.blue,
-                          size: 40,
-                        ),
+                  FlutterMap(
+                    mapController: _mapController,
+                    options: MapOptions(
+                      initialCenter: LatLng(
+                        _currentPosition!.latitude, 
+                        _currentPosition!.longitude
                       ),
-                      // Shelter Markers
-                      ..._nearbyShelters.map((shelter) => Marker(
-                        point: LatLng(shelter.latitude, shelter.longitude),
-                        width: 40,
-                        height: 40,
-                        child: GestureDetector(
-                          onTap: () => _showShelterDetails(shelter),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: _getShelterTypeColor(shelter.type),
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
-                            ),
-                            child: Icon(
-                              _getShelterTypeIcon(shelter.type),
-                              color: Colors.white,
-                              size: 20,
+                      initialZoom: 14.0,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'com.trong.meo_sinhton',
+                      ),
+                      MarkerLayer(
+                        markers: [
+                          // User Marker
+                          Marker(
+                            point: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+                            width: 40,
+                            height: 40,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withAlpha(50),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width: 15,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.white, width: 2),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      )).toList(),
+                          // Shelter Markers - Show all shelters
+                          ..._shelters.map((shelter) => Marker(
+                            point: LatLng(shelter.latitude, shelter.longitude),
+                            width: 40,
+                            height: 40,
+                            child: GestureDetector(
+                              onTap: () => _showShelterDetails(shelter),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: _getShelterTypeColor(shelter.type),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.white, width: 2),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withAlpha(50),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  _getShelterTypeIcon(shelter.type),
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                          )).toList(),
+                        ],
+                      ),
                     ],
+                  ),
+                  // Floating "My Location" Button on Map
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          if (_currentPosition != null) {
+                            _mapController.move(
+                              LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+                              15.0
+                            );
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha(40),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.my_location_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -939,18 +1199,18 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
               ),
               child: Icon(
                 Icons.location_city_outlined,
-                size: 64,
+                size: 50,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              widget.isEnglish
-                  ? 'No nearby shelters found'
-                  : 'Không tìm thấy cơ sở nào gần đó',
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
+            // const SizedBox(height: 16),
+            // Text(
+            //   widget.isEnglish
+            //       ? 'No nearby shelters found'
+            //       : 'Không tìm thấy cơ sở nào gần đó',
+            //   style: Theme.of(context).textTheme.titleLarge,
+            //   textAlign: TextAlign.center,
+            // ),
             const SizedBox(height: 8),
             Text(
               widget.isEnglish
@@ -1225,7 +1485,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                       onPressed: () async {
                         final phoneUri = Uri(scheme: 'tel', path: shelter.phone);
                         try {
-                          // Sử dụng url_launcher để gọi điện
+                          if (await canLaunchUrl(phoneUri)) {
+                            await launchUrl(phoneUri);
+                          }
                         } catch (e) {
                           print('Error making call: $e');
                         }
@@ -1274,6 +1536,30 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAirDetail(String label, String value) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.white.withAlpha(160),
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 
