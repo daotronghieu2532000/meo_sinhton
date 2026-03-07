@@ -7,6 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:meo_sinhton/screens/saved_tips_page.dart';
 import 'dart:async';
 
 const _isFlutterTest = bool.fromEnvironment('FLUTTER_TEST');
@@ -415,6 +416,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     AppStrings.notificationsDesc(isEnglish),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              _tileCard(
+                child: ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SavedTipsPage(
+                          appController: widget.appController,
+                          isEnglish: isEnglish,
+                        ),
+                      ),
+                    );
+                  },
+                  leading: _tileIcon(
+                    icon: Icons.bookmark_outline,
+                    background: Colors.orange.shade100,
+                    foreground: Colors.orange.shade700,
+                  ),
+                  title: Text(AppStrings.tabSaved(isEnglish)),
+                  subtitle: Text(
+                    isEnglish ? 'View your bookmarked survival tips' : 'Xem lại các mẹo sinh tồn bạn đã lưu',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: const Icon(Icons.chevron_right, size: 20),
                 ),
               ),
               const SizedBox(height: 6),

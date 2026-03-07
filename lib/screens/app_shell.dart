@@ -9,6 +9,7 @@ import 'package:meo_sinhton/screens/settings_screen.dart';
 import 'package:meo_sinhton/screens/tip_feed_view.dart';
 import 'package:meo_sinhton/screens/emergency_map_screen_improved.dart';
 import 'package:meo_sinhton/screens/community_page.dart';
+import 'package:meo_sinhton/screens/top_tips_page.dart';
 import 'package:meo_sinhton/widgets/logo_placeholder.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
@@ -97,9 +98,9 @@ class _AppShellState extends State<AppShell> {
         final titles = [
           AppStrings.appName(),
           AppStrings.tabCommunity(isEnglish),
+          AppStrings.tabTop10(isEnglish),
           AppStrings.tabScenario(isEnglish),
           AppStrings.tabMap(isEnglish),
-          AppStrings.tabSaved(isEnglish),
         ];
 
         final pages = [
@@ -111,15 +112,15 @@ class _AppShellState extends State<AppShell> {
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
+          TopTipsPage(
+            appController: widget.appController,
+            isEnglish: isEnglish,
+          ),
           ScenarioModePage(
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
           EmergencyMapScreen(
-            appController: widget.appController,
-            isEnglish: isEnglish,
-          ),
-          SavedTipsPage(
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
@@ -192,6 +193,32 @@ class _AppShellState extends State<AppShell> {
                     label: AppStrings.tabCommunity(isEnglish),
                   ),
                   BottomNavigationBarItem(
+                    icon: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.amber.shade100,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.amber, width: 2),
+                          ),
+                          child: const Icon(Icons.emoji_events, color: Colors.amber, size: 28),
+                        ),
+                        Positioned(
+                          right: -4,
+                          top: -4,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                            child: const Text('10', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    label: AppStrings.tabTop10(isEnglish),
+                  ),
+                  BottomNavigationBarItem(
                     icon: const Icon(Icons.quiz_outlined),
                     activeIcon: const Icon(Icons.quiz),
                     label: AppStrings.tabScenario(isEnglish),
@@ -200,11 +227,6 @@ class _AppShellState extends State<AppShell> {
                     icon: const Icon(Icons.map_outlined),
                     activeIcon: const Icon(Icons.map),
                     label: AppStrings.tabMap(isEnglish),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.bookmark_border),
-                    activeIcon: const Icon(Icons.bookmark),
-                    label: AppStrings.tabSaved(isEnglish),
                   ),
                 ],
               ),

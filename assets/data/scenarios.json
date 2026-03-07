@@ -8,7 +8,7 @@
     "difficulty": "Dễ",
     "difficultyEn": "Easy",
     "estimatedMinutes": 2,
-    "imageAsset": "assets/data_img/action/chaynhotrongbep.png",
+    "imageAsset": "assets/data_img/action/chaynhotrongbep.jpg",
     "steps": [
       {
         "question": "Khi phát hiện cháy dầu mỡ trên chảo, bước xử lý chuyên nghiệp đầu tiên là gì?",
@@ -102,7 +102,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/lacduong_khitroitoi.png",
+    "imageAsset": "assets/data_img/action/lacduong_khitroitoi.jpg",
     "steps": [
       {
         "question": "Khi phát hiện mình bị lạc vào ban đêm, bước xử lý chuyên nghiệp đầu tiên là gì?",
@@ -196,7 +196,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/dongdat_trongnha.png",
+    "imageAsset": "assets/data_img/action/dongdat_trongnha.jpg",
     "steps": [
       {
         "question": "Khi xảy ra rung lắc mạnh do động đất, bước xử lý chuyên nghiệp đầu tiên là gì?",
@@ -290,7 +290,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/ngaplut_khidi.png",
+    "imageAsset": "assets/data_img/action/ngaplut_khidi.jpg",
     "steps": [
       {
         "question": "Khi thấy nước ngập sâu, bạn nên làm gì trước?",
@@ -384,7 +384,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/ro_gas.png",
+    "imageAsset": "assets/data_img/action/ro_gas.jpg",
     "steps": [
       {
         "question": "Việc nào cần tránh ngay lập tức?",
@@ -478,7 +478,7 @@
     "difficulty": "Dễ",
     "difficultyEn": "Easy",
     "estimatedMinutes": 2,
-    "imageAsset": "assets/data_img/action/ket_trongthangmay.png",
+    "imageAsset": "assets/data_img/action/ket_trongthangmay.jpg",
     "steps": [
       {
         "question": "Hành động đúng đầu tiên là gì?",
@@ -572,7 +572,7 @@
     "difficulty": "Nâng cao",
     "difficultyEn": "Advanced",
     "estimatedMinutes": 4,
-    "imageAsset": "assets/data_img/action/nguoibi_diengiat.png",
+    "imageAsset": "assets/data_img/action/nguoibi_diengiat.jpg",
     "steps": [
       {
         "question": "Điều quan trọng nhất trước khi chạm vào nạn nhân là gì?",
@@ -708,7 +708,7 @@
     "difficulty": "Nâng cao",
     "difficultyEn": "Advanced",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/bicuon_raxabo.png",
+    "imageAsset": "assets/data_img/action/bicuon_raxabo.jpg",
     "steps": [
       {
         "question": "Khi nhận ra là rip current, bạn nên làm gì?",
@@ -802,7 +802,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/xemay_truotbanh.png",
+    "imageAsset": "assets/data_img/action/xemay_truotbanh.jpg",
     "steps": [
       {
         "question": "Khi cảm giác trượt, thao tác nào an toàn hơn?",
@@ -896,7 +896,7 @@
     "difficulty": "Nâng cao",
     "difficultyEn": "Advanced",
     "estimatedMinutes": 4,
-    "imageAsset": "assets/data_img/action/bi_rancan.png",
+    "imageAsset": "assets/data_img/action/bi_rancan.jpg",
     "steps": [
       {
         "question": "Xử lý nào đúng ngay sau khi nghi bị rắn cắn?",
@@ -1084,7 +1084,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/luadao_quacuocgoi.png",
+    "imageAsset": "assets/data_img/action/luadao_quacuocgoi.jpg",
     "steps": [
       {
         "question": "Bạn nhận được cuộc gọi video từ người thân, nhưng nghi ngờ là deepfake. Bạn nên làm gì?",
@@ -1205,7 +1205,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/matdien_dienrong.png",
+    "imageAsset": "assets/data_img/action/matdien_dienrong.jpg",
     "steps": [
       {
         "question": "Việc nào nên ưu tiên khi mất điện giữa nắng nóng?",
@@ -1272,7 +1272,7 @@
     "difficulty": "Trung bình",
     "difficultyEn": "Medium",
     "estimatedMinutes": 3,
-    "imageAsset": "assets/data_img/action/bibatnatquamang.png",
+    "imageAsset": "assets/data_img/action/bibatnatquamang.jpg",
     "steps": [
       {
         "question": "Việc nào nên làm đầu tiên khi bị bắt nạt qua mạng?",

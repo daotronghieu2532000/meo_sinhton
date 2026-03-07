@@ -15,6 +15,8 @@ class AppStrings {
       AppI18n.text(isEnglish: isEnglish, vi: 'Tình huống', en: 'Scenarios');
   static String tabMap(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Bản đồ', en: 'Map');
+  static String tabTop10(bool isEnglish) =>
+      AppI18n.text(isEnglish: isEnglish, vi: 'Top 10', en: 'Top 10');
   static String tabSaved(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Đã lưu', en: 'Saved');
   static String settings(bool isEnglish) =>

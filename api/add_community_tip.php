@@ -26,6 +26,37 @@ try {
     $user_id = isset($data['user_id']) ? (int)$data['user_id'] : null;
     $steps_json = isset($data['steps']) ? $data['steps'] : '[]'; // JSON string
     $ip_address = $_SERVER['REMOTE_ADDR'];
+    $image_url = '';
+
+    // Xử lý Upload ảnh (nếu có)
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $target_dir = __DIR__ . "/uploads/community/";
+        if (!file_exists($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+        
+        $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+        $new_filename = uniqid() . '.' . $file_extension;
+        $target_file = $target_dir . $new_filename;
+        
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            // Lưu đường dẫn tính từ thư mục api để get_community_tips.php dễ xử lý
+            $image_url = 'uploads/community/' . $new_filename; 
+        }
+    }
+
+    // Tự động suy diễn Quốc gia từ IP (Sử dụng IP-API)
+    $country_code = 'VN'; // Mặc định
+    try {
+        if ($ip_address !== '127.0.0.1' && $ip_address !== '::1' && !empty($ip_address)) {
+            $ip_details = json_decode(file_get_contents("http://ip-api.com/json/{$ip_address}?fields=status,countryCode"));
+            if ($ip_details && $ip_details->status === 'success') {
+                $country_code = $ip_details->countryCode;
+            }
+        }
+    } catch (Exception $e) {
+        // Lỗi gọi API thì cứ để mặc định VN
+    }
 
     if (empty($title) || empty($content)) {
         throw new Exception("Tiêu đề và nội dung không được để trống");
@@ -43,8 +74,8 @@ try {
     }
 
     // 2. Chèn dữ liệu mới với status = 0 (Chờ duyệt)
-    $stmt = $conn->prepare("INSERT INTO community_tips (user_id, title, content, category, author_name, ip_address, status, steps) VALUES (?, ?, ?, ?, ?, ?, 0, ?)");
-    $stmt->bind_param("issssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json);
+    $stmt = $conn->prepare("INSERT INTO community_tips (user_id, title, content, category, author_name, ip_address, status, steps, image_url, country_code) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?)");
+    $stmt->bind_param("isssssssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json, $image_url, $country_code);
 
     if ($stmt->execute()) {
         echo json_encode([

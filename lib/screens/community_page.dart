@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CommunityPage extends StatefulWidget {
   final AppController appController;
@@ -21,8 +23,16 @@ class CommunityPage extends StatefulWidget {
 
 class _CommunityPageState extends State<CommunityPage> {
   List<dynamic> _tips = [];
+  List<dynamic> _filteredTips = [];
   bool _isLoading = true;
   final String _baseUrl = 'https://codego.io.vn/api/';
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -39,6 +49,7 @@ class _CommunityPageState extends State<CommunityPage> {
         if (data['success']) {
           setState(() {
             _tips = data['data'];
+            _filteredTips = _tips;
             _isLoading = false;
           });
         }
@@ -47,6 +58,21 @@ class _CommunityPageState extends State<CommunityPage> {
       print('Error fetching tips: $e');
       setState(() => _isLoading = false);
     }
+  }
+
+  void _filterTips(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredTips = _tips;
+      } else {
+        _filteredTips = _tips.where((tip) {
+          final title = tip['title'].toString().toLowerCase();
+          final content = tip['content'].toString().toLowerCase();
+          final searchLower = query.toLowerCase();
+          return title.contains(searchLower) || content.contains(searchLower);
+        }).toList();
+      }
+    });
   }
 
   void _showAddTipDialog() {
@@ -58,6 +84,27 @@ class _CommunityPageState extends State<CommunityPage> {
       TextEditingController(),
     ];
     String selectedCategory = 'tip';
+    File? selectedImage;
+    final ImagePicker picker = ImagePicker();
+
+    Future<void> pickImage(void Function(void Function()) setModalState) async {
+      try {
+        // Nén ngay từ nguồn: maxWidth, maxHeight và imageQuality giúp giảm dung lượng xuống ~200-300KB
+        final XFile? image = await picker.pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1024, 
+          maxHeight: 1024,
+          imageQuality: 85, 
+        );
+        if (image != null) {
+          setModalState(() {
+            selectedImage = File(image.path);
+          });
+        }
+      } catch (e) {
+        print('Error picking image: $e');
+      }
+    }
 
     showModalBottomSheet(
       context: context,
@@ -113,7 +160,7 @@ class _CommunityPageState extends State<CommunityPage> {
                 DropdownButtonFormField<String>(
                   value: selectedCategory,
                   items: [
-                    DropdownMenuItem(value: 'tip', child: Text(widget.isEnglish ? 'Survival Tip' : 'Mẹo sinh tồn')),
+                    DropdownMenuItem(value: 'tip', child: Text(widget.isEnglish ? 'Survival Tip' : 'Mẹo')),
                     DropdownMenuItem(value: 'experience', child: Text(widget.isEnglish ? 'Survival Experience' : 'Kinh nghiệm sinh tồn')),
                     DropdownMenuItem(value: 'first_aid', child: Text(widget.isEnglish ? 'First Aid' : 'Sơ cứu')),
                     DropdownMenuItem(value: 'feedback', child: Text(widget.isEnglish ? 'App Feedback' : 'Góp ý ứng dụng')),
@@ -132,6 +179,48 @@ class _CommunityPageState extends State<CommunityPage> {
                     labelText: widget.isEnglish ? 'Content' : 'Nội dung mô tả',
                     hintText: widget.isEnglish ? 'Describe your tip or scenario...' : 'Mô tả ngắn gọn về mẹo hoặc tình huống...',
                     alignLabelWithHint: true,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // Khu vực chọn ảnh
+                InkWell(
+                  onTap: () => pickImage(setModalState),
+                  child: Container(
+                    width: double.infinity,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                    ),
+                    child: selectedImage != null 
+                      ? Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.file(selectedImage!, fit: BoxFit.cover),
+                            ),
+                            Positioned(
+                              top: 8, right: 8,
+                              child: IconButton.filled(
+                                onPressed: () => setModalState(() => selectedImage = null),
+                                icon: const Icon(Icons.delete_outline, size: 20),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add_a_photo_outlined, color: Theme.of(context).colorScheme.primary),
+                            const SizedBox(height: 8),
+                            Text(
+                              widget.isEnglish ? 'Add illustration photo (Optional)' : 'Thêm ảnh minh họa (Không bắt buộc)',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 13),
+                            ),
+                          ],
+                        ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -201,17 +290,24 @@ class _CommunityPageState extends State<CommunityPage> {
                           .map((c) => c.text)
                           .toList();
 
-                      final response = await http.post(
-                        Uri.parse('${_baseUrl}add_community_tip.php'),
-                        headers: {'Content-Type': 'application/json'},
-                        body: json.encode({
-                          'title': titleController.text,
-                          'content': contentController.text,
-                          'author_name': authorController.text.isEmpty ? 'Ẩn danh' : authorController.text,
-                          'category': selectedCategory,
-                          'steps': json.encode(stepsData),
-                        }),
-                      );
+                      // Sử dụng MultipartRequest để gửi cả ảnh và dữ liệu
+                      var request = http.MultipartRequest('POST', Uri.parse('${_baseUrl}add_community_tip.php'));
+                      
+                      request.fields['title'] = titleController.text;
+                      request.fields['content'] = contentController.text;
+                      request.fields['author_name'] = authorController.text.isEmpty ? 'Ẩn danh' : authorController.text;
+                      request.fields['category'] = selectedCategory;
+                      request.fields['steps'] = json.encode(stepsData);
+
+                      if (selectedImage != null) {
+                        request.files.add(await http.MultipartFile.fromPath(
+                          'image',
+                          selectedImage!.path,
+                        ));
+                      }
+
+                      final streamedResponse = await request.send();
+                      final response = await http.Response.fromStream(streamedResponse);
 
                       if (response.statusCode == 200) {
                         final data = json.decode(response.body);
@@ -248,13 +344,47 @@ class _CommunityPageState extends State<CommunityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: RefreshIndicator(
-        onRefresh: _fetchTips,
-        child: _isLoading 
-          ? const Center(child: CircularProgressIndicator())
-          : _tips.isEmpty 
-            ? _buildEmptyState()
-            : _buildTipsList(),
+      body: Column(
+        children: [
+          // Thanh tìm kiếm
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: TextField(
+              controller: _searchController,
+              onChanged: _filterTips,
+              decoration: InputDecoration(
+                hintText: widget.isEnglish ? 'Search tips...' : 'Tìm kiếm mẹo, kinh nghiệm...',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _searchController.text.isNotEmpty 
+                  ? IconButton(
+                      icon: const Icon(Icons.clear, size: 20),
+                      onPressed: () {
+                        _searchController.clear();
+                        _filterTips('');
+                      },
+                    )
+                  : null,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _fetchTips,
+              child: _isLoading 
+                ? const Center(child: CircularProgressIndicator())
+                : _filteredTips.isEmpty 
+                  ? _buildEmptyState()
+                  : _buildTipsList(),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddTipDialog,
@@ -294,9 +424,9 @@ class _CommunityPageState extends State<CommunityPage> {
   Widget _buildTipsList() {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: _tips.length,
+      itemCount: _filteredTips.length,
       itemBuilder: (context, index) {
-        final tip = _tips[index];
+        final tip = _filteredTips[index];
         return Card(
           margin: const EdgeInsets.only(bottom: 16),
           elevation: 0,
@@ -309,14 +439,52 @@ class _CommunityPageState extends State<CommunityPage> {
               backgroundColor: _getCategoryColor(tip['category']).withOpacity(0.2),
               child: Icon(_getCategoryIcon(tip['category']), color: _getCategoryColor(tip['category']), size: 20),
             ),
-            title: Text(
-              tip['title'],
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tip['title'],
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${tip['author_name']} ${_getFlagEmoji(tip['country_code'] ?? 'VN')} • ${DateFormat('dd/MM/yyyy').format(DateTime.parse(tip['created_at']))}',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (tip['image_url'] != null)
+                   GestureDetector(
+                     onTap: () => _showZoomedImage(tip['image_url']),
+                     child: Container(
+                       margin: const EdgeInsets.only(left: 12),
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(10),
+                         border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
+                       ),
+                       child: ClipRRect(
+                         borderRadius: BorderRadius.circular(9),
+                         child: Image.network(
+                           tip['image_url'],
+                           width: 54,
+                           height: 54,
+                           fit: BoxFit.cover,
+                           errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                         ),
+                       ),
+                     ),
+                   ),
+              ],
             ),
-            subtitle: Text(
-              '${tip['author_name']} • ${DateFormat('dd/MM/yyyy').format(DateTime.parse(tip['created_at']))}',
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-            ),
+            subtitle: null, // Subtitle moved inside title for better alignment
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -334,6 +502,45 @@ class _CommunityPageState extends State<CommunityPage> {
                       tip['content'],
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
+                    if (tip['image_url'] != null) ...[
+                      const SizedBox(height: 12),
+                      GestureDetector(
+                        onTap: () => _showZoomedImage(tip['image_url']),
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(
+                                tip['image_url'],
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                height: 160,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width * 0.7,
+                                    height: 160,
+                                    color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                                    child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                     if (tip['steps'] != null && (tip['steps'] as List).isNotEmpty) ...[
                       const SizedBox(height: 16),
                       Text(
@@ -432,20 +639,81 @@ class _CommunityPageState extends State<CommunityPage> {
   }
 
   Future<void> _likeTip(int tipId) async {
+    // 1. Cập nhật UI ngay lập tức (Optimistic Update) để trải nghiệm mượt mà
+    setState(() {
+      for (var tip in _tips) {
+        if (tip['id'] == tipId) {
+          tip['likes_count'] = (tip['likes_count'] ?? 0) + 1;
+          break;
+        }
+      }
+      // Đồng bộ với danh sách đang hiển thị (nếu đang search)
+      for (var tip in _filteredTips) {
+        if (tip['id'] == tipId) {
+          // Tránh cộng 2 lần nếu _tips và _filteredTips cùng reference
+          // nhưng trong Dart map objects thường là reference nên ok
+          break;
+        }
+      }
+    });
+
     try {
-      final response = await http.post(
+      await http.post(
         Uri.parse('${_baseUrl}like_community_tip.php'),
         body: {'tip_id': tipId.toString()},
       );
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data['success']) {
-          _fetchTips(); // Refresh list to update counts
-        }
-      }
+      // Không gọi _fetchTips() nữa để tránh load lại trang
     } catch (e) {
       print('Error liking tip: $e');
+      // Nếu lỗi mạng, có thể hoàn tác (rollback) ở đây nếu muốn
     }
+  }
+
+  void _showZoomedImage(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.zero,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.85),
+              ),
+            ),
+            InteractiveViewer(
+              panEnabled: true,
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              top: 40,
+              right: 20,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getFlagEmoji(String countryCode) {
+    if (countryCode.length != 2) return '';
+    int firstLetter = countryCode.toUpperCase().codeUnitAt(0) - 0x41 + 0x1F1E6;
+    int secondLetter = countryCode.toUpperCase().codeUnitAt(1) - 0x41 + 0x1F1E6;
+    return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
   }
 
   Color _getCategoryColor(String category) {

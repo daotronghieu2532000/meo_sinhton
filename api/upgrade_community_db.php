@@ -10,7 +10,9 @@ $sql1 = "ALTER TABLE community_tips
         ADD COLUMN IF NOT EXISTS status TINYINT DEFAULT 0 COMMENT '0: pending, 1: approved, 2: rejected',
         ADD COLUMN IF NOT EXISTS likes_count INT DEFAULT 0,
         ADD COLUMN IF NOT EXISTS ip_address VARCHAR(45),
-        ADD COLUMN IF NOT EXISTS steps JSON;";
+        ADD COLUMN IF NOT EXISTS steps JSON,
+        ADD COLUMN IF NOT EXISTS image_url VARCHAR(255),
+        ADD COLUMN IF NOT EXISTS country_code VARCHAR(5) DEFAULT 'VN';";
 
 // 2. Tạo bảng community_comments
 $sql2 = "CREATE TABLE IF NOT EXISTS community_comments (
