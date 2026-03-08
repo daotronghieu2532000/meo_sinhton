@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:meo_sinhton/app/app_controller.dart';
-import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -325,6 +324,14 @@ class _CommunityPageState extends State<CommunityPage> {
                               SnackBar(content: Text(data['message'])),
                             );
                           }
+                        }
+                      } else {
+                        print('Server Error: ${response.statusCode}');
+                        print('Response Body: ${response.body}');
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Lỗi máy chủ (${response.statusCode}). Bạn thử lại xem!')),
+                          );
                         }
                       }
                     },

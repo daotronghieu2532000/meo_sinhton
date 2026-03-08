@@ -3,8 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import '../services/location_service.dart';
 import '../services/emergency_location_manager.dart';
 import '../models/emergency_shelter.dart';
-import '../app/app_strings.dart';
 import '../utils/permission_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyMapScreen extends StatefulWidget {
   const EmergencyMapScreen({
@@ -548,7 +548,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
               onPressed: () async {
                 final phoneUri = Uri(scheme: 'tel', path: shelter.phone);
                 try {
-                  // Sử dụng url_launcher để gọi điện
+                  if (await canLaunchUrl(phoneUri)) {
+                    await launchUrl(phoneUri);
+                  }
                 } catch (e) {
                   print('Error making call: $e');
                 }

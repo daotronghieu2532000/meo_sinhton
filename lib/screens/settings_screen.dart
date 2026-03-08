@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:meo_sinhton/screens/saved_tips_page.dart';
+import 'package:meo_sinhton/screens/my_posts_page.dart';
 import 'dart:async';
 
 const _isFlutterTest = bool.fromEnvironment('FLUTTER_TEST');
@@ -330,11 +331,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     segments: const [
                       ButtonSegment<AppLanguage>(
                         value: AppLanguage.vietnamese,
-                        label: Text('VI'),
+                        label: Text('🇻🇳 VI'),
                       ),
                       ButtonSegment<AppLanguage>(
                         value: AppLanguage.english,
-                        label: Text('EN'),
+                        label: Text('🇺🇸 EN'),
                       ),
                     ],
                     selected: {widget.appController.language},
@@ -355,13 +356,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     vertical: 2,
                   ),
                   secondary: _tileIcon(
-                    icon: Icons.dark_mode_outlined,
-                    background: scheme.secondaryContainer,
-                    foreground: scheme.onSecondaryContainer,
+                    icon: widget.appController.themeMode == ThemeMode.dark
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                    background: widget.appController.themeMode == ThemeMode.dark
+                        ? Colors.indigo.shade100
+                        : Colors.orange.shade100,
+                    foreground: widget.appController.themeMode == ThemeMode.dark
+                        ? Colors.indigo.shade700
+                        : Colors.orange.shade800,
                   ),
-                  title: Text(AppStrings.darkMode(isEnglish)),
+                  title: Text(
+                    widget.appController.themeMode == ThemeMode.dark
+                        ? (isEnglish ? 'Dark Theme' : 'Giao diện tối')
+                        : (isEnglish ? 'Light Theme' : 'Giao diện sáng'),
+                  ),
                   subtitle: Text(
-                    AppStrings.darkModeDesc(isEnglish),
+                    widget.appController.themeMode == ThemeMode.dark
+                        ? (isEnglish ? 'Optimized for low light' : 'Tối ưu cho môi trường thiếu sáng')
+                        : (isEnglish ? 'Clean and clear appearance' : 'Giao diện sáng sủa, rõ ràng'),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   value: widget.appController.themeMode == ThemeMode.dark,
@@ -446,6 +459,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(AppStrings.tabSaved(isEnglish)),
                   subtitle: Text(
                     isEnglish ? 'View your bookmarked survival tips' : 'Xem lại các mẹo sinh tồn bạn đã lưu',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: const Icon(Icons.chevron_right, size: 20),
+                ),
+              ),
+              const SizedBox(height: 6),
+              _tileCard(
+                child: ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MyPostsPage(
+                          appController: widget.appController,
+                          isEnglish: isEnglish,
+                        ),
+                      ),
+                    );
+                  },
+                  leading: _tileIcon(
+                    icon: Icons.history_edu_outlined,
+                    background: Colors.blue.shade100,
+                    foreground: Colors.blue.shade700,
+                  ),
+                  title: Text(isEnglish ? 'My Shared Posts' : 'Bài viết của bạn'),
+                  subtitle: Text(
+                    isEnglish ? 'Check status of your shared survival tips' : 'Theo dõi trạng thái các bài đóng góp của bạn',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   trailing: const Icon(Icons.chevron_right, size: 20),

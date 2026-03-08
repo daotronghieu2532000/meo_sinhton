@@ -8,6 +8,7 @@ import 'package:meo_sinhton/screens/tip_feed_view.dart';
 import 'package:meo_sinhton/screens/emergency_map_screen_improved.dart';
 import 'package:meo_sinhton/screens/community_page.dart';
 import 'package:meo_sinhton/screens/top_tips_page.dart';
+import 'package:meo_sinhton/screens/my_posts_page.dart';
 import 'package:meo_sinhton/widgets/logo_placeholder.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
@@ -147,7 +148,30 @@ class _AppShellState extends State<AppShell> {
             title: Text(titles[_currentIndex]),
             actions: [
               IconButton(
-                icon: const Icon(Icons.settings_outlined),
+                icon: Icon(
+                  Icons.history_edu_rounded,
+                  size: 28,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                tooltip: isEnglish ? 'My Shared Posts' : 'Bài viết của bạn',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => MyPostsPage(
+                        appController: widget.appController,
+                        isEnglish: isEnglish,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                  size: 28,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
                 tooltip: AppStrings.settings(isEnglish),
                 onPressed: () {
                   Navigator.push(

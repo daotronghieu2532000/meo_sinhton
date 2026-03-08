@@ -65,8 +65,11 @@ try {
     // 1. Kiểm tra giới hạn 5 bài / ngày (theo IP or user_id)
     $sql_check = "SELECT COUNT(*) as total FROM community_tips 
                   WHERE (user_id = " . ($user_id ? $user_id : "NULL") . " OR ip_address = '$ip_address') 
-                  AND created_at >= CURDATE()";
+                  AND DATE(created_at) = CURDATE()";
     $result_check = $conn->query($sql_check);
+    if (!$result_check) {
+        throw new Exception("Lỗi truy vấn kiểm tra limits: " . $conn->error);
+    }
     $row_check = $result_check->fetch_assoc();
     
     if ($row_check['total'] >= 5) {
@@ -75,7 +78,13 @@ try {
 
     // 2. Chèn dữ liệu mới với status = 0 (Chờ duyệt)
     $stmt = $conn->prepare("INSERT INTO community_tips (user_id, title, content, category, author_name, ip_address, status, steps, image_url, country_code) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?)");
-    $stmt->bind_param("isssssssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json, $image_url, $country_code);
+    
+    if (!$stmt) {
+        throw new Exception("Lỗi prepare statement: " . $conn->error);
+    }
+
+    // 9 tham số => chuỗi là 'issssssss' (1 'i' và 8 's')
+    $stmt->bind_param("issssssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json, $image_url, $country_code);
 
     if ($stmt->execute()) {
         echo json_encode([
