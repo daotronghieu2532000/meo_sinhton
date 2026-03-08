@@ -5,6 +5,9 @@ import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart';
+import 'package:meo_sinhton/app/admob_config.dart';
 
 class CommunityPage extends StatefulWidget {
   final AppController appController;
@@ -27,9 +30,43 @@ class _CommunityPageState extends State<CommunityPage> {
   final String _baseUrl = 'https://codego.io.vn/api/';
   final TextEditingController _searchController = TextEditingController();
 
+  int _submitCount = 0;
+  InterstitialAd? _interstitialAd;
+  bool _isInterstitialAdReady = false;
+
+  void _loadInterstitialAd() {
+    if (kIsWeb) return;
+    InterstitialAd.load(
+      adUnitId: AdmobConfig.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+          _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              _isInterstitialAdReady = false;
+              _loadInterstitialAd();
+            },
+            onAdFailedToShowFullScreenContent: (ad, error) {
+              ad.dispose();
+              _isInterstitialAdReady = false;
+              _loadInterstitialAd();
+            },
+          );
+        },
+        onAdFailedToLoad: (error) {
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -37,6 +74,7 @@ class _CommunityPageState extends State<CommunityPage> {
   void initState() {
     super.initState();
     _fetchTips();
+    _loadInterstitialAd();
   }
 
   Future<void> _fetchTips() async {
@@ -317,6 +355,13 @@ class _CommunityPageState extends State<CommunityPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(data['message'])),
                             );
+                          }
+                          
+                          _submitCount++;
+                          if (_submitCount % 2 == 0 && _isInterstitialAdReady && _interstitialAd != null) {
+                            _interstitialAd!.show();
+                            _isInterstitialAdReady = false;
+                            _interstitialAd = null;
                           }
                         } else {
                           if (context.mounted) {

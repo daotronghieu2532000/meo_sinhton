@@ -516,12 +516,88 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     AppStrings.aboutDesc(isEnglish),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                        ),
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 40,
+                                height: 4,
+                                margin: const EdgeInsets.only(bottom: 24),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              isEnglish ? 'About This App' : 'Về Ứng Dụng Này',
+                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              isEnglish 
+                                ? 'LifeSpark aims to be your reliable digital sidekick during emergencies and adventures. Here is what you can do:'
+                                : 'LifeSpark (Share Tips and Tricks) là ứng dụng cẩm nang tổng hợp các kỹ năng sinh tồn và xử lý tình huống khẩn cấp. Dưới đây là chức năng chính:',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const SizedBox(height: 16),
+                            _buildFeatureRow(context, Icons.home, isEnglish ? 'Home: Browse all survival categories and tips.' : 'Trang chủ: Xem danh mục và chi tiết các kỹ năng.'),
+                            _buildFeatureRow(context, Icons.forum, isEnglish ? 'Community: Read and share tips with others.' : 'Góp ý: Xem và gửi chia sẻ bài viết, mẹo vặt.'),
+                            _buildFeatureRow(context, Icons.emoji_events, isEnglish ? 'Top 10: Best survival items/foods to pack.' : 'Top 10: Xem những vật dụng/thực phẩm sinh tồn tốt nhất.'),
+                            _buildFeatureRow(context, Icons.quiz, isEnglish ? 'Scenarios: Interactive survival stories with choices.' : 'Tình huống: Trải nghiệm các câu chuyện sinh tồn tương tác lấy quyết định.'),
+                            _buildFeatureRow(context, Icons.map, isEnglish ? 'Map: Find nearby shelters and rescue contacts.' : 'Bản đồ: Tìm trạm tị nạn và số điện thoại khẩn.'),
+                            const SizedBox(height: 24),
+                            SizedBox(
+                              width: double.infinity,
+                              child: FilledButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(isEnglish ? 'Got it' : 'Đã hiểu'),
+                              ),
+                            ),
+                            SizedBox(height: MediaQuery.of(context).padding.bottom),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildFeatureRow(BuildContext context, IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
