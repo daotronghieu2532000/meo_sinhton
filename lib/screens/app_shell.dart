@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/app/admob_config.dart';
-import 'package:meo_sinhton/screens/category_overview_page.dart';
 import 'package:meo_sinhton/screens/scenario_mode_page.dart';
-import 'package:meo_sinhton/screens/saved_tips_page.dart';
 import 'package:meo_sinhton/screens/settings_screen.dart';
 import 'package:meo_sinhton/screens/tip_feed_view.dart';
 import 'package:meo_sinhton/screens/emergency_map_screen_improved.dart';
@@ -89,6 +87,8 @@ class _AppShellState extends State<AppShell> {
     super.dispose();
   }
 
+  final Set<int> _initializedPages = {0}; // Khởi đầu với tab Home (index 0)
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -104,26 +104,31 @@ class _AppShellState extends State<AppShell> {
         ];
 
         final pages = [
+          // Index 0: Home
           TipFeedView(
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
-          CommunityPage(
-            appController: widget.appController,
-            isEnglish: isEnglish,
-          ),
-          TopTipsPage(
-            appController: widget.appController,
-            isEnglish: isEnglish,
-          ),
-          ScenarioModePage(
-            appController: widget.appController,
-            isEnglish: isEnglish,
-          ),
-          EmergencyMapScreen(
-            appController: widget.appController,
-            isEnglish: isEnglish,
-          ),
+          
+          // Index 1: Community (Lazy)
+          _initializedPages.contains(1) 
+            ? CommunityPage(appController: widget.appController, isEnglish: isEnglish)
+            : const Center(child: CircularProgressIndicator()),
+            
+          // Index 2: Top 10 (Lazy)
+          _initializedPages.contains(2) 
+            ? TopTipsPage(appController: widget.appController, isEnglish: isEnglish)
+            : const Center(child: CircularProgressIndicator()),
+            
+          // Index 3: Scenario (Lazy)
+          _initializedPages.contains(3) 
+            ? ScenarioModePage(appController: widget.appController, isEnglish: isEnglish)
+            : const Center(child: CircularProgressIndicator()),
+            
+          // Index 4: Map (Lazy - quan trọng nhất để tránh hỏi quyền ngay khi mở app)
+          _initializedPages.contains(4) 
+            ? EmergencyMapScreen(appController: widget.appController, isEnglish: isEnglish)
+            : const Center(child: CircularProgressIndicator()),
         ];
         final shouldShowAds =
             _adsSupported && !widget.appController.areAdsTemporarilyDisabled;
@@ -180,7 +185,12 @@ class _AppShellState extends State<AppShell> {
                 ),
               BottomNavigationBar(
                 currentIndex: _currentIndex,
-                onTap: (value) => setState(() => _currentIndex = value),
+                onTap: (value) {
+                  setState(() {
+                    _currentIndex = value;
+                    _initializedPages.add(value);
+                  });
+                },
                 items: [
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.home_outlined),

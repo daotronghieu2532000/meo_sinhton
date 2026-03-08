@@ -606,7 +606,11 @@ class _CommunityPageState extends State<CommunityPage> {
                           children: [
                             IconButton(
                               onPressed: () => _likeTip(tip['id']),
-                              icon: const Icon(Icons.favorite_border, size: 20, color: Colors.red),
+                              icon: Icon(
+                                (tip['is_liked'] ?? false) ? Icons.favorite : Icons.favorite_border, 
+                                size: 20, 
+                                color: (tip['is_liked'] ?? false) ? Colors.red : Colors.grey
+                              ),
                               visualDensity: VisualDensity.compact,
                             ),
                             Text(
@@ -639,33 +643,58 @@ class _CommunityPageState extends State<CommunityPage> {
   }
 
   Future<void> _likeTip(int tipId) async {
-    // 1. Cập nhật UI ngay lập tức (Optimistic Update) để trải nghiệm mượt mà
+    // 1. Cập nhật UI ngay lập tức (Optimistic Update)
+    bool ? originalStatus;
+    int ? originalCount;
+
     setState(() {
       for (var tip in _tips) {
         if (tip['id'] == tipId) {
-          tip['likes_count'] = (tip['likes_count'] ?? 0) + 1;
-          break;
-        }
-      }
-      // Đồng bộ với danh sách đang hiển thị (nếu đang search)
-      for (var tip in _filteredTips) {
-        if (tip['id'] == tipId) {
-          // Tránh cộng 2 lần nếu _tips và _filteredTips cùng reference
-          // nhưng trong Dart map objects thường là reference nên ok
+          originalStatus = tip['is_liked'] ?? false;
+          originalCount = tip['likes_count'] ?? 0;
+          
+          tip['is_liked'] = !(tip['is_liked'] ?? false);
+          tip['likes_count'] = tip['is_liked'] ? (tip['likes_count'] ?? 0) + 1 : (tip['likes_count'] ?? 1) - 1;
           break;
         }
       }
     });
 
     try {
-      await http.post(
+      final response = await http.post(
         Uri.parse('${_baseUrl}like_community_tip.php'),
         body: {'tip_id': tipId.toString()},
       );
-      // Không gọi _fetchTips() nữa để tránh load lại trang
+      
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success']) {
+          // Cập nhật lại chính xác từ Server trả về
+          setState(() {
+            for (var tip in _tips) {
+              if (tip['id'] == tipId) {
+                tip['is_liked'] = data['is_liked'];
+                tip['likes_count'] = data['new_likes_count'];
+                break;
+              }
+            }
+          });
+        }
+      }
     } catch (e) {
       print('Error liking tip: $e');
-      // Nếu lỗi mạng, có thể hoàn tác (rollback) ở đây nếu muốn
+      // Rollback nếu có lỗi
+      if (originalStatus != null) {
+        setState(() {
+          for (var tip in _tips) {
+            if (tip['id'] == tipId) {
+              tip['is_liked'] = originalStatus;
+              tip['likes_count'] = originalCount;
+              break;
+            }
+          }
+        });
+      }
     }
   }
 

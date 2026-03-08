@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart' as permission_handler;
-import '../app/app_strings.dart';
 
 class PermissionHelper {
   static Future<bool> requestLocationPermission(BuildContext context, bool isEnglish) async {
@@ -136,11 +135,7 @@ class PermissionHelper {
   }
 
   static Future<bool> requestAllEmergencyPermissions(BuildContext context, bool isEnglish) async {
-    bool locationGranted = await requestLocationPermission(context, isEnglish);
-    bool smsGranted = await requestSMSPermission(context, isEnglish);
-    bool phoneGranted = await requestPhonePermission(context, isEnglish);
-    
-    return locationGranted && smsGranted && phoneGranted;
+    return await requestEmergencyPermissionsBatch(context, isEnglish);
   }
 
   static Future<bool> checkAllPermissions() async {
@@ -153,6 +148,117 @@ class PermissionHelper {
 
   static Future<void> openAppSettings() async {
     await permission_handler.openAppSettings();
+  }
+
+  static Future<bool> requestEmergencyPermissionsBatch(BuildContext context, bool isEnglish) async {
+    try {
+      // 1. Check which permissions are still needed
+      final statusLocation = await permission_handler.Permission.location.status;
+      final statusSms = await permission_handler.Permission.sms.status;
+      final statusPhone = await permission_handler.Permission.phone.status;
+
+      List<permission_handler.Permission> permissionsToRequest = [];
+      if (!statusLocation.isGranted) permissionsToRequest.add(permission_handler.Permission.location);
+      if (!statusSms.isGranted) permissionsToRequest.add(permission_handler.Permission.sms);
+      if (!statusPhone.isGranted) permissionsToRequest.add(permission_handler.Permission.phone);
+
+      if (permissionsToRequest.isEmpty) return true;
+
+      // 2. Show ONE consolidated rationale dialog
+      bool? shouldRequest = await _showBatchPermissionDialog(context, isEnglish);
+      if (shouldRequest != true) return false;
+
+      // 3. Request all in one batch (OS might show sequential dialogs, but we only showed ONE app dialog)
+      Map<permission_handler.Permission, permission_handler.PermissionStatus> results = 
+          await permissionsToRequest.request();
+
+      // Check if location (minimum requirement for map) is granted
+      return results[permission_handler.Permission.location]?.isGranted ?? statusLocation.isGranted;
+    } catch (e) {
+      print('Error in batch request: $e');
+      return false;
+    }
+  }
+
+  static Future<bool?> _showBatchPermissionDialog(BuildContext context, bool isEnglish) async {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.security, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(isEnglish ? 'Emergency Permissions' : 'Quyền cấp cứu khẩn cấp')
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isEnglish 
+                ? 'To provide emergency features, LifeSpark needs the following permissions:'
+                : 'Để cung cấp các tính năng giải cứu, LifeSpark cần các quyền sau đây:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildPermissionItem(
+              Icons.location_on, 
+              isEnglish ? 'Location' : 'Vị trí',
+              isEnglish ? 'Show nearby shelters & Map' : 'Tìm trạm cứu hộ & Bản đồ',
+              context
+            ),
+            _buildPermissionItem(
+              Icons.sms, 
+              isEnglish ? 'SMS' : 'Tin nhắn SMS',
+              isEnglish ? 'Send SOS location to contacts' : 'Gửi vị trí SOS cho người thân',
+              context
+            ),
+            _buildPermissionItem(
+              Icons.phone, 
+              isEnglish ? 'Phone' : 'Điện thoại',
+              isEnglish ? 'Call emergency services directly' : 'Gọi trực tiếp cho cứu thương/CA',
+              context
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(isEnglish ? 'Cancel' : 'Hủy'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(isEnglish ? 'Grant All' : 'Cấp tất cả'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _buildPermissionItem(IconData icon, String title, String desc, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                Text(desc, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   static Future<bool?> _showPermissionDialog(

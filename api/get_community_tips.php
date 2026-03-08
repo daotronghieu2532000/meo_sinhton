@@ -21,14 +21,22 @@ try {
     $current_dir = str_replace('get_community_tips.php', '', $_SERVER['REQUEST_URI']);
     $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $current_dir;
 
-    // Chỉ lấy STATUS = 1 (Đã duyệt)
-    $sql = "SELECT * FROM community_tips WHERE status = 1 ORDER BY created_at DESC";
+    // Lấy IP của người dùng để kiểm tra trạng thái LIKE
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    
+    // Chỉ lấy STATUS = 1 (Đã duyệt) + Kiểm tra Like
+    $sql = "SELECT t.*, (SELECT id FROM tip_likes WHERE tip_id = t.id AND ip_address = '$ip_address' LIMIT 1) as my_like 
+            FROM community_tips t 
+            WHERE t.status = 1 
+            ORDER BY t.created_at DESC";
     $result = $conn->query($sql);
 
     $tips = [];
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $img = $row['image_url'];
+            $is_liked = $row['my_like'] ? true : false;
+
             // Xử lý fallback cho các bản ghi cũ có prefix 'api/'
             if ($img && strpos($img, 'api/') === 0) {
                 $img = str_replace('api/', '', $img);
@@ -42,6 +50,7 @@ try {
                 'category' => $row['category'],
                 'author_name' => $row['author_name'] ?? 'Ẩn danh',
                 'likes_count' => (int)$row['likes_count'],
+                'is_liked' => $is_liked,
                 'steps' => json_decode($row['steps'] ?? '[]'),
                 'image_url' => $img ? $base_url . $img : null,
                 'country_code' => $row['country_code'] ?? 'VN',

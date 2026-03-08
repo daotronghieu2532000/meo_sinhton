@@ -35,8 +35,8 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
 
   Future<void> _initializeLocation() async {
     try {
-      // Request all emergency permissions first
-      bool permissionsGranted = await PermissionHelper.requestAllEmergencyPermissions(
+      // Request all emergency permissions first in a single batch
+      bool permissionsGranted = await PermissionHelper.requestEmergencyPermissionsBatch(
         context,
         widget.isEnglish,
       );

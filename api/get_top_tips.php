@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 require_once 'includes/config.php';
 
@@ -9,15 +9,23 @@ try {
     $current_dir = str_replace('get_top_tips.php', '', $_SERVER['REQUEST_URI']);
     $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $current_dir;
     
-    // Get Top 10 tips by likes_count (Approved only)
-    $sql = "SELECT * FROM community_tips WHERE status = 1 ORDER BY likes_count DESC, created_at DESC LIMIT 10";
+    // Lấy IP của người dùng để kiểm tra trạng thái LIKE
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+
+    // Get Top 10 tips by likes_count (Approved only) + Check Like
+    $sql = "SELECT t.*, (SELECT id FROM tip_likes WHERE tip_id = t.id AND ip_address = '$ip_address' LIMIT 1) as my_like 
+            FROM community_tips t 
+            WHERE t.status = 1 
+            ORDER BY t.likes_count DESC, t.created_at DESC LIMIT 10";
     $result = $conn->query($sql);
 
     $tips = [];
 
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $img = $row['image_url'];
+            $is_liked = $row['my_like'] ? true : false;
+
             // Xử lý fallback cho các bản ghi cũ có prefix 'api/'
             if ($img && strpos($img, 'api/') === 0) {
                 $img = str_replace('api/', '', $img);
@@ -29,6 +37,7 @@ try {
                 'author_name' => $row['author_name'] ?? 'Anonymous',
                 'category' => $row['category'],
                 'likes_count' => (int)$row['likes_count'],
+                'is_liked' => $is_liked,
                 'steps' => json_decode($row['steps'] ?? '[]'),
                 'image_url' => $img ? $base_url . $img : null,
                 'country_code' => $row['country_code'] ?? 'VN',
@@ -40,12 +49,12 @@ try {
     echo json_encode([
         'success' => true,
         'data' => $tips
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
 
 } catch (Exception $e) {
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
 }
 ?>

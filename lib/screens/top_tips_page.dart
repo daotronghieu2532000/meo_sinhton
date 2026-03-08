@@ -30,6 +30,62 @@ class _TopTipsPageState extends State<TopTipsPage> {
     _fetchTopTips();
   }
 
+  Future<void> _likeTip(dynamic tipIdRaw) async {
+    final int tipId = tipIdRaw is String ? int.parse(tipIdRaw) : tipIdRaw;
+    
+    // 1. Optimistic Update
+    bool? originalStatus;
+    int? originalCount;
+
+    setState(() {
+      for (var tip in _topTips) {
+        if (tip['id'] == tipId) {
+          originalStatus = tip['is_liked'] ?? false;
+          originalCount = tip['likes_count'] ?? 0;
+          
+          tip['is_liked'] = !(tip['is_liked'] ?? false);
+          tip['likes_count'] = tip['is_liked'] ? (tip['likes_count'] ?? 0) + 1 : (tip['likes_count'] ?? 1) - 1;
+          break;
+        }
+      }
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('${_baseUrl}like_community_tip.php'),
+        body: {'tip_id': tipId.toString()},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success']) {
+          setState(() {
+            for (var tip in _topTips) {
+              if (tip['id'] == tipId) {
+                tip['is_liked'] = data['is_liked'];
+                tip['likes_count'] = data['new_likes_count'];
+                break;
+              }
+            }
+          });
+        }
+      }
+    } catch (e) {
+      print('Error liking: $e');
+      if (originalStatus != null) {
+        setState(() {
+          for (var tip in _topTips) {
+            if (tip['id'] == tipId) {
+              tip['is_liked'] = originalStatus;
+              tip['likes_count'] = originalCount;
+              break;
+            }
+          }
+        });
+      }
+    }
+  }
+
   Future<void> _fetchTopTips() async {
     setState(() => _isLoading = true);
     try {
@@ -246,22 +302,29 @@ class _TopTipsPageState extends State<TopTipsPage> {
                     fontSize: isTop ? 12 : 11,
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(_getFlagEmoji(tip['country_code'] ?? 'VN'), style: const TextStyle(fontSize: 10)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${tip['likes_count']}',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.85),
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () => _likeTip(tip['id']),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(_getFlagEmoji(tip['country_code'] ?? 'VN'), style: const TextStyle(fontSize: 10)),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${tip['likes_count']}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 2),
-                    const Icon(Icons.favorite, color: Colors.redAccent, size: 10),
-                  ],
+                      const SizedBox(width: 2),
+                      Icon(
+                        (tip['is_liked'] ?? false) ? Icons.favorite : Icons.favorite_border, 
+                        color: (tip['is_liked'] ?? false) ? Colors.redAccent : Colors.white.withOpacity(0.7), 
+                        size: 10
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -377,8 +440,16 @@ class _TopTipsPageState extends State<TopTipsPage> {
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                     ),
                     const Spacer(),
-                    Icon(Icons.favorite, size: 16, color: Colors.red.shade400),
-                    const SizedBox(width: 4),
+                    IconButton(
+                      icon: Icon(
+                        (tip['is_liked'] ?? false) ? Icons.favorite : Icons.favorite_border,
+                        size: 18, 
+                        color: (tip['is_liked'] ?? false) ? Colors.red.shade400 : Colors.grey
+                      ),
+                      onPressed: () => _likeTip(tip['id']),
+                      visualDensity: VisualDensity.compact,
+                    ),
+                    const SizedBox(width: 2),
                     Text('${tip['likes_count']} likes', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
