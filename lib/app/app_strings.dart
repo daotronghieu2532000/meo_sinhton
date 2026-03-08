@@ -1,7 +1,7 @@
 import 'package:meo_sinhton/app/app_i18n.dart';
 
 class AppStrings {
-  static String appName() => 'LifeSpark: Survival and Life Hacks';
+  static String appName() => 'MXH : Share Tips and Tricks';
 
   static String tabHome(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Trang chủ', en: 'Home');
