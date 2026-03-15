@@ -8,6 +8,7 @@ class AppController extends ChangeNotifier {
   AppController._({
     required this.language,
     required this.themeMode,
+    required this.userId,
     required SharedPreferences? prefs,
   }) : _prefs = prefs;
 
@@ -15,8 +16,10 @@ class AppController extends ChangeNotifier {
   static const String _darkModeKey = 'dark_mode_enabled';
   static const String _adFreeUntilKey = 'ad_free_until_epoch_ms';
   static const String _savedTipIdsKey = 'saved_tip_ids';
+  static const String _userIdKey = 'app_user_id';
 
   final SharedPreferences? _prefs;
+  final String userId;
   AppLanguage language;
   ThemeMode themeMode;
   DateTime? _adFreeUntil;
@@ -70,12 +73,22 @@ class AppController extends ChangeNotifier {
     final adFreeUntil = adFreeUntilEpochMs == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(adFreeUntilEpochMs);
+    
+    String? userId = prefs.getString(_userIdKey);
+    if (userId == null || userId.startsWith('user_')) {
+      // Pure numeric ID: timestamp + 4 random digits (Total ~17 digits, fits in BIGINT)
+      final now = DateTime.now().millisecondsSinceEpoch;
+      final random = (1000 + (DateTime.now().microsecond % 9000)).toString();
+      userId = '$now$random';
+      await prefs.setString(_userIdKey, userId);
+    }
 
     final controller = AppController._(
       language: savedLanguage == 'en'
           ? AppLanguage.english
           : AppLanguage.vietnamese,
       themeMode: darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+      userId: userId,
       prefs: prefs,
     );
 
@@ -91,6 +104,7 @@ class AppController extends ChangeNotifier {
     return AppController._(
       language: AppLanguage.vietnamese,
       themeMode: ThemeMode.light,
+      userId: 'offline_user',
       prefs: null,
     );
   }

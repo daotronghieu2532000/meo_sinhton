@@ -11,34 +11,44 @@ header('Content-Type: application/json; charset=utf-8');
 
 try {
     require_once __DIR__ . '/includes/config.php';
-    
-    if (!$conn) {
-        throw new Exception("Database connection failed");
-    }
+
 
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
-    $current_dir = str_replace('get_my_community_tips.php', '', $_SERVER['REQUEST_URI']);
-    $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $current_dir;
+    $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/';
+    // Đảm bảo không có dấu // nếu dirname trả về /
+    $base_url = str_replace('//', '/', $base_url);
+    $base_url = str_replace(':/', '://', $base_url);
 
+    $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
     $ip_address = $_SERVER['REMOTE_ADDR'];
     
-    // Lấy bài viết của chính IP này (tất cả trạng thái)
-    $stmt = $conn->prepare("SELECT * FROM community_tips WHERE ip_address = ? ORDER BY created_at DESC");
-    if (!$stmt) {
-        throw new Exception("Prepare failed: " . $conn->error);
+    // Ưu tiên tìm theo user_id, nếu không có thì tìm theo IP (để hỗ trợ bài cũ)
+    if (!empty($user_id)) {
+        $stmt = $conn->prepare("SELECT * FROM community_tips WHERE user_id = ? OR ip_address = ? ORDER BY created_at DESC");
+        $stmt->bind_param("ss", $user_id, $ip_address);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM community_tips WHERE ip_address = ? ORDER BY created_at DESC");
+        $stmt->bind_param("s", $ip_address);
     }
     
-    $stmt->bind_param("s", $ip_address);
     $stmt->execute();
     $result = $stmt->get_result();
 
     $tips = [];
     if ($result) {
         while ($row = $result->fetch_assoc()) {
-            $img = $row['image_url'];
-
-            if ($img && strpos($img, 'api/') === 0) {
-                $img = str_replace('api/', '', $img);
+            // Xử lý ảnh (Hỗ trợ cả đơn lẻ và mảng JSON)
+            $images = [];
+            $img_raw = $row['image_url'];
+            if ($img_raw) {
+                $decoded = json_decode($img_raw, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    foreach ($decoded as $path) {
+                        $images[] = $base_url . $path;
+                    }
+                } else {
+                    $images[] = $base_url . $img_raw;
+                }
             }
             
             $tips[] = [
@@ -48,10 +58,11 @@ try {
                 'content' => $row['content'],
                 'category' => $row['category'],
                 'author_name' => $row['author_name'] ?? 'Ẩn danh',
-                'status' => (int)$row['status'], // Trạng thái bài viết: 0=Chờ, 1=Đã duyệt, 2=Từ chối (hoặc tùy quy ước)
+                'status' => (int)$row['status'],
                 'likes_count' => (int)$row['likes_count'],
                 'steps' => json_decode($row['steps'] ?? '[]'),
-                'image_url' => $img ? $base_url . $img : null,
+                'image_url' => !empty($images) ? $images[0] : null,
+                'images' => $images,
                 'created_at' => $row['created_at']
             ];
         }

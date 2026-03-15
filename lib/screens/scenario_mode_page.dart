@@ -4,6 +4,9 @@ import '../app/app_controller.dart';
 import '../app/app_strings.dart';
 import '../models/scenario_item.dart';
 import '../repositories/scenario_repository.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../app/admob_config.dart';
+import 'package:flutter/foundation.dart';
 
 class ScenarioModePage extends StatefulWidget {
   const ScenarioModePage({
@@ -77,6 +80,7 @@ class _ScenarioModePageState extends State<ScenarioModePage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => ScenarioPlayScreen(
+                            appController: widget.appController,
                             scenario: scenario,
                             isEnglish: widget.isEnglish,
                           ),
@@ -97,10 +101,12 @@ class _ScenarioModePageState extends State<ScenarioModePage> {
 class ScenarioPlayScreen extends StatefulWidget {
   const ScenarioPlayScreen({
     super.key,
+    required this.appController,
     required this.scenario,
     required this.isEnglish,
   });
 
+  final AppController appController;
   final ScenarioItem scenario;
   final bool isEnglish;
 
@@ -112,6 +118,50 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
   int _stepIndex = 0;
   int _score = 0;
   ScenarioOption? _selectedOption;
+  
+  InterstitialAd? _interstitialAd;
+  bool _isInterstitialAdReady = false;
+
+  void _loadInterstitialAd() {
+    if (kIsWeb || widget.appController.areAdsTemporarilyDisabled) return;
+    InterstitialAd.load(
+      adUnitId: AdmobConfig.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+          _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              _isInterstitialAdReady = false;
+              _loadInterstitialAd();
+            },
+            onAdFailedToShowFullScreenContent: (ad, error) {
+              ad.dispose();
+              _isInterstitialAdReady = false;
+              _loadInterstitialAd();
+            },
+          );
+        },
+        onAdFailedToLoad: (error) {
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInterstitialAd();
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
 
   ScenarioStep get _currentStep => widget.scenario.steps[_stepIndex];
 
@@ -372,7 +422,12 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
         ),
         const SizedBox(height: 8),
         OutlinedButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            if (!widget.appController.areAdsTemporarilyDisabled && _isInterstitialAdReady && _interstitialAd != null) {
+              _interstitialAd!.show();
+            }
+            Navigator.of(context).pop();
+          },
           child: Text(AppStrings.tabScenario(widget.isEnglish)),
         ),
       ],

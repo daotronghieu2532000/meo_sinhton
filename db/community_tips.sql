@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th3 08, 2026 lúc 12:18 PM
+-- Thời gian đã tạo: Th3 15, 2026 lúc 02:08 PM
 -- Phiên bản máy phục vụ: 10.6.19-MariaDB
 -- Phiên bản PHP: 8.4.15
 
@@ -48,11 +48,10 @@ CREATE TABLE `community_tips` (
 --
 
 INSERT INTO `community_tips` (`id`, `user_id`, `title`, `content`, `category`, `author_name`, `created_at`, `status`, `likes_count`, `ip_address`, `steps`, `image_url`, `country_code`) VALUES
-(1, NULL, 'lũ miền trung', 'jsjsbxnnx', 'first_aid', 'Hiếu', '2026-03-07 11:30:36', 0, 1, NULL, NULL, NULL, 'VN'),
-(2, NULL, 'bhihj', 'bjsjw xhs', 'feedback', 'hiếu', '2026-03-07 11:43:44', 1, 11, '14.177.213.79', NULL, NULL, 'VN'),
-(3, NULL, 'Dò rỉ gas', 'Nghi ngờ rò rỉ gas', 'first_aid', 'Huy Hoàng', '2026-03-07 11:53:57', 1, 5, '14.177.213.79', NULL, NULL, 'VN'),
-(4, NULL, 'Ngã xuống nước siết', 'cô tình trượt ngã xuống sông chảy siết', 'experience', 'HÙng Cường', '2026-03-07 11:56:58', 1, 9, '14.177.213.79', '[\"bình tĩnh\",\"thay vì bơi ngược \",\"hãy bơi ngang theo dòng nước\"]', NULL, 'VN'),
-(5, NULL, 'tìm nước sạch', 'Tìm nước sạch nơi hoang dã', 'experience', 'HLinh', '2026-03-07 14:45:27', 1, 21, '14.177.213.79', '[\"khi lạc trong rừng hãy bình tĩnh\",\"đi theo động vật hoang dã để tìm thấy nguồn nước\"]', 'api/uploads/community/69ac3a07a4830.jpg', 'VN');
+(4, NULL, 'Ngã xuống nước siết', 'cô tình trượt ngã xuống sông chảy siết', 'experience', 'HÙng Cường', '2026-03-07 11:56:58', 1, 9, '14.177.213.79', '[\"bình tĩnh\",\"thay vì bơi ngược \",\"hãy bơi ngang theo dòng nước\"]', 'uploads/community/69ad2111cf439.jpg', 'VN'),
+(8, NULL, 'cách để buộc dây giày con bướm', 'bạn đã chán những kiểu buộc giày nhàm chán', 'tip', 'Anh tên là Bằng', '2026-03-08 06:29:51', 1, 1, '14.177.213.79', '[\"mở youtube \",\"xem và làm theo\",\"chúc bạn thành công \"]', 'uploads/community/69ad2273644be.jpg', 'VN'),
+(9, NULL, 'làm sao để học giỏi', 'bạn học quá kém , suốt ngày điểm kém ', 'tip', 'Anh bán xôi', '2026-03-08 06:30:05', 1, 1, '14.177.213.79', '[\"chơi ít thôi \",\"tránh xa điện thoại , làm bạn với sách vở \",\"chúc bạn thành công \"]', 'uploads/community/69ad20ba5c1fb.png', 'VN'),
+(11, NULL, 'hì hì', 'hí hí', 'experience', 'Hiếu', '2026-03-15 06:11:19', 0, 0, '14.177.213.79', '[\"học\",\"hochicj\",\"học\"]', 'uploads/community/69b64d86c8efe.jpg', 'VN');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -72,7 +71,7 @@ ALTER TABLE `community_tips`
 -- AUTO_INCREMENT cho bảng `community_tips`
 --
 ALTER TABLE `community_tips`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

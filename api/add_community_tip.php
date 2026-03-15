@@ -28,22 +28,43 @@ try {
     $ip_address = $_SERVER['REMOTE_ADDR'];
     $image_url = '';
 
-    // Xử lý Upload ảnh (nếu có)
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $target_dir = __DIR__ . "/uploads/community/";
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
+    // Xử lý Upload nhiều ảnh
+    $image_urls = [];
+    $target_dir = __DIR__ . "/uploads/community/";
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+
+    // Kiểm tra upload theo mảng (images[]) hoặc đơn lẻ (image)
+    $files_to_process = [];
+    if (isset($_FILES['images'])) {
+        foreach ($_FILES['images']['name'] as $key => $name) {
+            if ($_FILES['images']['error'][$key] == 0) {
+                $files_to_process[] = [
+                    'name' => $_FILES['images']['name'][$key],
+                    'tmp_name' => $_FILES['images']['tmp_name'][$key]
+                ];
+            }
         }
-        
-        $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    } elseif (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $files_to_process[] = [
+            'name' => $_FILES['image']['name'],
+            'tmp_name' => $_FILES['image']['tmp_name']
+        ];
+    }
+
+    foreach ($files_to_process as $file) {
+        $file_extension = pathinfo($file["name"], PATHINFO_EXTENSION);
         $new_filename = uniqid() . '.' . $file_extension;
         $target_file = $target_dir . $new_filename;
         
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            // Lưu đường dẫn tính từ thư mục api để get_community_tips.php dễ xử lý
-            $image_url = 'uploads/community/' . $new_filename; 
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            $image_urls[] = 'uploads/community/' . $new_filename; 
         }
     }
+
+    // Chuyển mảng ảnh thành JSON nếu có nhiều hơn 0 ảnh
+    $image_url_data = !empty($image_urls) ? json_encode($image_urls) : '';
 
     // Tự động suy diễn Quốc gia từ IP (Sử dụng IP-API)
     $country_code = 'VN'; // Mặc định
@@ -84,7 +105,7 @@ try {
     }
 
     // 9 tham số => chuỗi là 'issssssss' (1 'i' và 8 's')
-    $stmt->bind_param("issssssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json, $image_url, $country_code);
+    $stmt->bind_param("issssssss", $user_id, $title, $content, $category, $author_name, $ip_address, $steps_json, $image_url_data, $country_code);
 
     if ($stmt->execute()) {
         echo json_encode([

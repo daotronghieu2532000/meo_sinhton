@@ -37,7 +37,13 @@ class _MyPostsPageState extends State<MyPostsPage> {
       _errorMessage = null; 
     });
     try {
-      final response = await http.get(Uri.parse('${_baseUrl}get_my_community_tips.php'));
+      final url = '${_baseUrl}get_my_community_tips.php?user_id=${widget.appController.userId}';
+      print('>>> URL: $url');
+      
+      final response = await http.get(Uri.parse(url));
+      print('>>> Status Code: ${response.statusCode}');
+      print('>>> Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success']) {
@@ -217,18 +223,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
                     ),
                     const SizedBox(height: 4),
                     Text(tip['content']),
-                    if (tip['image_url'] != null) ...[
+                    if (tip['images'] != null && (tip['images'] as List).isNotEmpty) ...[
                       const SizedBox(height: 12),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          tip['image_url'],
-                          height: 150,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const SizedBox(),
-                        ),
-                      ),
+                      _MyTipImageCarousel(images: List<String>.from(tip['images'])),
+                    ] else if (tip['image_url'] != null) ...[
+                      const SizedBox(height: 12),
+                      _MyTipImageCarousel(images: [tip['image_url']]),
                     ],
                   ],
                 ),
@@ -312,5 +312,73 @@ class _MyPostsPageState extends State<MyPostsPage> {
       case 'feedback': return Icons.feedback_rounded;
       default: return Icons.more_horiz_rounded;
     }
+  }
+}
+
+class _MyTipImageCarousel extends StatefulWidget {
+  final List<String> images;
+
+  const _MyTipImageCarousel({required this.images});
+
+  @override
+  State<_MyTipImageCarousel> createState() => _MyTipImageCarouselState();
+}
+
+class _MyTipImageCarouselState extends State<_MyTipImageCarousel> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.images.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      children: [
+        SizedBox(
+          height: 180,
+          child: Stack(
+            children: [
+              PageView.builder(
+                itemCount: widget.images.length,
+                onPageChanged: (index) => setState(() => _currentIndex = index),
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      widget.images[index],
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Container(
+                        color: Colors.grey.shade200,
+                        child: const Icon(Icons.broken_image, color: Colors.grey),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              if (widget.images.length > 1)
+                Positioned(
+                  bottom: 8,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(widget.images.length, (index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        width: _currentIndex == index ? 8 : 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: _currentIndex == index ? Colors.blue : Colors.white70,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

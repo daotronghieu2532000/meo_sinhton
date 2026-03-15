@@ -24,13 +24,20 @@ class TipFeedView extends StatefulWidget {
   final bool isEnglish;
 
   @override
-  State<TipFeedView> createState() => _TipFeedViewState();
+  State<TipFeedView> createState() => TipFeedViewState();
 }
 
-class _TipFeedViewState extends State<TipFeedView> {
+class TipFeedViewState extends State<TipFeedView> {
   late final Future<List<SurvivalTip>> _tipsFuture;
   String _query = '';
   String _selectedCategory = 'Tất cả';
+  bool _isSearchExpanded = false;
+
+  void toggleSearch() {
+    setState(() {
+      _isSearchExpanded = !_isSearchExpanded;
+    });
+  }
 
   @override
   void initState() {
@@ -105,145 +112,125 @@ class _TipFeedViewState extends State<TipFeedView> {
 
         final filteredTips = _filterTips(tips);
 
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppStrings.feedHeadline(
-                  widget.isEnglish,
-                  emergencyOnly: widget.emergencyOnly,
-                ),
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 42,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: AppStrings.searchHint(widget.isEnglish),
-                    prefixIcon: const Icon(Icons.search, size: 18),
-                    prefixIconConstraints: const BoxConstraints(
-                      minWidth: 34,
-                      minHeight: 34,
-                    ),
-                    suffixIcon: widget.emergencyOnly
-                        ? const Icon(Icons.warning_amber_rounded, size: 18)
-                        : const Icon(Icons.tips_and_updates_outlined, size: 18),
-                    suffixIconConstraints: const BoxConstraints(
-                      minWidth: 34,
-                      minHeight: 34,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 10,
-                    ),
-                  ),
-                  onChanged: (value) => setState(() => _query = value),
-                ),
-              ),
-              const SizedBox(height: 10),
-              if (widget.showCategoryChips && widget.lockedCategory == null)
-                SizedBox(
-                  height: 34,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 8),
-                    itemBuilder: (context, index) {
-                      final category = categories[index];
-                      return ChoiceChip(
-                        visualDensity: VisualDensity.compact,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        showCheckmark: false,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        label: Text(
-                          AppI18n.category(category, widget.isEnglish),
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                        selected: _selectedCategory == category,
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.outlineVariant,
-                        ),
-                        selectedColor: Theme.of(
-                          context,
-                        ).colorScheme.secondaryContainer,
-                        onSelected: (_) =>
-                            setState(() => _selectedCategory = category),
-                      );
-                    },
-                  ),
-                ),
-              if (widget.showCategoryChips && widget.lockedCategory == null)
-                const SizedBox(height: 6),
-              const SizedBox(height: 8),
-              Expanded(
-                child: filteredTips.isEmpty
-                    ? Center(
-                        child: Text(
-                          AppStrings.noMatchingTips(widget.isEnglish),
-                        ),
-                      )
-                    : ListView.separated(
-                        padding: const EdgeInsets.only(top: 6, bottom: 12),
-                        itemCount: filteredTips.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 10),
-                        itemBuilder: (context, index) {
-                          final tip = filteredTips[index];
-                          final isSaved = widget.appController.isTipSaved(
-                            tip.id,
-                          );
-                          return TipPreviewCard(
-                            tip: tip,
-                            isEnglish: widget.isEnglish,
-                            isSaved: isSaved,
-                            saveTooltip: AppStrings.saveTip(widget.isEnglish),
-                            unsaveTooltip: AppStrings.unsaveTip(
-                              widget.isEnglish,
+        return Column(
+          children: [
+            // Search & Filter Header (Fixed at top)
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: Visibility(
+                visible: _isSearchExpanded,
+                child: Container(
+                  color: Theme.of(context).colorScheme.surface,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: SizedBox(
+                          height: 42,
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: AppStrings.searchHint(widget.isEnglish),
+                              prefixIcon: const Icon(Icons.search, size: 18),
+                              prefixIconConstraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                              suffixIcon: widget.emergencyOnly
+                                  ? const Icon(Icons.warning_amber_rounded, size: 18)
+                                  : const Icon(Icons.tips_and_updates_outlined, size: 18),
+                              suffixIconConstraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => TipDetailScreen(
-                                    tip: tip,
-                                    appController: widget.appController,
-                                    isEnglish: widget.isEnglish,
-                                  ),
-                                ),
-                              );
-                            },
-                            onToggleSaved: () async {
-                              final wasSaved = widget.appController.isTipSaved(
-                                tip.id,
-                              );
-                              await widget.appController.toggleTipSaved(tip.id);
-                              if (!context.mounted) {
-                                return;
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  duration: const Duration(milliseconds: 1200),
-                                  content: Text(
-                                    wasSaved
-                                        ? AppStrings.tipUnsaved(
-                                            widget.isEnglish,
-                                          )
-                                        : AppStrings.tipSaved(widget.isEnglish),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                            onChanged: (value) => setState(() => _query = value),
+                          ),
+                        ),
                       ),
+                      if (widget.showCategoryChips && widget.lockedCategory == null) ...[
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: 34,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: categories.length,
+                            separatorBuilder: (_, __) => const SizedBox(width: 8),
+                            itemBuilder: (context, cIndex) {
+                              final category = categories[cIndex];
+                              return ChoiceChip(
+                                visualDensity: VisualDensity.compact,
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                showCheckmark: false,
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                label: Text(
+                                  AppI18n.category(category, widget.isEnglish),
+                                  style: Theme.of(context).textTheme.labelMedium,
+                                ),
+                                selected: _selectedCategory == category,
+                                side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+                                selectedColor: Theme.of(context).colorScheme.secondaryContainer,
+                                onSelected: (_) => setState(() => _selectedCategory = category),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+            
+            // List of Tips
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  setState(() {});
+                },
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  itemCount: filteredTips.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  itemBuilder: (context, index) {
+                    final tip = filteredTips[index];
+                    final isSaved = widget.appController.isTipSaved(tip.id);
+                    
+                    return TipPreviewCard(
+                      tip: tip,
+                      isEnglish: widget.isEnglish,
+                      isSaved: isSaved,
+                      saveTooltip: AppStrings.saveTip(widget.isEnglish),
+                      unsaveTooltip: AppStrings.unsaveTip(widget.isEnglish),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => TipDetailScreen(
+                              tip: tip,
+                              appController: widget.appController,
+                              isEnglish: widget.isEnglish,
+                            ),
+                          ),
+                        );
+                      },
+                      onToggleSaved: () async {
+                        await widget.appController.toggleTipSaved(tip.id);
+                        setState(() {}); // Update local indicator
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

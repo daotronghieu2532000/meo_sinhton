@@ -1,4 +1,4 @@
-package com.example.meo_sinhton
+package vn.codego.meosinhton
 
 import io.flutter.embedding.android.FlutterActivity
 

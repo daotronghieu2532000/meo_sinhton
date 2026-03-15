@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:meo_sinhton/app/app_controller.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meo_sinhton/app/admob_config.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CommunityPage extends StatefulWidget {
   final AppController appController;
@@ -20,15 +22,26 @@ class CommunityPage extends StatefulWidget {
   });
 
   @override
-  State<CommunityPage> createState() => _CommunityPageState();
+  State<CommunityPage> createState() => CommunityPageState();
 }
 
-class _CommunityPageState extends State<CommunityPage> {
+class CommunityPageState extends State<CommunityPage> {
   List<dynamic> _tips = [];
   List<dynamic> _filteredTips = [];
   bool _isLoading = true;
   final String _baseUrl = 'https://codego.io.vn/api/';
   final TextEditingController _searchController = TextEditingController();
+  bool _isSearchExpanded = false;
+
+  void toggleSearch() {
+    setState(() {
+      _isSearchExpanded = !_isSearchExpanded;
+      if (!_isSearchExpanded) {
+        _searchController.clear();
+        _filterTips('');
+      }
+    });
+  }
 
   int _submitCount = 0;
   InterstitialAd? _interstitialAd;
@@ -80,7 +93,7 @@ class _CommunityPageState extends State<CommunityPage> {
   Future<void> _fetchTips() async {
     setState(() => _isLoading = true);
     try {
-      final response = await http.get(Uri.parse('${_baseUrl}get_community_tips.php'));
+      final response = await http.get(Uri.parse('${_baseUrl}get_community_tips.php?user_id=${widget.appController.userId}'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success']) {
@@ -121,25 +134,23 @@ class _CommunityPageState extends State<CommunityPage> {
       TextEditingController(),
     ];
     String selectedCategory = 'tip';
-    File? selectedImage;
+    List<File> selectedImages = [];
     final ImagePicker picker = ImagePicker();
 
-    Future<void> pickImage(void Function(void Function()) setModalState) async {
+    Future<void> pickImages(void Function(void Function()) setModalState) async {
       try {
-        // Nén ngay từ nguồn: maxWidth, maxHeight và imageQuality giúp giảm dung lượng xuống ~200-300KB
-        final XFile? image = await picker.pickImage(
-          source: ImageSource.gallery,
+        final List<XFile> images = await picker.pickMultiImage(
           maxWidth: 1024, 
           maxHeight: 1024,
           imageQuality: 85, 
         );
-        if (image != null) {
+        if (images.isNotEmpty) {
           setModalState(() {
-            selectedImage = File(image.path);
+            selectedImages.addAll(images.map((img) => File(img.path)));
           });
         }
       } catch (e) {
-        print('Error picking image: $e');
+        print('Error picking images: $e');
       }
     }
 
@@ -148,246 +159,351 @@ class _CommunityPageState extends State<CommunityPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => StatefulBuilder(
-        builder: (context, setModalState) => Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            top: 24,
-            left: 20,
-            right: 20,
-          ),
-          child: SingleChildScrollView(
+        builder: (context, setModalState) => GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.9,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.isEnglish ? 'Share your experience' : 'Chia sẻ kinh nghiệm',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close),
+                // Facebook-style Header
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  centerTitle: true,
+                  leading: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close),
+                  ),
+                  title: Text(
+                    widget.isEnglish ? 'Create Post' : 'Tạo bài viết',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () async {
+                        if (titleController.text.isEmpty || contentController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(widget.isEnglish ? 'Please fill title and content' : 'Vui lòng điền tiêu đề và nội dung')),
+                          );
+                          return;
+                        }
+                        
+                        List<String> stepsData = stepControllers
+                            .where((c) => c.text.isNotEmpty)
+                            .map((c) => c.text)
+                            .toList();
+
+                        var request = http.MultipartRequest('POST', Uri.parse('${_baseUrl}add_community_tip.php'));
+                        request.fields['title'] = titleController.text;
+                        request.fields['content'] = contentController.text;
+                        request.fields['author_name'] = authorController.text.isEmpty ? 'Ẩn danh' : authorController.text;
+                        request.fields['category'] = selectedCategory;
+                        request.fields['steps'] = json.encode(stepsData);
+                        request.fields['user_id'] = widget.appController.userId;
+
+                        if (selectedImages.isNotEmpty) {
+                          for (int i = 0; i < selectedImages.length; i++) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                              'images[$i]', 
+                              selectedImages[i].path,
+                            ));
+                          }
+                        }
+
+                        print('>>> Sending fields: ${request.fields}');
+                        final streamedResponse = await request.send();
+                        final response = await http.Response.fromStream(streamedResponse);
+                        print('>>> Post Status Code: ${response.statusCode}');
+                        print('>>> Post Response Body: ${response.body}');
+
+                        if (response.statusCode == 200) {
+                          final data = json.decode(response.body);
+                          if (data['success']) {
+                            if (context.mounted) Navigator.pop(context);
+                            _fetchTips();
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'])));
+                            }
+                            _submitCount++;
+                            if (!widget.appController.areAdsTemporarilyDisabled && _submitCount % 1 == 0 && _isInterstitialAdReady && _interstitialAd != null) {
+                              _interstitialAd!.show();
+                              _isInterstitialAdReady = false;
+                              _interstitialAd = null;
+                            }
+                          }
+                        }
+                      },
+                      child: Text(
+                        widget.isEnglish ? 'POST' : 'ĐĂNG',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: (titleController.text.isNotEmpty && contentController.text.isNotEmpty)
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    labelText: widget.isEnglish ? 'Title' : 'Tiêu đề',
-                    hintText: widget.isEnglish ? 'e.g. How to find water' : 'VD: Cách tìm nước sạch',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: authorController,
-                  decoration: InputDecoration(
-                    labelText: widget.isEnglish ? 'Your Name (optional)' : 'Tên bạn (không bắt buộc)',
-                    hintText: widget.isEnglish ? 'Anonymous' : 'Ẩn danh',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                DropdownButtonFormField<String>(
-                  value: selectedCategory,
-                  items: [
-                    DropdownMenuItem(value: 'tip', child: Text(widget.isEnglish ? 'Survival Tip' : 'Mẹo')),
-                    DropdownMenuItem(value: 'experience', child: Text(widget.isEnglish ? 'Survival Experience' : 'Kinh nghiệm sinh tồn')),
-                    DropdownMenuItem(value: 'first_aid', child: Text(widget.isEnglish ? 'First Aid' : 'Sơ cứu')),
-                    DropdownMenuItem(value: 'feedback', child: Text(widget.isEnglish ? 'App Feedback' : 'Góp ý ứng dụng')),
-                    DropdownMenuItem(value: 'other', child: Text(widget.isEnglish ? 'Other' : 'Khác')),
-                  ],
-                  onChanged: (val) => selectedCategory = val!,
-                  decoration: InputDecoration(
-                    labelText: widget.isEnglish ? 'Category' : 'Danh mục',
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: contentController,
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    labelText: widget.isEnglish ? 'Content' : 'Nội dung mô tả',
-                    hintText: widget.isEnglish ? 'Describe your tip or scenario...' : 'Mô tả ngắn gọn về mẹo hoặc tình huống...',
-                    alignLabelWithHint: true,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Khu vực chọn ảnh
-                InkWell(
-                  onTap: () => pickImage(setModalState),
-                  child: Container(
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
-                    ),
-                    child: selectedImage != null 
-                      ? Stack(
-                          fit: StackFit.expand,
+                const Divider(height: 1),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(16, 12, 16, MediaQuery.of(context).viewInsets.bottom + 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // User Info Row
+                        Row(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.file(selectedImage!, fit: BoxFit.cover),
+                            CircleAvatar(
+                              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                              child: Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
                             ),
-                            Positioned(
-                              top: 8, right: 8,
-                              child: IconButton.filled(
-                                onPressed: () => setModalState(() => selectedImage = null),
-                                icon: const Icon(Icons.delete_outline, size: 20),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextField(
+                                    controller: authorController,
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    decoration: InputDecoration(
+                                      hintText: widget.isEnglish ? 'Your Name' : 'Tên của bạn',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                        borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+                                      ),
+                                      isDense: true,
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  GestureDetector(
+                                    onTap: () => _showCategoryPicker(context, setModalState, (val) => selectedCategory = val),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.public, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            _getCategoryLabel(selectedCategory),
+                                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                                          ),
+                                          const Icon(Icons.arrow_drop_down, size: 16),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.add_a_photo_outlined, color: Theme.of(context).colorScheme.primary),
-                            const SizedBox(height: 8),
-                            Text(
-                              widget.isEnglish ? 'Add illustration photo (Optional)' : 'Thêm ảnh minh họa (Không bắt buộc)',
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 13),
-                            ),
-                          ],
                         ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  widget.isEnglish ? 'Implementation Steps' : 'Các bước thực hiện',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                ...List.generate(stepControllers.length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 12,
-                          child: Text('${index + 1}', style: const TextStyle(fontSize: 12)),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            controller: stepControllers[index],
-                            decoration: InputDecoration(
-                              hintText: widget.isEnglish ? 'Step ${index + 1} details...' : 'Chi tiết bước ${index + 1}...',
-                              isDense: true,
-                            ),
-                            maxLines: null,
+                        const SizedBox(height: 16),
+                        // Top Toolbar bar (moved up)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(widget.isEnglish ? 'Add content' : 'Thêm nội dung', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () => pickImages(setModalState),
+                                icon: const Icon(Icons.image, color: Colors.green, size: 20),
+                                tooltip: widget.isEnglish ? 'Add photos' : 'Thêm ảnh',
+                              ),
+                              IconButton(
+                                onPressed: () => _showCategoryPicker(context, setModalState, (val) => selectedCategory = val),
+                                icon: const Icon(Icons.label, color: Colors.blue, size: 20),
+                                tooltip: widget.isEnglish ? 'Change category' : 'Đổi danh mục',
+                              ),
+                            ],
                           ),
                         ),
-                        if (stepControllers.length > 2)
-                          IconButton(
-                            icon: const Icon(Icons.remove_circle_outline, color: Colors.grey),
-                            onPressed: () {
-                              setModalState(() {
-                                stepControllers.removeAt(index);
-                              });
+                        const SizedBox(height: 16),
+                        // Title Input Styled
+                        TextField(
+                          controller: titleController,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                          decoration: InputDecoration(
+                            hintText: widget.isEnglish ? 'Enter title...' : 'Nhập tiêu đề...',
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.2),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        // Content Input Styled
+                        TextField(
+                          controller: contentController,
+                          maxLines: null,
+                          minLines: 3,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          decoration: InputDecoration(
+                            hintText: widget.isEnglish ? "What's on your mind?" : 'Bạn muốn chia sẻ điều gì?',
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.2),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                          onChanged: (val) => setModalState(() {}),
+                        ),
+                        const SizedBox(height: 20),
+                        // Steps section
+                        Text(
+                          widget.isEnglish ? 'Implementation Steps' : 'Các bước xử lý',
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        const SizedBox(height: 12),
+                        ...List.generate(stepControllers.length, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 24, height: 24,
+                                  margin: const EdgeInsets.only(top: 12),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text('${index + 1}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: TextField(
+                                    controller: stepControllers[index],
+                                    decoration: InputDecoration(
+                                      hintText: widget.isEnglish ? 'Step detail...' : 'Chi tiết bước...',
+                                      filled: true,
+                                      fillColor: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.1),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    maxLines: null,
+                                  ),
+                                ),
+                                if (stepControllers.length > 2)
+                                  IconButton(
+                                    icon: const Icon(Icons.close, size: 18, color: Colors.grey),
+                                    onPressed: () => setModalState(() => stepControllers.removeAt(index)),
+                                  ),
+                            ],
+                          ),
+                        );
+                      }),
+                      TextButton.icon(
+                        onPressed: () => setModalState(() => stepControllers.add(TextEditingController())),
+                        icon: const Icon(Icons.add_circle_outline),
+                        label: Text(widget.isEnglish ? 'Add Step' : 'Thêm bước'),
+                      ),
+                      if (selectedImages.isNotEmpty) ...[
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 100,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: selectedImages.length,
+                            itemBuilder: (context, index) {
+                              return Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.file(
+                                        selectedImages[index],
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 4,
+                                    right: 12,
+                                    child: GestureDetector(
+                                      onTap: () => setModalState(() => selectedImages.removeAt(index)),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.black54,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Icon(Icons.close, size: 14, color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
                             },
                           ),
+                        ),
                       ],
-                    ),
-                  );
-                }),
-                TextButton.icon(
-                  onPressed: () {
-                    setModalState(() {
-                      stepControllers.add(TextEditingController());
-                    });
-                  },
-                  icon: const Icon(Icons.add_circle_outline),
-                  label: Text(widget.isEnglish ? 'Add Step' : 'Thêm bước'),
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 54,
-                  child: FilledButton(
-                    onPressed: () async {
-                      if (titleController.text.isEmpty || contentController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(widget.isEnglish ? 'Please fill title and content' : 'Vui lòng điền tiêu đề và nội dung')),
-                        );
-                        return;
-                      }
-                      
-                      List<String> stepsData = stepControllers
-                          .where((c) => c.text.isNotEmpty)
-                          .map((c) => c.text)
-                          .toList();
-
-                      // Sử dụng MultipartRequest để gửi cả ảnh và dữ liệu
-                      var request = http.MultipartRequest('POST', Uri.parse('${_baseUrl}add_community_tip.php'));
-                      
-                      request.fields['title'] = titleController.text;
-                      request.fields['content'] = contentController.text;
-                      request.fields['author_name'] = authorController.text.isEmpty ? 'Ẩn danh' : authorController.text;
-                      request.fields['category'] = selectedCategory;
-                      request.fields['steps'] = json.encode(stepsData);
-
-                      if (selectedImage != null) {
-                        request.files.add(await http.MultipartFile.fromPath(
-                          'image',
-                          selectedImage!.path,
-                        ));
-                      }
-
-                      final streamedResponse = await request.send();
-                      final response = await http.Response.fromStream(streamedResponse);
-
-                      if (response.statusCode == 200) {
-                        final data = json.decode(response.body);
-                        if (data['success']) {
-                          if (context.mounted) Navigator.pop(context);
-                          _fetchTips();
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(data['message'])),
-                            );
-                          }
-                          
-                          _submitCount++;
-                          if (_submitCount % 2 == 0 && _isInterstitialAdReady && _interstitialAd != null) {
-                            _interstitialAd!.show();
-                            _isInterstitialAdReady = false;
-                            _interstitialAd = null;
-                          }
-                        } else {
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(data['message'])),
-                            );
-                          }
-                        }
-                      } else {
-                        print('Server Error: ${response.statusCode}');
-                        print('Response Body: ${response.body}');
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Lỗi máy chủ (${response.statusCode}). Bạn thử lại xem!')),
-                          );
-                        }
-                      }
-                    },
-                    child: Text(widget.isEnglish ? 'Submit' : 'Gửi đi'),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 24),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
+    ));
+  }
+
+  void _showCategoryPicker(BuildContext context, Function setModalState, Function onSelect) {
+     showDialog(
+       context: context,
+       builder: (ctx) => SimpleDialog(
+         title: Text(widget.isEnglish ? 'Select Category' : 'Chọn danh mục'),
+         children: [
+            _categoryOption(ctx, 'tip', widget.isEnglish ? 'Survival Tip' : 'Mẹo', Icons.lightbulb, setModalState, onSelect),
+            _categoryOption(ctx, 'experience', widget.isEnglish ? 'Experience' : 'Kinh nghiệm', Icons.verified_user, setModalState, onSelect),
+            _categoryOption(ctx, 'first_aid', widget.isEnglish ? 'First Aid' : 'Sơ cứu', Icons.medical_services, setModalState, onSelect),
+            _categoryOption(ctx, 'feedback', widget.isEnglish ? 'Feedback' : 'Góp ý', Icons.feedback, setModalState, onSelect),
+         ],
+       )
+     );
+  }
+
+  Widget _categoryOption(BuildContext ctx, String value, String label, IconData icon, Function setModalState, Function onSelect) {
+    return SimpleDialogOption(
+      onPressed: () {
+        setModalState(() => onSelect(value));
+        Navigator.pop(ctx);
+      },
+      child: Row(
+        children: [
+          Icon(icon, size: 20),
+          const SizedBox(width: 12),
+          Text(label),
+        ],
       ),
     );
   }
@@ -398,30 +514,37 @@ class _CommunityPageState extends State<CommunityPage> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
-          // Thanh tìm kiếm
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: TextField(
-              controller: _searchController,
-              onChanged: _filterTips,
-              decoration: InputDecoration(
-                hintText: widget.isEnglish ? 'Search tips...' : 'Tìm kiếm mẹo, kinh nghiệm...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isNotEmpty 
-                  ? IconButton(
-                      icon: const Icon(Icons.clear, size: 20),
-                      onPressed: () {
-                        _searchController.clear();
-                        _filterTips('');
-                      },
-                    )
-                  : null,
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
+          // Thanh tìm kiếm (Animated)
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Visibility(
+              visible: _isSearchExpanded,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: _filterTips,
+                  decoration: InputDecoration(
+                    hintText: widget.isEnglish ? 'Search tips...' : 'Tìm kiếm mẹo, kinh nghiệm...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _searchController.text.isNotEmpty 
+                      ? IconButton(
+                          icon: const Icon(Icons.clear, size: 20),
+                          onPressed: () {
+                            _searchController.clear();
+                            _filterTips('');
+                          },
+                        )
+                      : null,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -475,142 +598,132 @@ class _CommunityPageState extends State<CommunityPage> {
 
   Widget _buildTipsList() {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: _filteredTips.length,
       itemBuilder: (context, index) {
         final tip = _filteredTips[index];
         return Card(
-          margin: const EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(bottom: 12),
           elevation: 0,
           color: Theme.of(context).colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: ExpansionTile(
-            shape: const RoundedRectangleBorder(side: BorderSide.none),
-            collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
-            leading: CircleAvatar(
-              backgroundColor: _getCategoryColor(tip['category']).withOpacity(0.2),
-              child: Icon(_getCategoryIcon(tip['category']), color: _getCategoryColor(tip['category']), size: 20),
-            ),
-            title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        tip['title'],
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${tip['author_name']} ${_getFlagEmoji(tip['country_code'] ?? 'VN')} • ${DateFormat('dd/MM/yyyy').format(DateTime.parse(tip['created_at']))}',
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (tip['image_url'] != null)
-                   GestureDetector(
-                     onTap: () => _showZoomedImage(tip['image_url']),
-                     child: Container(
-                       margin: const EdgeInsets.only(left: 12),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(10),
-                         border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
-                       ),
-                       child: ClipRRect(
-                         borderRadius: BorderRadius.circular(9),
-                         child: Image.network(
-                           tip['image_url'],
-                           width: 54,
-                           height: 54,
-                           fit: BoxFit.cover,
-                           errorBuilder: (context, error, stackTrace) => const SizedBox(),
-                         ),
-                       ),
-                     ),
-                   ),
-              ],
-            ),
-            subtitle: null, // Subtitle moved inside title for better alignment
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Header
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: _getCategoryColor(tip['category']).withOpacity(0.2),
+                      radius: 20,
+                      child: Icon(_getCategoryIcon(tip['category']), color: _getCategoryColor(tip['category']), size: 24),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  '${tip['author_name']} ${_getFlagEmoji(tip['country_code'] ?? 'VN')}',
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: _getCategoryColor(tip['category']).withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  _getCategoryLabel(tip['category']),
+                                  style: TextStyle(
+                                    color: _getCategoryColor(tip['category']),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Text(
+                                DateFormat('dd/MM/yyyy • HH:mm').format(DateTime.parse(tip['created_at'])),
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Icon(Icons.public, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.more_horiz),
+                      onPressed: () {},
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Title and Content
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Divider(),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.isEnglish ? 'Description:' : 'Mô tả:',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                    ),
-                    const SizedBox(height: 4),
+                    if (tip['title'] != null && tip['title'].toString().isNotEmpty) ...[
+                      Text(
+                        tip['title'],
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      const SizedBox(height: 4),
+                    ],
                     Text(
                       tip['content'],
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: const TextStyle(fontSize: 15),
                     ),
-                    if (tip['image_url'] != null) ...[
-                      const SizedBox(height: 12),
-                      GestureDetector(
-                        onTap: () => _showZoomedImage(tip['image_url']),
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.network(
-                                tip['image_url'],
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                height: 160,
-                                fit: BoxFit.cover,
-                                loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width * 0.7,
-                                    height: 160,
-                                    color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
-                                    child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    const SizedBox(height: 8),
+                    const SizedBox(height: 8),
+                    
+                    // Steps (if any)
                     if (tip['steps'] != null && (tip['steps'] as List).isNotEmpty) ...[
                       const SizedBox(height: 16),
+                      const Divider(height: 1, thickness: 0.5),
+                      const SizedBox(height: 16),
                       Text(
-                        widget.isEnglish ? 'Implementation Steps:' : 'Các bước xử lý:',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        widget.isEnglish ? 'Implementation Steps' : 'Các bước xử lý',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       ...(tip['steps'] as List).asMap().entries.map((entry) {
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                          padding: const EdgeInsets.only(bottom: 12.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 22,
-                                height: 22,
+                                width: 24,
+                                height: 24,
+                                margin: const EdgeInsets.only(top: 1),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                                   shape: BoxShape.circle,
                                 ),
                                 alignment: Alignment.center,
@@ -618,80 +731,164 @@ class _CommunityPageState extends State<CommunityPage> {
                                   '${entry.key + 1}',
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.primary,
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
                                   entry.value.toString(),
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    height: 1.5,
+                                    letterSpacing: 0.2,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         );
                       }),
+                      const Divider(height: 1, thickness: 0.5),
                     ],
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+
+              // Image Carousel
+              if (tip['images'] != null && (tip['images'] as List).isNotEmpty) ...[
+                const SizedBox(height: 4),
+                _TipImageCarousel(images: List<String>.from(tip['images'])),
+              ] else if (tip['image_url'] != null) ...[
+                const SizedBox(height: 4),
+                _TipImageCarousel(images: [tip['image_url']]),
+              ],
+
+              // Engagement Stats
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: _getCategoryColor(tip['category']).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle,
                           ),
-                          child: Text(
-                            _getCategoryLabel(tip['category']),
-                            style: TextStyle(
-                              color: _getCategoryColor(tip['category']),
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: const Icon(Icons.thumb_up, size: 12, color: Colors.white),
                         ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () => _likeTip(tip['id']),
-                              icon: Icon(
-                                (tip['is_liked'] ?? false) ? Icons.favorite : Icons.favorite_border, 
-                                size: 20, 
-                                color: (tip['is_liked'] ?? false) ? Colors.red : Colors.grey
-                              ),
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            Text(
-                              '${tip['likes_count']}',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                             const SizedBox(width: 8),
-                            IconButton(
-                              onPressed: () {
-                                // Xem bình luận (phát triển sau)
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                   SnackBar(content: Text(widget.isEnglish ? 'Comments coming soon' : 'Tính năng bình luận sắp ra mắt'))
-                                );
-                              },
-                              icon: const Icon(Icons.comment_outlined, size: 20),
-                              visualDensity: VisualDensity.compact,
-                            ),
-                          ],
+                        const SizedBox(width: 8),
+                        Text(
+                          '${tip['likes_count'] ?? 0}',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ],
+                    ),
+                    Text(
+                      widget.isEnglish ? '0 comments' : '0 bình luận',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
               ),
+
+              const Divider(height: 1, thickness: 1),
+
+              // Action Buttons
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildActionButton(
+                      icon: (tip['is_liked'] ?? false) ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                      label: widget.isEnglish ? 'Like' : 'Thích',
+                      color: (tip['is_liked'] ?? false) ? Colors.blue : Theme.of(context).colorScheme.onSurfaceVariant,
+                      onTap: () => _likeTip(tip['id']),
+                    ),
+                    _buildActionButton(
+                      icon: Icons.chat_bubble_outline,
+                      label: widget.isEnglish ? 'Comment' : 'Bình luận',
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(widget.isEnglish ? 'Comments coming soon' : 'Tính năng bình luận sắp ra mắt'))
+                        );
+                      },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.share_outlined,
+                      label: widget.isEnglish ? 'Share' : 'Chia sẻ',
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      onTap: () => _shareTip(tip),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
             ],
           ),
         );
       },
     );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon, 
+    required String label, 
+    required Color color, 
+    required VoidCallback onTap
+  }) {
+    return Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _shareTip(dynamic tip) async {
+    final String content = """
+${tip['title'] ?? (widget.isEnglish ? 'Survival Tip' : 'Mẹo sinh tồn')}
+
+${tip['content']}
+
+${tip['steps'] != null && (tip['steps'] as List).isNotEmpty ? (widget.isEnglish ? 'Steps:\n' : 'Các bước xử lý:\n') + (tip['steps'] as List).asMap().entries.map((e) => '${e.key + 1}. ${e.value}').join('\n') : ''}
+
+${widget.isEnglish ? 'Shared from Mẹo Sinh Tồn App' : 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn'}
+""";
+    await Share.share(content);
   }
 
   Future<void> _likeTip(int tipId) async {
@@ -712,12 +909,19 @@ class _CommunityPageState extends State<CommunityPage> {
       }
     });
 
+    print('>>> LIKING Tip ID: $tipId for User: ${widget.appController.userId}');
     try {
       final response = await http.post(
         Uri.parse('${_baseUrl}like_community_tip.php'),
-        body: {'tip_id': tipId.toString()},
+        body: {
+          'tip_id': tipId.toString(),
+          'user_id': widget.appController.userId,
+        },
       );
       
+      print('>>> Like Response Code: ${response.statusCode}');
+      print('>>> Like Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success']) {
@@ -750,7 +954,7 @@ class _CommunityPageState extends State<CommunityPage> {
     }
   }
 
-  void _showZoomedImage(String imageUrl) {
+  void _showZoomedImage(String imageUrl, {List<String>? allImages, int initialIndex = 0}) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -764,18 +968,25 @@ class _CommunityPageState extends State<CommunityPage> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Colors.black.withOpacity(0.85),
+                color: Colors.black.withOpacity(0.9),
               ),
             ),
-            InteractiveViewer(
-              panEnabled: true,
-              minScale: 0.5,
-              maxScale: 4.0,
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.contain,
+            if (allImages != null && allImages.length > 1)
+              _TipImageCarousel(
+                images: allImages, 
+                initialIndex: initialIndex,
+                isZoomMode: true,
+              )
+            else
+              InteractiveViewer(
+                panEnabled: true,
+                minScale: 0.5,
+                maxScale: 4.0,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
             Positioned(
               top: 40,
               right: 20,
@@ -835,5 +1046,127 @@ class _CommunityPageState extends State<CommunityPage> {
         default: return 'KHÁC';
       }
     }
+  }
+}
+
+class _TipImageCarousel extends StatefulWidget {
+  final List<String> images;
+  final int initialIndex;
+  final bool isZoomMode;
+
+  const _TipImageCarousel({
+    required this.images,
+    this.initialIndex = 0,
+    this.isZoomMode = false,
+  });
+
+  @override
+  State<_TipImageCarousel> createState() => _TipImageCarouselState();
+}
+
+class _TipImageCarouselState extends State<_TipImageCarousel> {
+  late PageController _pageController;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.images.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: widget.isZoomMode ? MediaQuery.of(context).size.height * 0.8 : 220,
+          child: Stack(
+            children: [
+              PageView.builder(
+                controller: _pageController,
+                itemCount: widget.images.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: widget.isZoomMode ? null : () {
+                      CommunityPageState parent = context.findAncestorStateOfType<CommunityPageState>()!;
+                      parent._showZoomedImage(widget.images[index], allImages: widget.images, initialIndex: index);
+                    },
+                    child: widget.isZoomMode 
+                      ? InteractiveViewer(
+                          child: Image.network(widget.images[index], fit: BoxFit.contain),
+                        )
+                      : Image.network(
+                          widget.images[index],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              width: double.infinity,
+                              height: 220,
+                              color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                              child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            width: double.infinity,
+                            height: 220,
+                            color: Colors.grey.shade200,
+                            child: const Icon(Icons.broken_image, color: Colors.grey),
+                          ),
+                        ),
+                  );
+                },
+              ),
+              if (widget.images.length > 1) ...[
+                // Dot indicator improved
+                Positioned(
+                  bottom: 15,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(widget.images.length, (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        width: _currentIndex == index ? 8 : 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: _currentIndex == index ? Colors.blue : Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(3),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 2,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

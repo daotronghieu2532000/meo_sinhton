@@ -410,8 +410,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                 ),
               ),
-              const SizedBox(height: 6),
-              _tileCard(
+              /* _tileCard(
                 child: ListTile(
                   dense: true,
                   visualDensity: VisualDensity.compact,
@@ -431,6 +430,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 6), */
               const SizedBox(height: 6),
               _tileCard(
                 child: ListTile(
@@ -497,8 +497,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   trailing: const Icon(Icons.chevron_right, size: 20),
                 ),
               ),
-              const SizedBox(height: 6),
-              _tileCard(
+              /* _tileCard(
                 child: ListTile(
                   dense: true,
                   visualDensity: VisualDensity.compact,
@@ -574,7 +573,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     );
                   },
                 ),
-              ),
+              ), */
             ],
           ),
         );

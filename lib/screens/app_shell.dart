@@ -88,7 +88,9 @@ class _AppShellState extends State<AppShell> {
     super.dispose();
   }
 
-  final Set<int> _initializedPages = {0}; // Khởi đầu với tab Home (index 0)
+  final Set<int> _initializedPages = {0};
+  final GlobalKey<TipFeedViewState> _tipFeedKey = GlobalKey<TipFeedViewState>();
+  final GlobalKey<CommunityPageState> _communityKey = GlobalKey<CommunityPageState>();
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +109,18 @@ class _AppShellState extends State<AppShell> {
         final pages = [
           // Index 0: Home
           TipFeedView(
+            key: _tipFeedKey,
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
           
           // Index 1: Community (Lazy)
           _initializedPages.contains(1) 
-            ? CommunityPage(appController: widget.appController, isEnglish: isEnglish)
+            ? CommunityPage(
+                key: _communityKey,
+                appController: widget.appController, 
+                isEnglish: isEnglish,
+              )
             : const Center(child: CircularProgressIndicator()),
             
           // Index 2: Top 10 (Lazy)
@@ -147,6 +154,18 @@ class _AppShellState extends State<AppShell> {
             ),
             title: Text(titles[_currentIndex]),
             actions: [
+              if (_currentIndex == 0 || _currentIndex == 1) // Show on Home and Community tabs
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  tooltip: isEnglish ? 'Toggle Search' : 'Bật/Tắt tìm kiếm',
+                  onPressed: () {
+                    if (_currentIndex == 0) {
+                      _tipFeedKey.currentState?.toggleSearch();
+                    } else if (_currentIndex == 1) {
+                      _communityKey.currentState?.toggleSearch();
+                    }
+                  },
+                ),
               IconButton(
                 icon: Icon(
                   Icons.history_edu_rounded,

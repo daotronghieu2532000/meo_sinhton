@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/models/survival_tip.dart';
-import 'package:meo_sinhton/widgets/info_pill.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TipPreviewCard extends StatelessWidget {
   const TipPreviewCard({
@@ -27,107 +27,200 @@ class TipPreviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.zero,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      color: Theme.of(context).colorScheme.surfaceContainer,
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (tip.imageAsset != null && tip.imageAsset!.trim().isNotEmpty)
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Image.asset(
-                  tip.imageAsset!,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) {
-                    return Container(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerHighest,
+            // Facebook-style Header
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                   CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                    radius: 20,
+                    child: Icon(
+                      tip.isEmergency ? Icons.warning_amber_rounded : Icons.tips_and_updates_outlined, 
+                      color: tip.isEmergency ? Colors.red : Theme.of(context).colorScheme.primary, 
+                      size: 24
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tip.categoryText(isEnglish),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        const SizedBox(height: 2),
+                        // Metadata Row with ellipsis protection
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const NeverScrollableScrollPhysics(),
+                          child: Row(
+                            children: [
+                              ConstrainedBox(
+                                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.5),
+                                child: Text(
+                                  '${tip.subCategoryText(isEnglish)} • ${AppStrings.minuteUnit(isEnglish, tip.estimatedMinutes, compact: true)}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ),
+                              if (tip.isEmergency) ...[
+                                const SizedBox(width: 4),
+                                Text(
+                                  '• ${AppStrings.emergencyChip(isEnglish)}',
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                              const SizedBox(width: 4),
+                              Icon(Icons.public, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    onPressed: () {},
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Title and Content
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tip.titleText(isEnglish),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    tip.summaryText(isEnglish),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+
+            // Image
+            if (tip.imageAsset != null && tip.imageAsset!.trim().isNotEmpty) ...[
+              const SizedBox(height: 4),
+              Image.asset(
+                tip.imageAsset!,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) {
+                  return Container(
+                    height: 200,
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    child: Center(
                       child: Icon(
                         Icons.image_not_supported_outlined,
                         size: 32,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
+            ],
+
+            // Action Buttons (Combined Like & Save)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          tip.titleText(isEnglish),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      const Icon(Icons.chevron_right),
-                    ],
+                  _buildActionButton(
+                    context,
+                    icon: isSaved ? Icons.thumb_up_alt : Icons.thumb_up_alt_outlined,
+                    label: isEnglish ? 'Like' : 'Thích',
+                    color: isSaved ? Colors.blue : Theme.of(context).colorScheme.onSurfaceVariant,
+                    onTap: onToggleSaved, // Now Like button handles saving
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    tip.summaryText(isEnglish),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: [
-                            InfoPill(
-                              icon: Icons.folder_outlined,
-                              label: tip.categoryText(isEnglish),
-                            ),
-                            InfoPill(
-                              icon: Icons.sell_outlined,
-                              label: tip.subCategoryText(isEnglish),
-                            ),
-                            InfoPill(
-                              icon: Icons.schedule_outlined,
-                              label: AppStrings.minuteUnit(
-                                isEnglish,
-                                tip.estimatedMinutes,
-                                compact: true,
-                              ),
-                            ),
-                            if (tip.isEmergency)
-                              InfoPill(
-                                icon: Icons.warning_amber_rounded,
-                                label: AppStrings.emergencyChip(isEnglish),
-                                highlighted: true,
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      IconButton(
-                        visualDensity: VisualDensity.compact,
-                        tooltip: isSaved ? unsaveTooltip : saveTooltip,
-                        onPressed: onToggleSaved,
-                        icon: Icon(
-                          isSaved ? Icons.bookmark : Icons.bookmark_border,
-                        ),
-                      ),
-                    ],
+                  _buildActionButton(
+                    context,
+                    icon: Icons.share_outlined,
+                    label: isEnglish ? 'Share' : 'Chia sẻ',
+                    onTap: () {
+                      final content = """
+${tip.titleText(isEnglish)}
+
+${tip.summaryText(isEnglish)}
+
+${isEnglish ? 'More details in the Mẹo Sinh Tồn app!' : 'Xem chi tiết trong ứng dụng Mẹo Sinh Tồn!'}
+""";
+                      Share.share(content);
+                    },
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 4),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context, {
+    required IconData icon, 
+    required String label, 
+    Color? color,
+    required VoidCallback onTap
+  }) {
+    final finalColor = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
+    return Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: finalColor, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: finalColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

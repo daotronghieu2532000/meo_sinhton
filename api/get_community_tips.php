@@ -18,17 +18,25 @@ try {
 
     // Tự động nhận diện Base URL (http/https + domain + path)
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
-    $current_dir = str_replace('get_community_tips.php', '', $_SERVER['REQUEST_URI']);
-    $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . $current_dir;
+    $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/';
+    $base_url = str_replace('//', '/', $base_url);
+    $base_url = str_replace(':/', '://', $base_url);
 
-    // Lấy IP của người dùng để kiểm tra trạng thái LIKE
+    $user_id = isset($_GET['user_id']) ? $conn->real_escape_string($_GET['user_id']) : '';
     $ip_address = $_SERVER['REMOTE_ADDR'];
     
-    // Chỉ lấy STATUS = 1 (Đã duyệt) + Kiểm tra Like
-    $sql = "SELECT t.*, (SELECT id FROM tip_likes WHERE tip_id = t.id AND ip_address = '$ip_address' LIMIT 1) as my_like 
+    // Câu lệnh SQL kiểm tra trạng thái Like dựa trên user_id hoặc IP
+    if (!empty($user_id)) {
+        $like_check_subquery = "SELECT id FROM tip_likes WHERE tip_id = t.id AND (user_id = '$user_id' OR ip_address = '$ip_address') LIMIT 1";
+    } else {
+        $like_check_subquery = "SELECT id FROM tip_likes WHERE tip_id = t.id AND ip_address = '$ip_address' LIMIT 1";
+    }
+
+    $sql = "SELECT t.*, ($like_check_subquery) as my_like 
             FROM community_tips t 
             WHERE t.status = 1 
             ORDER BY t.created_at DESC";
+    
     $result = $conn->query($sql);
 
     $tips = [];
@@ -37,9 +45,18 @@ try {
             $img = $row['image_url'];
             $is_liked = $row['my_like'] ? true : false;
 
-            // Xử lý fallback cho các bản ghi cũ có prefix 'api/'
-            if ($img && strpos($img, 'api/') === 0) {
-                $img = str_replace('api/', '', $img);
+            // Xử lý ảnh (Hỗ trợ cả đơn lẻ và mảng JSON)
+            $images = [];
+            $img_raw = $row['image_url'];
+            if ($img_raw) {
+                $decoded = json_decode($img_raw, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    foreach ($decoded as $path) {
+                        $images[] = $base_url . $path;
+                    }
+                } else {
+                    $images[] = $base_url . $img_raw;
+                }
             }
             
             $tips[] = [
@@ -52,7 +69,8 @@ try {
                 'likes_count' => (int)$row['likes_count'],
                 'is_liked' => $is_liked,
                 'steps' => json_decode($row['steps'] ?? '[]'),
-                'image_url' => $img ? $base_url . $img : null,
+                'image_url' => !empty($images) ? $images[0] : null, // Giữ lại cho tương thích cũ
+                'images' => $images, // Mảng ảnh mới
                 'country_code' => $row['country_code'] ?? 'VN',
                 'created_at' => $row['created_at']
             ];

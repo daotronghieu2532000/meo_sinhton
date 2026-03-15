@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:intl/intl.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TopTipsPage extends StatefulWidget {
   final AppController appController;
@@ -28,6 +29,19 @@ class _TopTipsPageState extends State<TopTipsPage> {
   void initState() {
     super.initState();
     _fetchTopTips();
+  }
+
+  Future<void> _shareTip(dynamic tip) async {
+    final String content = """
+${tip['title'] ?? (widget.isEnglish ? 'Survival Tip' : 'Mẹo sinh tồn')}
+
+${tip['content']}
+
+${tip['steps'] != null && (tip['steps'] as List).isNotEmpty ? (widget.isEnglish ? 'Steps:\n' : 'Các bước xử lý:\n') + (tip['steps'] as List).asMap().entries.map((e) => '${e.key + 1}. ${e.value}').join('\n') : ''}
+
+${widget.isEnglish ? 'Shared from Mẹo Sinh Tồn App' : 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn'}
+""";
+    await Share.share(content);
   }
 
   Future<void> _likeTip(dynamic tipIdRaw) async {
@@ -256,8 +270,10 @@ class _TopTipsPageState extends State<TopTipsPage> {
                       child: CircleAvatar(
                         radius: avatarSize / 2,
                         backgroundColor: color.withOpacity(0.1),
-                        backgroundImage: tip['image_url'] != null ? NetworkImage(tip['image_url']) : null,
-                        child: tip['image_url'] == null 
+                        backgroundImage: (tip['images'] != null && (tip['images'] as List).isNotEmpty)
+                          ? NetworkImage(tip['images'][0])
+                          : (tip['image_url'] != null ? NetworkImage(tip['image_url']) : null),
+                        child: (tip['images'] == null || (tip['images'] as List).isEmpty) && tip['image_url'] == null 
                           ? Icon(Icons.person, color: Colors.white.withOpacity(0.8), size: avatarSize * 0.5)
                           : null,
                       ),
@@ -342,196 +358,224 @@ class _TopTipsPageState extends State<TopTipsPage> {
     else rankColor = Theme.of(context).colorScheme.outlineVariant;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12),
       elevation: 0,
       color: Theme.of(context).colorScheme.surfaceContainer,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: ExpansionTile(
-        shape: const RoundedRectangleBorder(side: BorderSide.none),
-        collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
-        leading: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            CircleAvatar(
-              backgroundColor: _getCategoryColor(tip['category']).withOpacity(0.2),
-              child: Icon(_getCategoryIcon(tip['category']), color: _getCategoryColor(tip['category']), size: 18),
-            ),
-            Positioned(
-              right: -10,
-              top: -6,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: rankColor,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white, width: 2),
-                  boxShadow: [
-                    if (index < 3)
-                      BoxShadow(color: rankColor.withOpacity(0.4), blurRadius: 4, spreadRadius: 1)
-                  ]
-                ),
-                child: Text(
-                  '${index + 1}',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: index < 3 ? Colors.white : Colors.black87,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tip['title'],
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    '${tip['author_name']} ${_getFlagEmoji(tip['country_code'] ?? 'VN')} • ${DateFormat('dd/MM/yyyy').format(DateTime.parse(tip['created_at']))}',
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (tip['image_url'] != null)
-              Container(
-                margin: const EdgeInsets.only(left: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(9),
-                  child: Image.network(
-                    tip['image_url'],
-                    width: 54,
-                    height: 54,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const SizedBox(),
-                  ),
-                ),
-              ),
-          ],
-        ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Divider(),
-                const SizedBox(height: 8),
-                Row(
+                Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
                   children: [
-                    Text(
-                      widget.isEnglish ? 'Description:' : 'Mô tả:',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    CircleAvatar(
+                      backgroundColor: _getCategoryColor(tip['category']).withValues(alpha: 0.2),
+                      radius: 20,
+                      child: Icon(_getCategoryIcon(tip['category']), color: _getCategoryColor(tip['category']), size: 24),
                     ),
-                    const Spacer(),
-                    IconButton(
-                      icon: Icon(
-                        (tip['is_liked'] ?? false) ? Icons.favorite : Icons.favorite_border,
-                        size: 18, 
-                        color: (tip['is_liked'] ?? false) ? Colors.red.shade400 : Colors.grey
-                      ),
-                      onPressed: () => _likeTip(tip['id']),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                    const SizedBox(width: 2),
-                    Text('${tip['likes_count']} likes', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  tip['content'],
-                  style: const TextStyle(fontSize: 14, height: 1.5),
-                ),
-                if (tip['image_url'] != null) ...[
-                  const SizedBox(height: 12),
-                  GestureDetector(
-                    onTap: () => _showZoomedImage(tip['image_url']),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.5)),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11),
-                        child: Image.network(
-                          tip['image_url'],
-                          fit: BoxFit.cover,
-                          height: 220,
-                          width: double.infinity,
-                          errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                    Positioned(
+                      right: -6,
+                      top: -6,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: rankColor,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white, width: 2),
+                          boxShadow: [
+                            if (index < 3)
+                              BoxShadow(color: rankColor.withValues(alpha: 0.4), blurRadius: 4, spreadRadius: 1)
+                          ]
+                        ),
+                        child: Text(
+                          '${index + 1}',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: index < 3 ? Colors.white : Colors.black87,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-                if (tip['steps'] != null && (tip['steps'] as List).isNotEmpty) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    widget.isEnglish ? 'Implementation steps:' : 'Các bước thực hiện:',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                  ),
-                  const SizedBox(height: 12),
-                  ...(tip['steps'] as List).asMap().entries.map((entry) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ],
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${tip['author_name']} ${_getFlagEmoji(tip['country_code'] ?? 'VN')}',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(top: 2, right: 10),
-                            width: 22,
-                            height: 22,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              '${entry.key + 1}',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                          Text(
+                            DateFormat('dd/MM/yyyy • HH:mm').format(DateTime.parse(tip['created_at'])),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
-                          Expanded(
-                            child: Text(
-                              entry.value.toString(),
-                              style: const TextStyle(fontSize: 14, height: 1.4),
-                            ),
-                          ),
+                          const SizedBox(width: 4),
+                          Icon(Icons.public, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         ],
                       ),
-                    );
-                  }).toList(),
-                ],
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.more_horiz),
+                  onPressed: () {},
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
               ],
             ),
           ),
+
+          // Title and Content
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (tip['title'] != null) ...[
+                  Text(
+                    tip['title'],
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const SizedBox(height: 4),
+                ],
+                Text(
+                  tip['content'],
+                  style: const TextStyle(fontSize: 15),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+
+          // Image Carousel
+          if (tip['images'] != null && (tip['images'] as List).isNotEmpty) ...[
+            const SizedBox(height: 4),
+            _TopTipImageCarousel(images: List<String>.from(tip['images'])),
+          ] else if (tip['image_url'] != null) ...[
+            const SizedBox(height: 4),
+            _TopTipImageCarousel(images: [tip['image_url']]),
+          ],
+
+          // Engagement Stats
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.thumb_up, size: 12, color: Colors.white),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${tip['likes_count'] ?? 0}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          const Divider(height: 1, thickness: 1),
+
+          // Action Buttons
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildActionButton(
+                  icon: (tip['is_liked'] ?? false) ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                  label: widget.isEnglish ? 'Like' : 'Thích',
+                  color: (tip['is_liked'] ?? false) ? Colors.blue : Theme.of(context).colorScheme.onSurfaceVariant,
+                  onTap: () => _likeTip(tip['id']),
+                ),
+                _buildActionButton(
+                  icon: Icons.chat_bubble_outline,
+                  label: widget.isEnglish ? 'Comment' : 'Bình luận',
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(widget.isEnglish ? 'Comments coming soon' : 'Tính năng bình luận sắp ra mắt'))
+                    );
+                  },
+                ),
+                _buildActionButton(
+                  icon: Icons.share_outlined,
+                  label: widget.isEnglish ? 'Share' : 'Chia sẻ',
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  onTap: () => _shareTip(tip),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
         ],
       ),
     );
   }
 
-  void _showZoomedImage(String imageUrl) {
+  Widget _buildActionButton({
+    required IconData icon, 
+    required String label, 
+    required Color color, 
+    required VoidCallback onTap
+  }) {
+    return Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showZoomedImage(String imageUrl, {List<String>? allImages, int initialIndex = 0}) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -545,18 +589,25 @@ class _TopTipsPageState extends State<TopTipsPage> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Colors.black.withOpacity(0.85),
+                color: Colors.black.withOpacity(0.9),
               ),
             ),
-            InteractiveViewer(
-              panEnabled: true,
-              minScale: 0.5,
-              maxScale: 4.0,
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.contain,
+            if (allImages != null && allImages.length > 1)
+              _TopTipImageCarousel(
+                images: allImages, 
+                initialIndex: initialIndex,
+                isZoomMode: true,
+              )
+            else
+              InteractiveViewer(
+                panEnabled: true,
+                minScale: 0.5,
+                maxScale: 4.0,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
             Positioned(
               top: 40,
               right: 20,
@@ -613,4 +664,126 @@ class _StarPainter extends CustomPainter {
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _TopTipImageCarousel extends StatefulWidget {
+  final List<String> images;
+  final int initialIndex;
+  final bool isZoomMode;
+
+  const _TopTipImageCarousel({
+    required this.images,
+    this.initialIndex = 0,
+    this.isZoomMode = false,
+  });
+
+  @override
+  State<_TopTipImageCarousel> createState() => _TopTipImageCarouselState();
+}
+
+class _TopTipImageCarouselState extends State<_TopTipImageCarousel> {
+  late PageController _pageController;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.images.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: widget.isZoomMode ? MediaQuery.of(context).size.height * 0.8 : 220,
+          child: Stack(
+            children: [
+              PageView.builder(
+                controller: _pageController,
+                itemCount: widget.images.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: widget.isZoomMode ? null : () {
+                      _TopTipsPageState parent = context.findAncestorStateOfType<_TopTipsPageState>()!;
+                      parent._showZoomedImage(widget.images[index], allImages: widget.images, initialIndex: index);
+                    },
+                    child: widget.isZoomMode 
+                      ? InteractiveViewer(
+                          child: Image.network(widget.images[index], fit: BoxFit.contain),
+                        )
+                      : Image.network(
+                          widget.images[index],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              width: double.infinity,
+                              height: 220,
+                              color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                              child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            width: double.infinity,
+                            height: 220,
+                            color: Colors.grey.shade200,
+                            child: const Icon(Icons.broken_image, color: Colors.grey),
+                          ),
+                        ),
+                  );
+                },
+              ),
+              if (widget.images.length > 1) ...[
+                // Dot indicator improved
+                Positioned(
+                  bottom: 15,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(widget.images.length, (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        width: _currentIndex == index ? 8 : 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: _currentIndex == index ? Colors.blue : Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(3),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 2,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
