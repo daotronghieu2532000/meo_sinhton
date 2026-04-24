@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
-enum AppLanguage { vietnamese, english }
+enum AppLanguage { vietnamese, english, polish }
 
 class AppController extends ChangeNotifier {
   AppController._({
@@ -27,6 +27,7 @@ class AppController extends ChangeNotifier {
   final Set<String> _savedTipIds = <String>{};
 
   bool get isEnglish => language == AppLanguage.english;
+  bool get isPolish => language == AppLanguage.polish;
   DateTime? get adFreeUntil => _adFreeUntil;
   Set<String> get savedTipIds => Set.unmodifiable(_savedTipIds);
 
@@ -73,7 +74,7 @@ class AppController extends ChangeNotifier {
     final adFreeUntil = adFreeUntilEpochMs == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(adFreeUntilEpochMs);
-    
+
     String? userId = prefs.getString(_userIdKey);
     if (userId == null || userId.startsWith('user_')) {
       // Pure numeric ID: timestamp + 4 random digits (Total ~17 digits, fits in BIGINT)
@@ -86,6 +87,8 @@ class AppController extends ChangeNotifier {
     final controller = AppController._(
       language: savedLanguage == 'en'
           ? AppLanguage.english
+          : savedLanguage == 'pl'
+          ? AppLanguage.polish
           : AppLanguage.vietnamese,
       themeMode: darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
       userId: userId,
@@ -118,7 +121,11 @@ class AppController extends ChangeNotifier {
     if (_prefs != null) {
       await _prefs.setString(
         _languageKey,
-        value == AppLanguage.english ? 'en' : 'vi',
+        value == AppLanguage.english
+            ? 'en'
+            : value == AppLanguage.polish
+            ? 'pl'
+            : 'vi',
       );
     }
   }

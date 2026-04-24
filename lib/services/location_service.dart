@@ -8,14 +8,25 @@ class LocationService {
     return locationPermission.isGranted;
   }
 
-  static Future<Position?> getCurrentLocation() async {
+  static Future<Position?> getCurrentLocation({
+    bool requestPermission = true,
+  }) async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         return null;
       }
 
-      bool hasPermission = await requestPermissions();
+      bool hasPermission;
+      if (requestPermission) {
+        hasPermission = await requestPermissions();
+      } else {
+        final permission = await Geolocator.checkPermission();
+        hasPermission =
+            permission == LocationPermission.always ||
+            permission == LocationPermission.whileInUse;
+      }
+
       if (!hasPermission) {
         return null;
       }
@@ -36,16 +47,21 @@ class LocationService {
         position.latitude,
         position.longitude,
       );
-      
+
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
         List<String> parts = [];
-        if (place.subLocality != null && place.subLocality!.isNotEmpty) parts.add(place.subLocality!);
-        if (place.locality != null && place.locality!.isNotEmpty) parts.add(place.locality!);
-        if (place.subAdministrativeArea != null && place.subAdministrativeArea!.isNotEmpty) parts.add(place.subAdministrativeArea!);
-        
-        if (parts.isEmpty && place.administrativeArea != null) parts.add(place.administrativeArea!);
-        
+        if (place.subLocality != null && place.subLocality!.isNotEmpty)
+          parts.add(place.subLocality!);
+        if (place.locality != null && place.locality!.isNotEmpty)
+          parts.add(place.locality!);
+        if (place.subAdministrativeArea != null &&
+            place.subAdministrativeArea!.isNotEmpty)
+          parts.add(place.subAdministrativeArea!);
+
+        if (parts.isEmpty && place.administrativeArea != null)
+          parts.add(place.administrativeArea!);
+
         return parts.join(', ');
       }
     } catch (e) {

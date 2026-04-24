@@ -11,12 +11,12 @@ class TipDetailScreen extends StatelessWidget {
     super.key,
     required this.tip,
     required this.appController,
-    required this.isEnglish,
+    required this.language,
   });
 
   final SurvivalTip tip;
   final AppController appController;
-  final bool isEnglish;
+  final AppLanguage language;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class TipDetailScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(tip.titleText(isEnglish)),
+            title: Text(tip.titleText(language)),
             actions: [
               IconButton(
                 tooltip: isSaved
-                    ? AppStrings.unsaveTip(isEnglish)
-                    : AppStrings.saveTip(isEnglish),
+                    ? AppStrings.unsaveTip(language == AppLanguage.english)
+                    : AppStrings.saveTip(language == AppLanguage.english),
                 onPressed: () async {
                   final wasSaved = appController.isTipSaved(tip.id);
                   await appController.toggleTipSaved(tip.id);
@@ -44,8 +44,12 @@ class TipDetailScreen extends StatelessWidget {
                       duration: const Duration(milliseconds: 1200),
                       content: Text(
                         wasSaved
-                            ? AppStrings.tipUnsaved(isEnglish)
-                            : AppStrings.tipSaved(isEnglish),
+                            ? AppStrings.tipUnsaved(
+                                language == AppLanguage.english,
+                              )
+                            : AppStrings.tipSaved(
+                                language == AppLanguage.english,
+                              ),
                       ),
                     ),
                   );
@@ -58,7 +62,7 @@ class TipDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               Text(
-                tip.summaryText(isEnglish),
+                tip.summaryText(language),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 10),
@@ -68,31 +72,31 @@ class TipDetailScreen extends StatelessWidget {
                 children: [
                   InfoPill(
                     icon: Icons.folder_outlined,
-                    label: tip.categoryText(isEnglish),
+                    label: tip.categoryText(language),
                   ),
                   InfoPill(
                     icon: Icons.sell_outlined,
-                    label: tip.subCategoryText(isEnglish),
+                    label: tip.subCategoryText(language),
                   ),
                   InfoPill(
                     icon: Icons.speed_outlined,
-                    label: tip.difficultyText(isEnglish),
+                    label: tip.difficultyText(language),
                   ),
                   InfoPill(
                     icon: Icons.schedule_outlined,
                     label: AppStrings.minuteUnit(
-                      isEnglish,
+                      language,
                       tip.estimatedMinutes,
                     ),
                   ),
                   if (tip.isEmergency)
                     InfoPill(
                       icon: Icons.warning_amber_rounded,
-                      label: AppStrings.emergencyChip(isEnglish),
+                      label: AppStrings.emergencyChip(language),
                       highlighted: true,
                     ),
                   ...tip
-                      .tagsText(isEnglish)
+                      .tagsText(language)
                       .map(
                         (tag) => InfoPill(icon: Icons.tag_outlined, label: tag),
                       ),
@@ -101,20 +105,20 @@ class TipDetailScreen extends StatelessWidget {
               const SizedBox(height: 16),
               TipImagePlaceholder(
                 imageAsset: tip.imageAsset,
-                isEnglish: isEnglish,
+                language: language,
               ),
               const SizedBox(height: 16),
               Text(
-                AppStrings.detailsHeader(isEnglish),
+                AppStrings.detailsHeader(language),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
-              for (var i = 0; i < tip.stepsText(isEnglish).length; i++)
+              for (var i = 0; i < tip.stepsText(language).length; i++)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: StepItem(
                     number: i + 1,
-                    text: tip.stepsText(isEnglish)[i],
+                    text: tip.stepsText(language)[i],
                   ),
                 ),
             ],

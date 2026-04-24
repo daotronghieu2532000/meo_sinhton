@@ -1,4 +1,5 @@
 import 'package:meo_sinhton/app/app_i18n.dart';
+import 'package:meo_sinhton/app/app_controller.dart';
 
 class AppStrings {
   static String appName() => 'MXH : Share Tips and Tricks';
@@ -55,18 +56,36 @@ class AppStrings {
   );
 
   static String minuteUnit(
-    bool isEnglish,
+    AppLanguage language,
     int minutes, {
     bool compact = false,
   }) {
-    if (isEnglish) {
-      return compact ? '$minutes min' : '~$minutes min';
+    switch (language) {
+      case AppLanguage.english:
+        return compact ? '$minutes min' : '~$minutes min';
+      case AppLanguage.polish:
+        // Đơn giản: số 1 là minuta, còn lại là min
+        if (minutes == 1) {
+          return compact ? '1 minuta' : '~1 minuta';
+        }
+        return compact ? '$minutes min' : '~$minutes min';
+      case AppLanguage.vietnamese:
+      default:
+        return compact ? '$minutes phút' : '~$minutes phút';
     }
-    return compact ? '$minutes phút' : '~$minutes phút';
   }
 
-  static String emergencyChip(bool isEnglish) =>
-      AppI18n.text(isEnglish: isEnglish, vi: 'Khẩn cấp', en: 'Emergency');
+  static String emergencyChip(AppLanguage language) {
+    switch (language) {
+      case AppLanguage.english:
+        return 'Emergency';
+      case AppLanguage.polish:
+        return 'Awaryjne';
+      case AppLanguage.vietnamese:
+      default:
+        return 'Khẩn cấp';
+    }
+  }
 
   static String categoryLoadError(bool isEnglish) => AppI18n.text(
     isEnglish: isEnglish,
@@ -197,11 +216,17 @@ class AppStrings {
     en: 'Unable to load rewarded ad. Please try again.',
   );
 
-  static String detailsHeader(bool isEnglish) => AppI18n.text(
-    isEnglish: isEnglish,
-    vi: 'Hướng dẫn chi tiết',
-    en: 'Detailed steps',
-  );
+  static String detailsHeader(AppLanguage language) {
+    switch (language) {
+      case AppLanguage.english:
+        return 'Detailed steps';
+      case AppLanguage.polish:
+        return 'Szczegółowa instrukcja';
+      case AppLanguage.vietnamese:
+      default:
+        return 'Hướng dẫn chi tiết';
+    }
+  }
 
   static String imagePlaceholder(bool isEnglish) => AppI18n.text(
     isEnglish: isEnglish,

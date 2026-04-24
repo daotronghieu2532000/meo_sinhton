@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../app/app_controller.dart';
-import '../app/app_strings.dart';
 import '../models/scenario_item.dart';
 import '../repositories/scenario_repository.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../app/admob_config.dart';
 import 'package:flutter/foundation.dart';
+
+String _scenarioText(
+  AppLanguage language, {
+  required String vi,
+  required String en,
+  required String pl,
+}) {
+  switch (language) {
+    case AppLanguage.english:
+      return en;
+    case AppLanguage.polish:
+      return pl;
+    case AppLanguage.vietnamese:
+      return vi;
+  }
+}
 
 class ScenarioModePage extends StatefulWidget {
   const ScenarioModePage({
@@ -26,6 +41,8 @@ class _ScenarioModePageState extends State<ScenarioModePage> {
   late final Future<List<ScenarioItem>> _future;
   final ScenarioRepository _repository = ScenarioRepository();
 
+  AppLanguage get _language => widget.appController.language;
+
   @override
   void initState() {
     super.initState();
@@ -43,14 +60,24 @@ class _ScenarioModePageState extends State<ScenarioModePage> {
 
         if (snapshot.hasError) {
           return _MessageView(
-            text: AppStrings.scenarioLoadError(widget.isEnglish),
+            text: _scenarioText(
+              _language,
+              vi: 'Không tải được dữ liệu tình huống offline.',
+              en: 'Unable to load offline scenario data.',
+              pl: 'Nie mozna zaladowac danych scenariuszy offline.',
+            ),
           );
         }
 
         final scenarios = snapshot.data ?? const <ScenarioItem>[];
         if (scenarios.isEmpty) {
           return _MessageView(
-            text: AppStrings.scenarioNoData(widget.isEnglish),
+            text: _scenarioText(
+              _language,
+              vi: 'Chưa có tình huống nào.',
+              en: 'No scenarios available yet.',
+              pl: 'Brak dostepnych scenariuszy.',
+            ),
           );
         }
 
@@ -68,21 +95,21 @@ class _ScenarioModePageState extends State<ScenarioModePage> {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
             children: [
-              _ScenarioHeader(isEnglish: widget.isEnglish),
+              _ScenarioHeader(language: _language),
               const SizedBox(height: 14),
               ...scenarios.map(
                 (scenario) => Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: _ScenarioCard(
                     scenario: scenario,
-                    isEnglish: widget.isEnglish,
+                    language: _language,
                     onStart: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => ScenarioPlayScreen(
                             appController: widget.appController,
                             scenario: scenario,
-                            isEnglish: widget.isEnglish,
+                            language: _language,
                           ),
                         ),
                       );
@@ -103,12 +130,12 @@ class ScenarioPlayScreen extends StatefulWidget {
     super.key,
     required this.appController,
     required this.scenario,
-    required this.isEnglish,
+    required this.language,
   });
 
   final AppController appController;
   final ScenarioItem scenario;
-  final bool isEnglish;
+  final AppLanguage language;
 
   @override
   State<ScenarioPlayScreen> createState() => _ScenarioPlayScreenState();
@@ -118,7 +145,7 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
   int _stepIndex = 0;
   int _score = 0;
   ScenarioOption? _selectedOption;
-  
+
   InterstitialAd? _interstitialAd;
   bool _isInterstitialAdReady = false;
 
@@ -131,18 +158,19 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
         onAdLoaded: (ad) {
           _interstitialAd = ad;
           _isInterstitialAdReady = true;
-          _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              ad.dispose();
-              _isInterstitialAdReady = false;
-              _loadInterstitialAd();
-            },
-            onAdFailedToShowFullScreenContent: (ad, error) {
-              ad.dispose();
-              _isInterstitialAdReady = false;
-              _loadInterstitialAd();
-            },
-          );
+          _interstitialAd?.fullScreenContentCallback =
+              FullScreenContentCallback(
+                onAdDismissedFullScreenContent: (ad) {
+                  ad.dispose();
+                  _isInterstitialAdReady = false;
+                  _loadInterstitialAd();
+                },
+                onAdFailedToShowFullScreenContent: (ad, error) {
+                  ad.dispose();
+                  _isInterstitialAdReady = false;
+                  _loadInterstitialAd();
+                },
+              );
         },
         onAdFailedToLoad: (error) {
           _isInterstitialAdReady = false;
@@ -164,6 +192,7 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
   }
 
   ScenarioStep get _currentStep => widget.scenario.steps[_stepIndex];
+  AppLanguage get _language => widget.language;
 
   void _onSelect(ScenarioOption option) {
     if (_selectedOption != null) {
@@ -208,7 +237,7 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
         _selectedOption != null;
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.scenario.titleText(widget.isEnglish))),
+      appBar: AppBar(title: Text(widget.scenario.titleText(_language))),
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -250,10 +279,11 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      AppStrings.scenarioStepProgress(
-                        widget.isEnglish,
-                        _stepIndex + 1,
-                        widget.scenario.steps.length,
+                      _scenarioText(
+                        widget.language,
+                        vi: 'Bước ${_stepIndex + 1}/${widget.scenario.steps.length}',
+                        en: 'Step ${_stepIndex + 1}/${widget.scenario.steps.length}',
+                        pl: 'Krok ${_stepIndex + 1}/${widget.scenario.steps.length}',
                       ),
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w700,
@@ -301,7 +331,7 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
                     ),
                   ),
                   child: Text(
-                    step.questionText(widget.isEnglish),
+                    step.questionText(_language),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: colorScheme.onPrimaryContainer,
@@ -318,7 +348,7 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
                     child: _OptionTile(
                       marker: marker,
                       option: option,
-                      isEnglish: widget.isEnglish,
+                      language: widget.language,
                       selected: _selectedOption == option,
                       locked: _selectedOption != null,
                       onTap: () => _onSelect(option),
@@ -345,14 +375,24 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
               children: [
                 Text(
                   _selectedOption!.isCorrect
-                      ? AppStrings.scenarioCorrect(widget.isEnglish)
-                      : AppStrings.scenarioIncorrect(widget.isEnglish),
+                      ? _scenarioText(
+                          widget.language,
+                          vi: 'Chính xác',
+                          en: 'Correct',
+                          pl: 'Poprawnie',
+                        )
+                      : _scenarioText(
+                          widget.language,
+                          vi: 'Chưa đúng',
+                          en: 'Not correct',
+                          pl: 'Niepoprawnie',
+                        ),
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 4),
-                Text(_selectedOption!.explanationText(widget.isEnglish)),
+                Text(_selectedOption!.explanationText(_language)),
               ],
             ),
           ),
@@ -360,8 +400,18 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
           onPressed: _selectedOption == null ? null : _goNext,
           child: Text(
             _stepIndex == widget.scenario.steps.length - 1
-                ? AppStrings.scenarioViewResult(widget.isEnglish)
-                : AppStrings.scenarioContinue(widget.isEnglish),
+                ? _scenarioText(
+                    widget.language,
+                    vi: 'Xem kết quả',
+                    en: 'View result',
+                    pl: 'Zobacz wynik',
+                  )
+                : _scenarioText(
+                    widget.language,
+                    vi: 'Tiếp tục',
+                    en: 'Continue',
+                    pl: 'Kontynuuj',
+                  ),
           ),
         ),
       ],
@@ -372,10 +422,25 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
     final total = widget.scenario.steps.length;
     final ratio = total == 0 ? 0 : _score / total;
     final summary = ratio >= 0.8
-        ? AppStrings.scenarioResultGreat(widget.isEnglish)
+        ? _scenarioText(
+            widget.language,
+            vi: 'Rất tốt! Bạn xử lý tình huống khá chính xác.',
+            en: 'Great job! Your decisions are highly accurate.',
+            pl: 'Dobra robota! Twoje decyzje sa bardzo trafne.',
+          )
         : ratio >= 0.5
-        ? AppStrings.scenarioResultGood(widget.isEnglish)
-        : AppStrings.scenarioResultRetry(widget.isEnglish);
+        ? _scenarioText(
+            widget.language,
+            vi: 'Ổn rồi! Tiếp tục luyện thêm để phản xạ tốt hơn.',
+            en: 'Nice work! Keep practicing to improve your reaction.',
+            pl: 'Dobra robota! Cwicz dalej, aby poprawic refleks.',
+          )
+        : _scenarioText(
+            widget.language,
+            vi: 'Thử lại nhé! Đọc kỹ giải thích để cải thiện nhanh.',
+            en: 'Try again! Review explanations to improve quickly.',
+            pl: 'Sprobuj ponownie! Przejrzyj wyjasnienia, aby szybciej sie poprawic.',
+          );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -397,14 +462,23 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppStrings.scenarioResultTitle(widget.isEnglish),
+                _scenarioText(
+                  widget.language,
+                  vi: 'Kết quả tình huống',
+                  en: 'Scenario result',
+                  pl: 'Wynik scenariusza',
+                ),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                AppStrings.scenarioScore(widget.isEnglish, _score, total),
+                widget.language == AppLanguage.english
+                    ? 'Score: $_score/$total'
+                    : widget.language == AppLanguage.polish
+                    ? 'Wynik: $_score/$total'
+                    : 'Điểm: $_score/$total',
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
@@ -418,17 +492,33 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
         FilledButton.icon(
           onPressed: _restart,
           icon: const Icon(Icons.replay),
-          label: Text(AppStrings.scenarioPlayAgain(widget.isEnglish)),
+          label: Text(
+            _scenarioText(
+              widget.language,
+              vi: 'Chơi lại',
+              en: 'Play again',
+              pl: 'Zagraj ponownie',
+            ),
+          ),
         ),
         const SizedBox(height: 8),
         OutlinedButton(
           onPressed: () {
-            if (!widget.appController.areAdsTemporarilyDisabled && _isInterstitialAdReady && _interstitialAd != null) {
+            if (!widget.appController.areAdsTemporarilyDisabled &&
+                _isInterstitialAdReady &&
+                _interstitialAd != null) {
               _interstitialAd!.show();
             }
             Navigator.of(context).pop();
           },
-          child: Text(AppStrings.tabScenario(widget.isEnglish)),
+          child: Text(
+            _scenarioText(
+              widget.language,
+              vi: 'Tình huống',
+              en: 'Scenarios',
+              pl: 'Scenariusze',
+            ),
+          ),
         ),
       ],
     );
@@ -436,9 +526,9 @@ class _ScenarioPlayScreenState extends State<ScenarioPlayScreen> {
 }
 
 class _ScenarioHeader extends StatelessWidget {
-  const _ScenarioHeader({required this.isEnglish});
+  const _ScenarioHeader({required this.language});
 
-  final bool isEnglish;
+  final AppLanguage language;
 
   @override
   Widget build(BuildContext context) {
@@ -479,16 +569,24 @@ class _ScenarioHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.scenarioHeadline(isEnglish),
+                  _scenarioText(
+                    language,
+                    vi: 'Luyện phản xạ qua các tình huống thực tế',
+                    en: 'Practice quick decisions with real-life scenarios',
+                    pl: 'Trenuj szybkie decyzje w realistycznych scenariuszach',
+                  ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  isEnglish
-                      ? 'Practice realistic decisions and learn from each choice.'
-                      : 'Luyện phản xạ với tình huống thực tế và học từ từng lựa chọn.',
+                  _scenarioText(
+                    language,
+                    vi: 'Luyện phản xạ với tình huống thực tế và học từ từng lựa chọn.',
+                    en: 'Practice realistic decisions and learn from each choice.',
+                    pl: 'Cwicz realistyczne decyzje i ucz sie z kazdego wyboru.',
+                  ),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: colorScheme.onPrimaryContainer.withValues(
                       alpha: 0.82,
@@ -507,12 +605,12 @@ class _ScenarioHeader extends StatelessWidget {
 class _ScenarioCard extends StatelessWidget {
   const _ScenarioCard({
     required this.scenario,
-    required this.isEnglish,
+    required this.language,
     required this.onStart,
   });
 
   final ScenarioItem scenario;
-  final bool isEnglish;
+  final AppLanguage language;
   final VoidCallback onStart;
 
   @override
@@ -520,7 +618,6 @@ class _ScenarioCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final imageAsset = scenario.imageAsset?.trim();
     final hasImage = imageAsset != null && imageAsset.isNotEmpty;
-
     return Semantics(
       container: true,
       child: Card(
@@ -560,7 +657,7 @@ class _ScenarioCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        scenario.titleText(isEnglish),
+                        scenario.titleText(language),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -569,7 +666,7 @@ class _ScenarioCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        scenario.descriptionText(isEnglish),
+                        scenario.descriptionText(language),
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -586,7 +683,14 @@ class _ScenarioCard extends StatelessWidget {
                             visualDensity: VisualDensity.compact,
                           ),
                           icon: const Icon(Icons.play_arrow_rounded, size: 18),
-                          label: Text(AppStrings.scenarioStart(isEnglish)),
+                          label: Text(
+                            _scenarioText(
+                              language,
+                              vi: 'Bắt đầu',
+                              en: 'Start',
+                              pl: 'Start',
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -654,7 +758,7 @@ class _OptionTile extends StatelessWidget {
   const _OptionTile({
     required this.marker,
     required this.option,
-    required this.isEnglish,
+    required this.language,
     required this.selected,
     required this.locked,
     required this.onTap,
@@ -662,7 +766,7 @@ class _OptionTile extends StatelessWidget {
 
   final String marker;
   final ScenarioOption option;
-  final bool isEnglish;
+  final AppLanguage language;
   final bool selected;
   final bool locked;
   final VoidCallback onTap;
@@ -721,7 +825,7 @@ class _OptionTile extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    option.labelText(isEnglish),
+                    option.labelText(language),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

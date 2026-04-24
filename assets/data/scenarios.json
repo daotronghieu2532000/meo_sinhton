@@ -19,23 +19,30 @@
             "labelEn": "Stay calm, immediately turn off the heat source, and maintain a safe distance",
             "isCorrect": true,
             "explanation": "Việc ngắt nguồn nhiệt là yếu tố quyết định để kiểm soát đám cháy dầu mỡ. Luôn giữ bình tĩnh để đánh giá tình hình và tránh hoảng loạn gây nguy hiểm cho bản thân và người xung quanh.",
-            "explanationEn": "Cutting off the heat source is critical to controlling an oil fire. Staying calm allows you to assess the situation and avoid panic, which can endanger yourself and others."
+            "explanationEn": "Cutting off the heat source is critical to controlling an oil fire. Staying calm allows you to assess the situation and avoid panic, which can endanger yourself and others.",
+            "labelPl": "Zachowaj spokój, natychmiast wyłącz źródło ciepła i zachowaj bezpieczną odległość",
+            "explanationPl": "Odcięcie źródła ciepła jest kluczowe dla kontroli pożaru oleju. Zachowanie spokoju pozwala ocenić sytuację i uniknąć paniki, która może zagrażać tobie i innym."
           },
           {
             "label": "Đổ nước vào chảo để dập lửa nhanh",
             "labelEn": "Pour water into the pan to extinguish the fire quickly",
             "isCorrect": false,
             "explanation": "Tuyệt đối không đổ nước vào dầu đang cháy, vì nước sẽ làm dầu bắn tung tóe và gây bùng lửa mạnh, có thể dẫn đến bỏng nặng và cháy lan.",
-            "explanationEn": "Never pour water on burning oil, as it will cause splattering and a violent flare-up, leading to severe burns and fire spread."
+            "explanationEn": "Never pour water on burning oil, as it will cause splattering and a violent flare-up, leading to severe burns and fire spread.",
+            "labelPl": "Wlej wodę na patelnię, aby szybko ugasić ogień",
+            "explanationPl": "Nigdy nie wlewaj wody na płonący olej – spowoduje to rozprysk i gwałtowne rozpalenie ognia, co może prowadzić do poważnych oparzeń i rozprzestrzeniania się pożaru."
           },
           {
             "label": "Di chuyển chảo ra ngoài để tránh cháy lan",
             "labelEn": "Move the pan outside to prevent fire spread",
             "isCorrect": false,
             "explanation": "Không nên di chuyển chảo đang cháy, vì nguy cơ dầu bắn và cháy lan rất cao. Hãy xử lý tại chỗ bằng các biện pháp an toàn.",
-            "explanationEn": "Do not move a burning pan, as the risk of splattering and fire spread is very high. Handle the situation in place using safe methods."
+            "explanationEn": "Do not move a burning pan, as the risk of splattering and fire spread is very high. Handle the situation in place using safe methods.",
+            "labelPl": "Przenieś patelnię na zewnątrz, aby zapobiec rozprzestrzenieniu ognia",
+            "explanationPl": "Nie przenoś płonącej patelni – ryzyko rozprysku i rozprzestrzenienia ognia jest bardzo wysokie. Radź sobie z sytuacją na miejscu przy użyciu bezpiecznych metod."
           }
-        ]
+        ],
+        "questionPl": "Po wykryciu pożaru oleju na patelni, jakie jest pierwsze profesjonalne działanie?"
       },
       {
         "question": "Sau khi đã tắt nguồn nhiệt, biện pháp chuyên nghiệp tiếp theo để kiểm soát đám cháy là gì?",
@@ -46,23 +53,30 @@
             "labelEn": "Cover the pan tightly with a metal lid or heat-resistant shield to block oxygen",
             "isCorrect": true,
             "explanation": "Ngăn oxy tiếp xúc với dầu đang cháy là phương pháp hiệu quả nhất để dập lửa. Tuyệt đối không dùng vật liệu dễ cháy như khăn giấy hoặc vải thông thường.",
-            "explanationEn": "Blocking oxygen from reaching the burning oil is the most effective way to extinguish the fire. Never use flammable materials like paper towels or regular cloth."
+            "explanationEn": "Blocking oxygen from reaching the burning oil is the most effective way to extinguish the fire. Never use flammable materials like paper towels or regular cloth.",
+            "labelPl": "Szczelnie przykryj patelnię metalową pokrywką lub osłoną żaroodporną, aby odciąć dostęp tlenu",
+            "explanationPl": "Odcięcie dopływu tlenu do płonącego oleju jest najskuteczniejszym sposobem gaszenia ognia. Nigdy nie używaj materiałów łatwopalnych, takich jak ręczniki papierowe czy zwykłe tkaniny."
           },
           {
             "label": "Dùng khăn giấy hoặc vải phủ lên chảo",
             "labelEn": "Cover the pan with paper towels or cloth",
             "isCorrect": false,
             "explanation": "Vật liệu dễ cháy sẽ bắt lửa và làm đám cháy lan rộng, gây nguy hiểm nghiêm trọng.",
-            "explanationEn": "Flammable materials will catch fire and worsen the situation, causing serious danger."
+            "explanationEn": "Flammable materials will catch fire and worsen the situation, causing serious danger.",
+            "labelPl": "Przykryj patelnię ręcznikami papierowymi lub tkaniną",
+            "explanationPl": "Materiały łatwopalne zapalą się i pogorszą sytuację, powodując poważne niebezpieczeństwo."
           },
           {
             "label": "Mở quạt lớn để thổi lửa ra khỏi bếp",
             "labelEn": "Turn on a strong fan to blow the fire out of the kitchen",
             "isCorrect": false,
             "explanation": "Gió mạnh sẽ làm lửa lan nhanh và khó kiểm soát, tăng nguy cơ cháy lan sang các khu vực khác.",
-            "explanationEn": "Strong airflow will spread the fire rapidly and make it harder to control, increasing the risk of fire spreading to other areas."
+            "explanationEn": "Strong airflow will spread the fire rapidly and make it harder to control, increasing the risk of fire spreading to other areas.",
+            "labelPl": "Włącz mocny wentylator, aby zdmuchnąć ogień z kuchni",
+            "explanationPl": "Silny przepływ powietrza szybko rozprzestrzeni ogień i utrudni jego kontrolę, zwiększając ryzyko przeniesienia ognia na inne obszary."
           }
-        ]
+        ],
+        "questionPl": "Po wyłączeniu źródła ciepła, jaki jest następny profesjonalny krok kontroli ognia?"
       },
       {
         "question": "Nếu đám cháy vượt quá khả năng kiểm soát hoặc lan rộng, quy trình chuyên nghiệp cần thực hiện là gì?",
@@ -73,25 +87,35 @@
             "labelEn": "Immediately call the fire department, activate alarms, and evacuate everyone from the danger zone",
             "isCorrect": true,
             "explanation": "Khi đám cháy vượt quá khả năng xử lý cá nhân, cần huy động lực lượng chuyên nghiệp và đảm bảo sơ tán an toàn để giảm thiệt hại về người và tài sản. Luôn tuân thủ hướng dẫn của lực lượng cứu hỏa khi họ đến hiện trường.",
-            "explanationEn": "When the fire is beyond personal control, professional intervention and safe evacuation are essential to minimize harm to people and property. Always follow the instructions of fire personnel upon their arrival."
+            "explanationEn": "When the fire is beyond personal control, professional intervention and safe evacuation are essential to minimize harm to people and property. Always follow the instructions of fire personnel upon their arrival.",
+            "labelPl": "Natychmiast zadzwoń do straży pożarnej, aktywuj alarmy i ewakuuj wszystkich ze strefy zagrożenia",
+            "explanationPl": "Gdy ogień wymknął się spod kontroli, konieczna jest interwencja profesjonalistów i bezpieczna ewakuacja, aby zminimalizować szkody dla ludzi i mienia. Zawsze postępuj zgodnie z instrukcjami straży pożarnej po przybyciu na miejsce."
           },
           {
             "label": "Tự cố gắng dập lửa bằng mọi cách, bất chấp nguy hiểm",
             "labelEn": "Try to extinguish the fire by any means, regardless of danger",
             "isCorrect": false,
             "explanation": "Không nên tự xử lý khi đám cháy lớn, vì nguy cơ bị thương hoặc tử vong rất cao. Ưu tiên an toàn cá nhân và cộng đồng.",
-            "explanationEn": "Do not attempt to handle large fires alone, as the risk of injury or death is very high. Prioritize personal and community safety."
+            "explanationEn": "Do not attempt to handle large fires alone, as the risk of injury or death is very high. Prioritize personal and community safety.",
+            "labelPl": "Staraj się ugasić ogień wszelkimi możliwymi sposobami, niezależnie od niebezpieczeństwa",
+            "explanationPl": "Nie próbuj samodzielnie walczyć z dużym pożarem – ryzyko obrażeń lub śmierci jest bardzo wysokie. Priorytetem jest bezpieczeństwo osobiste i społeczności."
           },
           {
             "label": "Đóng cửa lại và rời khỏi hiện trường mà không thông báo cho ai",
             "labelEn": "Close the door and leave the scene without informing anyone",
             "isCorrect": false,
             "explanation": "Luôn cảnh báo mọi người xung quanh và gọi cứu hỏa trước khi rời khỏi khu vực nguy hiểm. Việc bỏ đi mà không thông báo sẽ gây nguy hiểm cho người khác.",
-            "explanationEn": "Always alert others nearby and call the fire department before leaving the danger zone. Leaving without warning puts others at risk."
+            "explanationEn": "Always alert others nearby and call the fire department before leaving the danger zone. Leaving without warning puts others at risk.",
+            "labelPl": "Zamknij drzwi i opuść miejsce zdarzenia bez powiadamiania nikogo",
+            "explanationPl": "Zawsze ostrzeż osoby w pobliżu i zadzwoń do straży pożarnej przed opuszczeniem strefy zagrożenia. Wyjście bez ostrzeżenia naraża innych na niebezpieczeństwo."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ogień przekracza twoje możliwości kontroli lub się rozprzestrzenia, jaki jest profesjonalny protokół?"
       }
-    ]
+    ],
+    "titlePl": "Gaszenie pożaru oleju kuchennego",
+    "descriptionPl": "Podczas gotowania olej na patelni nagle się zapala. Wybierz najbardziej profesjonalne i bezpieczne działanie, aby chronić siebie i innych.",
+    "difficultyPl": "Łatwy"
   },
   {
     "id": "scenario-lost-night",
@@ -113,23 +137,30 @@
             "labelEn": "Stop immediately, assess your current location, avoid aimless movement, and stay calm",
             "isCorrect": true,
             "explanation": "Việc dừng lại giúp bạn tránh nguy cơ lạc sâu hơn hoặc gặp tai nạn. Bình tĩnh để phân tích tình hình, sử dụng các dấu hiệu tự nhiên hoặc công nghệ để xác định vị trí.",
-            "explanationEn": "Stopping prevents you from getting more lost or injured. Stay calm to analyze the situation and use natural signs or technology to determine your location."
+            "explanationEn": "Stopping prevents you from getting more lost or injured. Stay calm to analyze the situation and use natural signs or technology to determine your location.",
+            "labelPl": "Zatrzymaj się natychmiast, oceń swoją obecną lokalizację, unikaj bezcelowego ruchu i zachowaj spokój",
+            "explanationPl": "Zatrzymanie zapobiega dalszemu zagubionemu lub obrażeniom. Zachowaj spokój, aby przeanalizować sytuację i użyj naturalnych znaków lub technologii do określenia swojej lokalizacji."
           },
           {
             "label": "Chạy nhanh tìm đường ra trước khi trời tối hoàn toàn",
             "labelEn": "Run quickly to find a way out before it gets completely dark",
             "isCorrect": false,
             "explanation": "Di chuyển vội vàng trong điều kiện thiếu sáng dễ gây chấn thương, mất phương hướng và làm tình hình nguy hiểm hơn.",
-            "explanationEn": "Rushing in low light increases risk of injury, disorientation, and worsens the situation."
+            "explanationEn": "Rushing in low light increases risk of injury, disorientation, and worsens the situation.",
+            "labelPl": "Biegnij szybko, aby znaleźć wyjście, zanim całkowicie się ściemni",
+            "explanationPl": "Pośpiech przy słabym oświetleniu zwiększa ryzyko obrażeń, dezorientacji i pogarsza sytuację."
           },
           {
             "label": "Tắt điện thoại hoàn toàn để tiết kiệm pin, không sử dụng nữa",
             "labelEn": "Turn off your phone completely to save battery, do not use it anymore",
             "isCorrect": false,
             "explanation": "Pin điện thoại vẫn cần thiết cho các tình huống khẩn cấp như gửi tín hiệu SOS hoặc kiểm tra vị trí khi cần thiết.",
-            "explanationEn": "Phone battery is still needed for emergencies such as sending SOS signals or checking location when necessary."
+            "explanationEn": "Phone battery is still needed for emergencies such as sending SOS signals or checking location when necessary.",
+            "labelPl": "Całkowicie wyłącz telefon, aby oszczędzać baterię – nie używaj go więcej",
+            "explanationPl": "Bateria telefonu nadal jest potrzebna do sytuacji awaryjnych, takich jak wysyłanie sygnałów SOS lub sprawdzanie lokalizacji w razie potrzeby."
           }
-        ]
+        ],
+        "questionPl": "Po uświadomieniu sobie, że zgubiłeś się w nocy, jakie jest pierwsze profesjonalne działanie?"
       },
       {
         "question": "Biện pháp chuyên nghiệp để tối ưu hóa thời lượng pin điện thoại khi bị lạc là gì?",
@@ -140,23 +171,30 @@
             "labelEn": "Enable battery saver mode, use GPS or communication only in short, necessary intervals",
             "isCorrect": true,
             "explanation": "Quản lý pin hợp lý giúp duy trì khả năng liên lạc và định vị trong thời gian dài, tăng cơ hội được cứu hộ.",
-            "explanationEn": "Proper battery management maintains communication and location capabilities longer, increasing rescue chances."
+            "explanationEn": "Proper battery management maintains communication and location capabilities longer, increasing rescue chances.",
+            "labelPl": "Włącz tryb oszczędzania baterii, używaj GPS lub komunikacji tylko w krótkich, niezbędnych odstępach",
+            "explanationPl": "Właściwe zarządzanie baterią utrzymuje możliwości komunikacji i lokalizacji przez dłuższy czas, zwiększając szanse na ratunek."
           },
           {
             "label": "Bật đèn flash liên tục để soi đường suốt đêm",
             "labelEn": "Keep flashlight on continuously to light the way all night",
             "isCorrect": false,
             "explanation": "Đèn flash tiêu hao pin rất nhanh, chỉ nên sử dụng khi thực sự cần thiết và trong thời gian ngắn.",
-            "explanationEn": "Flashlight drains battery quickly, use only when absolutely necessary and for short periods."
+            "explanationEn": "Flashlight drains battery quickly, use only when absolutely necessary and for short periods.",
+            "labelPl": "Przez całą noc trzymaj latarkę włączoną, aby oświetlać drogę",
+            "explanationPl": "Latarka szybko wyczerpuje baterię – używaj jej tylko wtedy, gdy jest to absolutnie konieczne i przez krótki czas."
           },
           {
             "label": "Xem video hướng dẫn sinh tồn liên tục để lấy kinh nghiệm",
             "labelEn": "Watch survival guide videos continuously for experience",
             "isCorrect": false,
             "explanation": "Việc sử dụng dữ liệu và màn hình sáng liên tục sẽ làm cạn kiệt pin, giảm khả năng liên lạc khẩn cấp.",
-            "explanationEn": "Continuous data and screen use will quickly deplete battery, reducing emergency communication capability."
+            "explanationEn": "Continuous data and screen use will quickly deplete battery, reducing emergency communication capability.",
+            "labelPl": "Stale oglądaj filmy instruktażowe dotyczące przetrwania, aby zdobyć doświadczenie",
+            "explanationPl": "Ciągłe korzystanie z danych i jasny ekran szybko wyczerpią baterię, zmniejszając zdolność do komunikacji awaryjnej."
           }
-        ]
+        ],
+        "questionPl": "Jaka jest profesjonalna metoda optymalizacji żywotności baterii telefonu po zagubieniu się?"
       },
       {
         "question": "Nếu trời tối hoàn toàn, pin gần hết và không thể liên lạc, quy trình chuyên nghiệp cần thực hiện là gì?",
@@ -167,25 +205,35 @@
             "labelEn": "Find safe shelter, keep warm, minimize movement, and wait for daylight to continue searching or contacting help",
             "isCorrect": true,
             "explanation": "Trú ẩn qua đêm giúp bảo toàn sức khỏe, giảm nguy cơ tai nạn và tăng khả năng quan sát, định hướng khi trời sáng. Ưu tiên giữ ấm và bảo vệ bản thân khỏi động vật hoặc thời tiết xấu.",
-            "explanationEn": "Sheltering overnight preserves health, reduces accident risk, and improves orientation and visibility at daylight. Prioritize warmth and protection from wildlife or bad weather."
+            "explanationEn": "Sheltering overnight preserves health, reduces accident risk, and improves orientation and visibility at daylight. Prioritize warmth and protection from wildlife or bad weather.",
+            "labelPl": "Znajdź bezpieczne schronienie, utrzymuj ciepło ciała, minimalizuj ruch i czekaj na świt, aby kontynuować poszukiwania lub nawiązać kontakt",
+            "explanationPl": "Schronienie przez noc zachowuje zdrowie, zmniejsza ryzyko wypadków i poprawia orientację i widoczność o świcie. Priorytetem jest ciepło i ochrona przed dziką przyrodą lub złą pogodą."
           },
           {
             "label": "Tiếp tục di chuyển trong đêm bất chấp nguy hiểm",
             "labelEn": "Keep moving through the night regardless of danger",
             "isCorrect": false,
             "explanation": "Di chuyển ban đêm khi không rõ hướng làm tăng nguy cơ lạc sâu hơn, gặp tai nạn hoặc kiệt sức.",
-            "explanationEn": "Night travel without clear direction increases risk of getting more lost, injured, or exhausted."
+            "explanationEn": "Night travel without clear direction increases risk of getting more lost, injured, or exhausted.",
+            "labelPl": "Kontynuuj poruszanie się w nocy bez względu na niebezpieczeństwo",
+            "explanationPl": "Nocna wędrówka bez wyraźnego kierunku zwiększa ryzyko dalszego zagubienia się, obrażeń lub wyczerpania."
           },
           {
             "label": "Đốt lửa lớn để thu hút sự chú ý, bất chấp nguy cơ cháy rừng",
             "labelEn": "Light a big fire to attract attention, regardless of forest fire risk",
             "isCorrect": false,
             "explanation": "Chỉ nên đốt lửa nhỏ, kiểm soát được, tránh gây cháy rừng hoặc nguy hiểm cho bản thân và môi trường.",
-            "explanationEn": "Only small, controlled fires are safe, avoid causing forest fires or endangering yourself and the environment."
+            "explanationEn": "Only small, controlled fires are safe, avoid causing forest fires or endangering yourself and the environment.",
+            "labelPl": "Rozpal duże ognisko, aby przyciągnąć uwagę, bez względu na ryzyko pożaru lasu",
+            "explanationPl": "Bezpieczne są tylko małe, kontrolowane ogniska – unikaj powodowania pożarów lasów lub narażania siebie i środowiska na niebezpieczeństwo."
           }
-        ]
+        ],
+        "questionPl": "Jeśli całkowicie zapadła noc, bateria jest na wyczerpaniu i nie możesz skontaktować się z nikim, jaki jest profesjonalny protokół?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku zgubienia się w nocy",
+    "descriptionPl": "Podczas trekkingu zdajesz sobie sprawę, że się zgubiłeś, gdy zapada noc, a bateria telefonu jest na wyczerpaniu. Wybierz najbardziej profesjonalne działanie, aby zapewnić sobie bezpieczeństwo i zmaksymalizować szanse na ratunek.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-earthquake-home",
@@ -207,23 +255,30 @@
             "labelEn": "Apply Drop-Cover-Hold: get low, protect head and neck, shelter under sturdy furniture, stay away from windows and falling objects",
             "isCorrect": true,
             "explanation": "Drop-Cover-Hold là quy trình chuẩn quốc tế giúp giảm nguy cơ chấn thương do vật rơi, kính vỡ hoặc kết cấu sập. Luôn giữ bình tĩnh và không di chuyển khi đang rung lắc.",
-            "explanationEn": "Drop-Cover-Hold is the international standard to reduce injury risk from falling objects, shattered glass, or structural collapse. Stay calm and avoid moving during shaking."
+            "explanationEn": "Drop-Cover-Hold is the international standard to reduce injury risk from falling objects, shattered glass, or structural collapse. Stay calm and avoid moving during shaking.",
+            "labelPl": "Zastosuj Upuść-Przykryj-Trzymaj: kucnij nisko, chroń głowę i szyję, schronij się pod solidnymi meblami, trzymaj się z dala od okien i spadających przedmiotów",
+            "explanationPl": "Upuść-Przykryj-Trzymaj to międzynarodowy standard zmniejszający ryzyko obrażeń od spadających przedmiotów, rozbitego szkła lub zawalenia się konstrukcji. Zachowaj spokój i unikaj poruszania się podczas wstrząsów."
           },
           {
             "label": "Chạy ngay ra cầu thang máy để thoát hiểm",
             "labelEn": "Run immediately to the elevator to escape",
             "isCorrect": false,
             "explanation": "Không sử dụng thang máy khi động đất, nguy cơ kẹt hoặc sập rất cao. Ưu tiên trú ẩn tại chỗ an toàn cho đến khi rung lắc dừng lại.",
-            "explanationEn": "Never use elevators during earthquakes, high risk of being trapped or collapse. Shelter in place until shaking stops."
+            "explanationEn": "Never use elevators during earthquakes, high risk of being trapped or collapse. Shelter in place until shaking stops.",
+            "labelPl": "Natychmiast biegnij do windy, aby uciec",
+            "explanationPl": "Nigdy nie używaj wind podczas trzęsień ziemi – ryzyko uwięzienia lub zawalenia jest bardzo wysokie. Schronij się na miejscu, aż wstrząsy ustaną."
           },
           {
             "label": "Đứng sát cửa kính để quan sát bên ngoài",
             "labelEn": "Stand close to windows to observe outside",
             "isCorrect": false,
             "explanation": "Cửa kính có thể vỡ bất ngờ, gây thương tích nghiêm trọng. Luôn tránh xa các vật liệu dễ vỡ hoặc có thể rơi.",
-            "explanationEn": "Windows may shatter unexpectedly, causing serious injury. Always stay away from breakable or falling objects."
+            "explanationEn": "Windows may shatter unexpectedly, causing serious injury. Always stay away from breakable or falling objects.",
+            "labelPl": "Stój blisko okien, aby obserwować na zewnątrz",
+            "explanationPl": "Okna mogą niespodziewanie stłuc się, powodując poważne obrażenia. Zawsze trzymaj się z dala od kruchych lub spadających przedmiotów."
           }
-        ]
+        ],
+        "questionPl": "Podczas silnych wstrząsów trzęsienia ziemi, jakie jest pierwsze profesjonalne działanie?"
       },
       {
         "question": "Sau khi rung lắc dừng lại, quy trình chuyên nghiệp tiếp theo là gì?",
@@ -234,23 +289,30 @@
             "labelEn": "Move to an open, safe area using stairs, away from buildings, power poles, and falling debris. Remain alert for aftershocks.",
             "isCorrect": true,
             "explanation": "Sau động đất, nguy cơ dư chấn và sập kết cấu vẫn còn. Di chuyển có tổ chức, không chen lấn, ưu tiên an toàn cá nhân và cộng đồng.",
-            "explanationEn": "After an earthquake, aftershock and collapse risks remain. Move in an orderly fashion, avoid crowding, prioritize personal and community safety."
+            "explanationEn": "After an earthquake, aftershock and collapse risks remain. Move in an orderly fashion, avoid crowding, prioritize personal and community safety.",
+            "labelPl": "Przesuń się na otwartą, bezpieczną przestrzeń korzystając ze schodów, z dala od budynków, słupów energetycznych i gruzów. Pozostań czujny na wstrząsy wtórne.",
+            "explanationPl": "Po trzęsieniu ziemi wciąż istnieje ryzyko wstrząsów wtórnych i zawalenia. Poruszaj się w sposób uporządkowany, unikaj tłoczenia się, priorytetem jest bezpieczeństwo osobiste i społeczności."
           },
           {
             "label": "Vào bếp kiểm tra ngay bếp gas hoặc thiết bị điện",
             "labelEn": "Go to the kitchen to check the gas stove or electrical devices immediately",
             "isCorrect": false,
             "explanation": "Chỉ kiểm tra thiết bị khi đã ra khỏi khu vực nguy hiểm và đảm bảo an toàn. Ưu tiên sơ tán trước.",
-            "explanationEn": "Only check devices after leaving the danger zone and ensuring safety. Evacuate first."
+            "explanationEn": "Only check devices after leaving the danger zone and ensuring safety. Evacuate first.",
+            "labelPl": "Idź do kuchni, aby natychmiast sprawdzić kuchenkę gazową lub urządzenia elektryczne",
+            "explanationPl": "Sprawdzaj urządzenia dopiero po opuszczeniu strefy zagrożenia i zapewnieniu bezpieczeństwa. Najpierw ewakuuj się."
           },
           {
             "label": "Đăng lên mạng xã hội để báo tin trước khi sơ tán",
             "labelEn": "Post on social media before evacuating",
             "isCorrect": false,
             "explanation": "Thông tin liên lạc chỉ thực hiện sau khi đã đảm bảo an toàn cá nhân và sơ tán thành công.",
-            "explanationEn": "Communicate only after ensuring personal safety and successful evacuation."
+            "explanationEn": "Communicate only after ensuring personal safety and successful evacuation.",
+            "labelPl": "Opublikuj post w mediach społecznościowych przed ewakuacją",
+            "explanationPl": "Komunikuj się dopiero po zapewnieniu sobie bezpieczeństwa i udanej ewakuacji."
           }
-        ]
+        ],
+        "questionPl": "Po ustaniu wstrząsów, jaki jest następny profesjonalny protokół?"
       },
       {
         "question": "Nếu có người bị thương hoặc mắc kẹt sau động đất, quy trình chuyên nghiệp cần thực hiện là gì?",
@@ -261,25 +323,35 @@
             "labelEn": "Call emergency services immediately, provide basic first aid if safe, do not move severely injured persons, give location and status details to rescue teams",
             "isCorrect": true,
             "explanation": "Sơ cứu đúng cách và thông tin chính xác giúp tăng cơ hội sống sót cho nạn nhân. Chỉ di chuyển người bị thương khi khu vực có nguy cơ sập hoặc cháy nổ.",
-            "explanationEn": "Proper first aid and accurate information increase survival chances. Move injured persons only if there is risk of collapse or fire."
+            "explanationEn": "Proper first aid and accurate information increase survival chances. Move injured persons only if there is risk of collapse or fire.",
+            "labelPl": "Natychmiast wezwij służby ratunkowe, udziel podstawowej pierwszej pomocy, jeśli jest to bezpieczne, nie przenoś ciężko rannych osób, przekaż lokalizację i szczegóły stanu zespołom ratunkowym",
+            "explanationPl": "Właściwa pierwsza pomoc i dokładne informacje zwiększają szanse na przeżycie. Przenoś rannych tylko wtedy, gdy istnieje ryzyko zawalenia lub pożaru."
           },
           {
             "label": "Tự ý di chuyển người bị thương ra ngoài ngay mà không đánh giá tình trạng",
             "labelEn": "Move injured persons outside immediately without assessing their condition",
             "isCorrect": false,
             "explanation": "Di chuyển sai cách có thể làm chấn thương nặng hơn, gây nguy hiểm cho nạn nhân.",
-            "explanationEn": "Improper movement can worsen injuries and endanger victims."
+            "explanationEn": "Improper movement can worsen injuries and endanger victims.",
+            "labelPl": "Natychmiast przenieś rannych na zewnątrz bez oceny ich stanu",
+            "explanationPl": "Niewłaściwe przenoszenie może pogorszyć obrażenia i zagrozić ofiarom."
           },
           {
             "label": "Bỏ qua người bị thương, chỉ lo cho bản thân",
             "labelEn": "Ignore injured persons, only care for yourself",
             "isCorrect": false,
             "explanation": "Hỗ trợ người khác khi an toàn là trách nhiệm cộng đồng, góp phần giảm thiệt hại và tăng hiệu quả cứu hộ.",
-            "explanationEn": "Helping others safely is a community responsibility, reducing harm and improving rescue outcomes."
+            "explanationEn": "Helping others safely is a community responsibility, reducing harm and improving rescue outcomes.",
+            "labelPl": "Ignoruj rannych, dbaj tylko o siebie",
+            "explanationPl": "Bezpieczna pomoc innym jest odpowiedzialnością społeczną, zmniejsza szkody i poprawia wyniki ratownicze."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ktoś jest ranny lub uwięziony po trzęsieniu ziemi, jaki jest profesjonalny protokół?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku trzęsienia ziemi w domu",
+    "descriptionPl": "Jesteś w mieszkaniu i czujesz silne wstrząsy spowodowane trzęsieniem ziemi. Wybierz najbardziej profesjonalne działania, aby zmaksymalizować bezpieczeństwo siebie i innych.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-flood-street",
@@ -301,23 +373,30 @@
             "labelEn": "Stop, find higher ground, and avoid crossing moving water",
             "isCorrect": true,
             "explanation": "Nước chảy có thể cuốn người/xe ngay cả khi không quá sâu.",
-            "explanationEn": "Moving water can sweep people and vehicles even at moderate depth."
+            "explanationEn": "Moving water can sweep people and vehicles even at moderate depth.",
+            "labelPl": "Zatrzymaj się, znajdź wyższy teren i unikaj przekraczania płynącej wody",
+            "explanationPl": "Płynąca woda może zmieść ludzi i pojazdy nawet przy umiarkowanej głębokości."
           },
           {
             "label": "Đi nhanh qua cho kịp trước khi nước dâng",
             "labelEn": "Rush through before water rises",
             "isCorrect": false,
             "explanation": "Tăng tốc qua vùng ngập làm mất kiểm soát và tăng nguy cơ tai nạn.",
-            "explanationEn": "Rushing through flooded areas increases loss of control and crash risk."
+            "explanationEn": "Rushing through flooded areas increases loss of control and crash risk.",
+            "labelPl": "Przejedź szybko, zanim woda przybierze",
+            "explanationPl": "Pędzenie przez zalane obszary zwiększa ryzyko utraty kontroli i wypadku."
           },
           {
             "label": "Đứng giữa đường chờ nước tự rút",
             "labelEn": "Stand in the middle of the road and wait",
             "isCorrect": false,
             "explanation": "Ở giữa dòng xe và dòng nước đều nguy hiểm.",
-            "explanationEn": "Staying exposed in traffic and moving water is unsafe."
+            "explanationEn": "Staying exposed in traffic and moving water is unsafe.",
+            "labelPl": "Stój pośrodku drogi i czekaj",
+            "explanationPl": "Stanie narażonym w ruchu drogowym i płynącej wodzie jest niebezpieczne."
           }
-        ]
+        ],
+        "questionPl": "Gdy zobaczysz głęboką wodę powodziową, co powinieneś zrobić najpierw?"
       },
       {
         "question": "Nếu đang lái xe ô tô và nước lên nhanh, ưu tiên là gì?",
@@ -328,23 +407,30 @@
             "labelEn": "Leave the vehicle when safe and move to higher ground",
             "isCorrect": true,
             "explanation": "Khi nước lên nhanh, xe có thể mất điện và bị cuốn.",
-            "explanationEn": "Rapidly rising water can disable and move vehicles."
+            "explanationEn": "Rapidly rising water can disable and move vehicles.",
+            "labelPl": "Opuść pojazd, gdy jest to bezpieczne i przemieść się na wyższy teren",
+            "explanationPl": "Szybko rosnąca woda może unieruchomić i przemieścić pojazdy."
           },
           {
             "label": "Cố khởi động lại liên tục để đi tiếp",
             "labelEn": "Keep restarting repeatedly and continue driving",
             "isCorrect": false,
             "explanation": "Xe chết máy trong nước sâu dễ làm bạn mắc kẹt hơn.",
-            "explanationEn": "Stalling in deep water can trap you in a worse position."
+            "explanationEn": "Stalling in deep water can trap you in a worse position.",
+            "labelPl": "Próbuj ponownie uruchomić silnik i kontynuuj jazdę",
+            "explanationPl": "Ugrzęźnięcie w głębokiej wodzie może postawić cię w jeszcze gorszej sytuacji."
           },
           {
             "label": "Mở cửa kính và quay video",
             "labelEn": "Roll down windows and record video",
             "isCorrect": false,
             "explanation": "Ưu tiên thoát hiểm và an toàn cá nhân, không phải ghi hình.",
-            "explanationEn": "Personal safety and evacuation come before recording."
+            "explanationEn": "Personal safety and evacuation come before recording.",
+            "labelPl": "Opuść okna i nagrywaj wideo",
+            "explanationPl": "Bezpieczeństwo osobiste i ewakuacja są ważniejsze niż nagrywanie."
           }
-        ]
+        ],
+        "questionPl": "Jeśli prowadzisz samochód i woda szybko przybiera, jaki jest priorytet?"
       },
       {
         "question": "Nếu bị mắc kẹt trong xe khi nước dâng cao, bạn nên làm gì?",
@@ -355,25 +441,35 @@
             "labelEn": "Stay calm, remove seatbelt, open door or window to escape when possible",
             "isCorrect": true,
             "explanation": "Thoát ra khỏi xe khi nước chưa ngập hoàn toàn giúp tăng cơ hội sống sót.",
-            "explanationEn": "Escaping before car is fully submerged increases survival chances."
+            "explanationEn": "Escaping before car is fully submerged increases survival chances.",
+            "labelPl": "Zachowaj spokój, zdejmij pas bezpieczeństwa, otwórz drzwi lub okno i ucieknij, gdy to możliwe",
+            "explanationPl": "Ucieczka przed całkowitym zatopieniem samochodu zwiększa szanse na przeżycie."
           },
           {
             "label": "Chờ cứu hộ đến mà không làm gì",
             "labelEn": "Wait for rescue without doing anything",
             "isCorrect": false,
             "explanation": "Chủ động thoát hiểm khi có thể sẽ an toàn hơn.",
-            "explanationEn": "Active escape is safer than passive waiting."
+            "explanationEn": "Active escape is safer than passive waiting.",
+            "labelPl": "Czekaj na ratunek nie robiąc nic",
+            "explanationPl": "Aktywna ucieczka jest bezpieczniejsza niż bierne czekanie."
           },
           {
             "label": "Gọi điện quay video trực tiếp",
             "labelEn": "Call and livestream the situation",
             "isCorrect": false,
             "explanation": "Ưu tiên thoát hiểm, không nên mất thời gian vào việc ghi hình.",
-            "explanationEn": "Focus on escape, not recording."
+            "explanationEn": "Focus on escape, not recording.",
+            "labelPl": "Dzwoń i transmituj sytuację na żywo",
+            "explanationPl": "Skup się na ucieczce, a nie na nagrywaniu."
           }
-        ]
+        ],
+        "questionPl": "Jeśli zostałeś uwięziony w samochodzie z rosnącą wodą, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie na zalanych ulicach podczas dojazdu",
+    "descriptionPl": "Napotkasz głęboką, szybko płynącą wodę powodziową podczas dojazdu do pracy. Wybierz profesjonalne działania, aby zapewnić bezpieczeństwo sobie i swojemu pojazdowi.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-gas-leak-apartment",
@@ -395,23 +491,30 @@
             "labelEn": "Turning electrical switches on/off in the gas-smelling area",
             "isCorrect": true,
             "explanation": "Tia lửa nhỏ từ công tắc có thể kích nổ khí gas.",
-            "explanationEn": "A tiny spark from switches can ignite leaked gas."
+            "explanationEn": "A tiny spark from switches can ignite leaked gas.",
+            "labelPl": "Włączania/wyłączania przełączników elektrycznych w obszarze, gdzie czuć gaz",
+            "explanationPl": "Mała iskra z przełączników może zapalić wyciekły gaz."
           },
           {
             "label": "Mở cửa sổ để thoáng khí",
             "labelEn": "Open windows for ventilation",
             "isCorrect": false,
             "explanation": "Thông gió là bước đúng để giảm nồng độ khí.",
-            "explanationEn": "Ventilation is a correct step to reduce gas concentration."
+            "explanationEn": "Ventilation is a correct step to reduce gas concentration.",
+            "labelPl": "Otwierania okien w celu wentylacji",
+            "explanationPl": "Wentylacja jest właściwym krokiem zmniejszającym stężenie gazu."
           },
           {
             "label": "Khóa van gas nếu có thể tiếp cận an toàn",
             "labelEn": "Shut off the gas valve if safely reachable",
             "isCorrect": false,
             "explanation": "Cắt nguồn gas giúp giảm nguy cơ cháy nổ.",
-            "explanationEn": "Stopping gas supply reduces fire/explosion risk."
+            "explanationEn": "Stopping gas supply reduces fire/explosion risk.",
+            "labelPl": "Zamknięcia zaworu gazowego, jeśli można do niego bezpiecznie dotrzeć",
+            "explanationPl": "Odcięcie dopływu gazu zmniejsza ryzyko pożaru/eksplozji."
           }
-        ]
+        ],
+        "questionPl": "Czego należy natychmiast unikać?"
       },
       {
         "question": "Sau khi thoát ra nơi an toàn, bạn nên làm gì?",
@@ -422,23 +525,30 @@
             "labelEn": "Call gas service/emergency and warn nearby people",
             "isCorrect": true,
             "explanation": "Cần chuyên môn kiểm tra trước khi quay lại căn hộ.",
-            "explanationEn": "Professional inspection is required before re-entry."
+            "explanationEn": "Professional inspection is required before re-entry.",
+            "labelPl": "Zadzwoń do pogotowia gazowego/ratunkowego i ostrzeż pobliskie osoby",
+            "explanationPl": "Przed ponownym wejściem wymagana jest profesjonalna inspekcja."
           },
           {
             "label": "Quay lại ngay để kiểm tra thêm",
             "labelEn": "Go back immediately for another check",
             "isCorrect": false,
             "explanation": "Quay lại quá sớm có thể đối mặt nguy cơ nổ cao.",
-            "explanationEn": "Re-entering too soon may expose you to explosion risk."
+            "explanationEn": "Re-entering too soon may expose you to explosion risk.",
+            "labelPl": "Natychmiast wróć, aby przeprowadzić kolejną kontrolę",
+            "explanationPl": "Zbyt wczesny powrót może narazić cię na ryzyko eksplozji."
           },
           {
             "label": "Bỏ qua vì mùi gas có thể tự hết",
             "labelEn": "Ignore it because the smell may disappear",
             "isCorrect": false,
             "explanation": "Chủ quan với rò gas là cực kỳ nguy hiểm.",
-            "explanationEn": "Ignoring a gas leak is extremely dangerous."
+            "explanationEn": "Ignoring a gas leak is extremely dangerous.",
+            "labelPl": "Zignoruj to, bo zapach może zniknąć",
+            "explanationPl": "Ignorowanie wycieku gazu jest niezwykle niebezpieczne."
           }
-        ]
+        ],
+        "questionPl": "Po dotarciu do bezpiecznego miejsca, co powinieneś zrobić?"
       },
       {
         "question": "Nếu có người bị ngộ độc khí gas hoặc bất tỉnh, bạn nên làm gì?",
@@ -449,25 +559,35 @@
             "labelEn": "Move to fresh air, call emergency, assist breathing if needed",
             "isCorrect": true,
             "explanation": "Xử lý nhanh giúp tăng cơ hội sống sót cho nạn nhân.",
-            "explanationEn": "Quick action increases survival chances."
+            "explanationEn": "Quick action increases survival chances.",
+            "labelPl": "Przenieś go na świeże powietrze, zadzwoń po pomoc i w razie potrzeby wspomagaj oddychanie",
+            "explanationPl": "Szybkie działanie zwiększa szanse na przeżycie."
           },
           {
             "label": "Để nạn nhân nằm lại trong phòng kín",
             "labelEn": "Leave victim in closed room",
             "isCorrect": false,
             "explanation": "Cần đưa ra nơi thoáng khí càng sớm càng tốt.",
-            "explanationEn": "Move to fresh air as soon as possible."
+            "explanationEn": "Move to fresh air as soon as possible.",
+            "labelPl": "Zostaw ofiarę w zamkniętym pomieszczeniu",
+            "explanationPl": "Jak najszybciej przenieś na świeże powietrze."
           },
           {
             "label": "Chờ người tỉnh lại rồi mới gọi cấp cứu",
             "labelEn": "Wait for victim to wake up before calling emergency",
             "isCorrect": false,
             "explanation": "Gọi cấp cứu ngay khi có dấu hiệu nguy hiểm.",
-            "explanationEn": "Call emergency at first sign of danger."
+            "explanationEn": "Call emergency at first sign of danger.",
+            "labelPl": "Poczekaj, aż ofiara się obudzi, zanim zadzwonisz po pomoc",
+            "explanationPl": "Zadzwoń po pomoc przy pierwszych oznakach niebezpieczeństwa."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ktoś jest zatruty gazem lub nieprzytomny, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku podejrzenia wycieku gazu w mieszkaniu",
+    "descriptionPl": "Czujesz zapach gazu w kuchni. Wybierz profesjonalne kroki, aby zapobiec pożarowi/eksplozji i chronić zdrowie wszystkich.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-elevator-stuck",
@@ -489,23 +609,30 @@
             "labelEn": "Stay calm and press alarm/emergency button",
             "isCorrect": true,
             "explanation": "Liên lạc đúng kênh giúp cứu hộ đến nhanh hơn.",
-            "explanationEn": "Using proper emergency channels speeds up assistance."
+            "explanationEn": "Using proper emergency channels speeds up assistance.",
+            "labelPl": "Zachowaj spokój i naciśnij przycisk alarmu/awaryjny",
+            "explanationPl": "Korzystanie z właściwych kanałów awaryjnych przyspiesza udzielenie pomocy."
           },
           {
             "label": "Cạy cửa để tự trèo ra",
             "labelEn": "Pry doors open and climb out yourself",
             "isCorrect": false,
             "explanation": "Tự thoát khi cabin chưa ngang tầng rất nguy hiểm.",
-            "explanationEn": "Self-escape is dangerous if the cabin is misaligned."
+            "explanationEn": "Self-escape is dangerous if the cabin is misaligned.",
+            "labelPl": "Wyważ drzwi i sam wyjdź",
+            "explanationPl": "Samodzielna ucieczka jest niebezpieczna, jeśli kabina nie jest wyrównana z piętrem."
           },
           {
             "label": "Nhảy liên tục để thang hoạt động lại",
             "labelEn": "Jump repeatedly to restart the elevator",
             "isCorrect": false,
             "explanation": "Hành động này có thể làm tình huống xấu hơn.",
-            "explanationEn": "This can worsen mechanical instability."
+            "explanationEn": "This can worsen mechanical instability.",
+            "labelPl": "Skacz wielokrotnie, aby ponownie uruchomić windę",
+            "explanationPl": "Może to pogorszyć niestabilność mechaniczną."
           }
-        ]
+        ],
+        "questionPl": "Jakie jest właściwe pierwsze działanie?"
       },
       {
         "question": "Trong lúc chờ cứu hộ, nên làm gì?",
@@ -516,23 +643,30 @@
             "labelEn": "Save phone battery and provide clear location info",
             "isCorrect": true,
             "explanation": "Giữ liên lạc ổn định giúp đội cứu hộ định vị nhanh.",
-            "explanationEn": "Stable communication helps rescuers locate you quickly."
+            "explanationEn": "Stable communication helps rescuers locate you quickly.",
+            "labelPl": "Oszczędzaj baterię telefonu i przekaż jasne informacje o lokalizacji",
+            "explanationPl": "Stabilna komunikacja pomaga ratownikom szybko cię zlokalizować."
           },
           {
             "label": "Tắt hết đèn điện thoại và không liên lạc",
             "labelEn": "Turn phone off and avoid all communication",
             "isCorrect": false,
             "explanation": "Bạn vẫn cần liên lạc khi có cập nhật cứu hộ.",
-            "explanationEn": "You still need communication for rescue updates."
+            "explanationEn": "You still need communication for rescue updates.",
+            "labelPl": "Wyłącz telefon i unikaj wszelkiej komunikacji",
+            "explanationPl": "Nadal potrzebujesz komunikacji dla aktualizacji ratowniczych."
           },
           {
             "label": "Cố dùng vật cứng nạy trần thang",
             "labelEn": "Force open the ceiling hatch with hard objects",
             "isCorrect": false,
             "explanation": "Tự can thiệp hệ thống có thể gây nguy hiểm nghiêm trọng.",
-            "explanationEn": "Tampering with elevator systems can be seriously dangerous."
+            "explanationEn": "Tampering with elevator systems can be seriously dangerous.",
+            "labelPl": "Spróbuj otworzyć właz sufitowy za pomocą twardych przedmiotów",
+            "explanationPl": "Ingerencja w systemy windy może być poważnie niebezpieczna."
           }
-        ]
+        ],
+        "questionPl": "Podczas oczekiwania na ratunek, co powinieneś robić?"
       },
       {
         "question": "Nếu có người hoảng loạn hoặc gặp vấn đề sức khỏe trong thang máy, bạn nên làm gì?",
@@ -543,25 +677,35 @@
             "labelEn": "Calm them, assist breathing, call emergency if needed",
             "isCorrect": true,
             "explanation": "Giữ bình tĩnh và hỗ trợ y tế giúp giảm nguy cơ biến chứng.",
-            "explanationEn": "Calm and medical support reduce complication risk."
+            "explanationEn": "Calm and medical support reduce complication risk.",
+            "labelPl": "Uspokój go, wspomagaj oddychanie i w razie potrzeby zadzwoń po pomoc",
+            "explanationPl": "Spokój i wsparcie medyczne zmniejszają ryzyko powikłań."
           },
           {
             "label": "Bỏ mặc người gặp vấn đề",
             "labelEn": "Ignore the person in trouble",
             "isCorrect": false,
             "explanation": "Hỗ trợ người khác khi an toàn là trách nhiệm chung.",
-            "explanationEn": "Helping others safely is a shared responsibility."
+            "explanationEn": "Helping others safely is a shared responsibility.",
+            "labelPl": "Zignoruj osobę mającą problemy",
+            "explanationPl": "Bezpieczna pomoc innym jest wspólną odpowiedzialnością."
           },
           {
             "label": "Cố gắng mở cửa bằng mọi giá",
             "labelEn": "Try to open the door at all costs",
             "isCorrect": false,
             "explanation": "Chỉ mở cửa khi có hướng dẫn chuyên môn và an toàn.",
-            "explanationEn": "Open doors only with professional guidance and safety."
+            "explanationEn": "Open doors only with professional guidance and safety.",
+            "labelPl": "Spróbuj za wszelką cenę otworzyć drzwi",
+            "explanationPl": "Otwieraj drzwi tylko przy profesjonalnym nadzorze i w bezpiecznych warunkach."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ktoś wpada w panikę lub ma problemy zdrowotne w windzie, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku utknięcia w windzie",
+    "descriptionPl": "Winda niespodziewanie zatrzymuje się między piętrami. Wybierz profesjonalne kroki, aby zapewnić sobie bezpieczeństwo, zachować spokój i współpracować z zespołami ratunkowymi.",
+    "difficultyPl": "Łatwy"
   },
   {
     "id": "scenario-electric-shock-home",
@@ -583,23 +727,30 @@
             "labelEn": "Cut power or separate victim using an insulating object",
             "isCorrect": true,
             "explanation": "Nếu chưa ngắt điện, người cứu cũng có thể bị giật.",
-            "explanationEn": "Without power isolation, rescuers can also be electrocuted."
+            "explanationEn": "Without power isolation, rescuers can also be electrocuted.",
+            "labelPl": "Odetnij zasilanie lub oddziel ofiarę za pomocą izolującego przedmiotu",
+            "explanationPl": "Bez odizolowania prądu ratownicy mogą również zostać porażeni."
           },
           {
             "label": "Nắm tay kéo nạn nhân ra ngay",
             "labelEn": "Grab and pull the victim immediately",
             "isCorrect": false,
             "explanation": "Chạm trực tiếp khi còn điện rất nguy hiểm.",
-            "explanationEn": "Direct contact while current is active is dangerous."
+            "explanationEn": "Direct contact while current is active is dangerous.",
+            "labelPl": "Złap i natychmiast wyciągnij ofiarę",
+            "explanationPl": "Bezpośredni kontakt przy aktywnym prądzie jest niebezpieczny."
           },
           {
             "label": "Đổ nước vào khu vực để giảm nóng",
             "labelEn": "Pour water in the area to cool things down",
             "isCorrect": false,
             "explanation": "Nước làm tăng nguy cơ dẫn điện.",
-            "explanationEn": "Water can increase electrical conduction risk."
+            "explanationEn": "Water can increase electrical conduction risk.",
+            "labelPl": "Wlej wodę w okolice, aby ochłodzić",
+            "explanationPl": "Woda może zwiększyć ryzyko przewodzenia elektrycznego."
           }
-        ]
+        ],
+        "questionPl": "Co jest najważniejsze przed dotknięciem ofiary?"
       },
       {
         "question": "Sau khi tách khỏi nguồn điện an toàn, bước tiếp là?",
@@ -610,23 +761,30 @@
             "labelEn": "Call emergency services and check breathing/consciousness",
             "isCorrect": true,
             "explanation": "Điện giật có thể gây ngưng tim, cần hỗ trợ y tế sớm.",
-            "explanationEn": "Electric shock can cause cardiac arrest and needs urgent care."
+            "explanationEn": "Electric shock can cause cardiac arrest and needs urgent care.",
+            "labelPl": "Zadzwoń po pomoc i sprawdź oddychanie/świadomość",
+            "explanationPl": "Porażenie prądem może powodować zatrzymanie akcji serca i wymaga pilnej opieki."
           },
           {
             "label": "Cho nạn nhân đứng dậy đi lại ngay",
             "labelEn": "Make the victim stand and walk immediately",
             "isCorrect": false,
             "explanation": "Nạn nhân có thể choáng hoặc tổn thương bên trong.",
-            "explanationEn": "Victims may have shock or internal injury."
+            "explanationEn": "Victims may have shock or internal injury.",
+            "labelPl": "Każ ofierze natychmiast wstać i chodzić",
+            "explanationPl": "Ofiary mogą być w szoku lub mieć obrażenia wewnętrzne."
           },
           {
             "label": "Bỏ qua nếu nạn nhân nói vẫn ổn",
             "labelEn": "Ignore it if the victim says they feel fine",
             "isCorrect": false,
             "explanation": "Triệu chứng có thể xuất hiện muộn, vẫn cần theo dõi y tế.",
-            "explanationEn": "Delayed symptoms are possible, medical follow-up is still needed."
+            "explanationEn": "Delayed symptoms are possible, medical follow-up is still needed.",
+            "labelPl": "Zignoruj to, jeśli ofiara mówi, że czuje się dobrze",
+            "explanationPl": "Możliwe są opóźnione objawy – konieczna jest obserwacja medyczna."
           }
-        ]
+        ],
+        "questionPl": "Po bezpiecznym odłączeniu od prądu, co jest następne?"
       },
       {
         "question": "Nếu nạn nhân ngừng thở hoặc ngưng tim, bạn nên làm gì?",
@@ -637,35 +795,45 @@
             "labelEn": "Perform CPR if trained, wait for emergency services",
             "isCorrect": true,
             "explanation": "CPR đúng cách giúp tăng cơ hội sống sót cho nạn nhân. Nếu có nhiều người, phân công gọi cấp cứu, hỗ trợ hô hấp, kiểm tra mạch, và chuẩn bị AED nếu có. Nếu không biết CPR, hướng dẫn người khác qua điện thoại hoặc video call với cấp cứu.",
-            "explanationEn": "Proper CPR increases survival chances. If multiple people are present, assign someone to call emergency, assist breathing, check pulse, and prepare AED if available. If untrained, get instructions via phone or video call with emergency services."
+            "explanationEn": "Proper CPR increases survival chances. If multiple people are present, assign someone to call emergency, assist breathing, check pulse, and prepare AED if available. If untrained, get instructions via phone or video call with emergency services.",
+            "labelPl": "Wykonaj CPR jeśli jesteś przeszkolony, czekaj na służby ratunkowe",
+            "explanationPl": "Właściwe CPR zwiększa szanse na przeżycie. Jeśli jest więcej osób, wyznacz kogoś do dzwonienia po pomoc, asystowania w oddychaniu, sprawdzania tętna i przygotowania AED. Jeśli nie znasz CPR, uzyskaj instrukcje telefonicznie od służb ratunkowych."
           },
           {
             "label": "Chỉ đứng nhìn và chờ cấp cứu",
             "labelEn": "Just watch and wait for emergency",
             "isCorrect": false,
             "explanation": "Hành động ngay khi có thể sẽ cứu sống nạn nhân. Nếu không biết CPR, hãy nhờ người xung quanh hoặc gọi cấp cứu để được hướng dẫn trực tiếp.",
-            "explanationEn": "Immediate action can save lives. If you don't know CPR, ask others nearby or call emergency for direct instructions."
+            "explanationEn": "Immediate action can save lives. If you don't know CPR, ask others nearby or call emergency for direct instructions.",
+            "labelPl": "Po prostu patrz i czekaj na pomoc",
+            "explanationPl": "Natychmiastowe działanie może uratować życie. Jeśli nie znasz CPR, poproś innych w pobliżu lub zadzwoń po instrukcje."
           },
           {
             "label": "Di chuyển nạn nhân ra ngoài trời",
             "labelEn": "Move victim outside",
             "isCorrect": false,
             "explanation": "Chỉ di chuyển khi khu vực không an toàn (có nguy cơ cháy, ngập nước, khí độc). Nếu khu vực an toàn, ưu tiên hồi sức tại chỗ, giữ nạn nhân nằm ngửa trên mặt phẳng cứng.",
-            "explanationEn": "Move only if area is unsafe (fire, flood, toxic gas risk). If safe, prioritize on-site resuscitation, keep victim lying flat on a hard surface."
+            "explanationEn": "Move only if area is unsafe (fire, flood, toxic gas risk). If safe, prioritize on-site resuscitation, keep victim lying flat on a hard surface.",
+            "labelPl": "Przenieś ofiarę na zewnątrz",
+            "explanationPl": "Przenoś tylko wtedy, gdy obszar jest niebezpieczny (pożar, powódź, gaz toksyczny). Jeśli jest bezpiecznie, priorytetem jest reanimacja na miejscu."
           },
           {
             "label": "Kiểm tra dị vật trong miệng, hỗ trợ hô hấp nếu cần",
             "labelEn": "Check for airway obstruction, assist breathing if needed",
             "isCorrect": true,
             "explanation": "Nếu có dị vật, cố gắng loại bỏ cẩn thận. Hỗ trợ hô hấp miệng-miệng nếu nạn nhân không tự thở, kết hợp ép tim nếu ngưng tim.",
-            "explanationEn": "If airway is blocked, carefully remove obstruction. Provide mouth-to-mouth if victim isn't breathing, combine with chest compressions if cardiac arrest."
+            "explanationEn": "If airway is blocked, carefully remove obstruction. Provide mouth-to-mouth if victim isn't breathing, combine with chest compressions if cardiac arrest.",
+            "labelPl": "Sprawdź drogi oddechowe pod kątem niedrożności i w razie potrzeby wspomagaj oddychanie",
+            "explanationPl": "Jeśli drogi oddechowe są zablokowane, ostrożnie usuń przeszkodę. Stosuj oddychanie usta-usta, jeśli ofiara nie oddycha, połącz z uciskami klatki piersiowej przy zatrzymaniu akcji serca."
           },
           {
             "label": "Ghi lại thời điểm bắt đầu ngưng thở/ngưng tim, thông báo cho cấp cứu",
             "labelEn": "Record time of arrest, inform emergency responders",
             "isCorrect": true,
             "explanation": "Thời gian ngưng thở/ngưng tim rất quan trọng để cấp cứu đánh giá và xử trí. Thông báo rõ ràng khi gọi cấp cứu.",
-            "explanationEn": "Time of arrest is critical for emergency assessment and treatment. Clearly inform emergency responders when calling."
+            "explanationEn": "Time of arrest is critical for emergency assessment and treatment. Clearly inform emergency responders when calling.",
+            "labelPl": "Zanotuj czas zatrzymania i poinformuj ratowników",
+            "explanationPl": "Czas zatrzymania jest krytyczny dla oceny i leczenia w nagłych przypadkach. Wyraźnie poinformuj ratowników podczas dzwonienia."
           }
         ],
         "branches": [
@@ -695,9 +863,13 @@
               "Sử dụng AED theo hướng dẫn, tiếp tục CPR cho đến khi máy báo dừng hoặc cấp cứu đến."
             ]
           }
-        ]
+        ],
+        "questionPl": "Jeśli ofiara przestaje oddychać lub doznaje zatrzymania akcji serca, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku porażenia prądem w domu",
+    "descriptionPl": "Jesteś świadkiem porażenia prądem w domu. Wybierz profesjonalne kroki, aby zapewnić bezpieczeństwo ofierze i ratownikowi.",
+    "difficultyPl": "Zaawansowany"
   },
   {
     "id": "scenario-rip-current-beach",
@@ -719,23 +891,30 @@
             "labelEn": "Swim parallel/diagonal to shore to exit the current",
             "isCorrect": true,
             "explanation": "Bơi ngược dòng trực diện dễ kiệt sức.",
-            "explanationEn": "Swimming directly against the current causes rapid exhaustion."
+            "explanationEn": "Swimming directly against the current causes rapid exhaustion.",
+            "labelPl": "Płyń równolegle/ukośnie do brzegu, aby wydostać się z prądu",
+            "explanationPl": "Pływanie bezpośrednio przeciwko prądowi powoduje szybkie wyczerpanie."
           },
           {
             "label": "Cố bơi thẳng vào bờ bằng mọi giá",
             "labelEn": "Force straight back to shore at all costs",
             "isCorrect": false,
             "explanation": "Đây là lỗi phổ biến khiến nạn nhân mất sức nhanh.",
-            "explanationEn": "This common mistake quickly drains energy."
+            "explanationEn": "This common mistake quickly drains energy.",
+            "labelPl": "Za wszelką cenę płyń prosto z powrotem do brzegu",
+            "explanationPl": "Ten częsty błąd szybko wyczerpuje energię."
           },
           {
             "label": "Lặn sâu xuống để tránh dòng mặt",
             "labelEn": "Dive deep to avoid surface current",
             "isCorrect": false,
             "explanation": "Lặn sâu làm tăng rủi ro hoảng loạn và thiếu oxy.",
-            "explanationEn": "Deep diving increases panic and oxygen risk."
+            "explanationEn": "Deep diving increases panic and oxygen risk.",
+            "labelPl": "Nurkuj głęboko, aby uniknąć prądu powierzchniowego",
+            "explanationPl": "Głębokie nurkowanie zwiększa ryzyko paniki i problemów z tlenem."
           }
-        ]
+        ],
+        "questionPl": "Gdy zdasz sobie sprawę, że to prąd wsteczny, co powinieneś zrobić?"
       },
       {
         "question": "Nếu đã mệt, lựa chọn đúng là?",
@@ -746,23 +925,30 @@
             "labelEn": "Float, stay calm, and signal for help",
             "isCorrect": true,
             "explanation": "Giữ năng lượng để chờ hỗ trợ là ưu tiên sống còn.",
-            "explanationEn": "Conserving energy while signaling is critical for survival."
+            "explanationEn": "Conserving energy while signaling is critical for survival.",
+            "labelPl": "Unoś się, zachowaj spokój i sygnalizuj pomoc",
+            "explanationPl": "Oszczędzanie energii podczas sygnalizowania jest kluczowe dla przeżycia."
           },
           {
             "label": "Nín thở liên tục để đỡ nuốt nước",
             "labelEn": "Hold your breath continuously to avoid swallowing water",
             "isCorrect": false,
             "explanation": "Cách này gây hoảng và mất kiểm soát nhanh.",
-            "explanationEn": "This leads to panic and faster loss of control."
+            "explanationEn": "This leads to panic and faster loss of control.",
+            "labelPl": "Wstrzymuj oddech ciągle, aby uniknąć połykania wody",
+            "explanationPl": "Prowadzi to do paniki i szybszej utraty kontroli."
           },
           {
             "label": "Ngừng ra tín hiệu vì ngại người khác chú ý",
             "labelEn": "Stop signaling because you feel embarrassed",
             "isCorrect": false,
             "explanation": "Ra tín hiệu rõ ràng giúp cứu hộ nhận diện sớm.",
-            "explanationEn": "Clear signaling helps rescuers spot you early."
+            "explanationEn": "Clear signaling helps rescuers spot you early.",
+            "labelPl": "Przestań sygnalizować, bo się wstydzisz",
+            "explanationPl": "Wyraźne sygnalizowanie pomaga ratownikom wcześniej cię zauważyć."
           }
-        ]
+        ],
+        "questionPl": "Jeśli jesteś wyczerpany, jakie jest właściwe działanie?"
       },
       {
         "question": "Nếu có người khác bị cuốn theo dòng, bạn nên làm gì?",
@@ -773,25 +959,35 @@
             "labelEn": "Call rescue, throw floatation device, do not jump in unless trained",
             "isCorrect": true,
             "explanation": "Hỗ trợ đúng cách giúp cứu người mà không gây thêm nguy hiểm.",
-            "explanationEn": "Proper support saves lives without risking more."
+            "explanationEn": "Proper support saves lives without risking more.",
+            "labelPl": "Wezwij ratowników, rzuć urządzenie ratunkowe, nie skacz do wody, chyba że jesteś przeszkolony",
+            "explanationPl": "Właściwe wsparcie ratuje życie bez narażania kolejnych osób."
           },
           {
             "label": "Tự lao xuống cứu bất chấp nguy hiểm",
             "labelEn": "Jump in to save regardless of danger",
             "isCorrect": false,
             "explanation": "Chỉ cứu khi có kỹ năng chuyên nghiệp và thiết bị hỗ trợ.",
-            "explanationEn": "Only rescue with proper training and equipment."
+            "explanationEn": "Only rescue with proper training and equipment.",
+            "labelPl": "Skocz do środka, aby ratować bez względu na niebezpieczeństwo",
+            "explanationPl": "Ratuj tylko z odpowiednim szkoleniem i sprzętem."
           },
           {
             "label": "Đứng nhìn và chờ người tự thoát",
             "labelEn": "Just watch and wait for self-rescue",
             "isCorrect": false,
             "explanation": "Hỗ trợ từ xa và gọi cứu hộ là cách an toàn nhất.",
-            "explanationEn": "Remote support and calling rescue is safest."
+            "explanationEn": "Remote support and calling rescue is safest.",
+            "labelPl": "Po prostu patrz i czekaj na samodzielną ucieczkę",
+            "explanationPl": "Zdalne wsparcie i wezwanie ratowników jest najbezpieczniejsze."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ktoś inny jest złapany przez prąd, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku złapania przez prąd wsteczny",
+    "descriptionPl": "Silny prąd ciągnie cię od brzegu podczas kąpieli. Wybierz profesjonalne strategie bezpiecznej ucieczki i wsparcia innych w razie potrzeby.",
+    "difficultyPl": "Zaawansowany"
   },
   {
     "id": "scenario-motorbike-rain-slip",
@@ -813,23 +1009,30 @@
             "labelEn": "Ease off throttle gradually, keep bike straight, avoid sudden steering",
             "isCorrect": true,
             "explanation": "Thao tác mượt giúp lốp bám lại mặt đường tốt hơn.",
-            "explanationEn": "Smooth control helps tires regain traction."
+            "explanationEn": "Smooth control helps tires regain traction.",
+            "labelPl": "Stopniowo zwalniaj, trzymaj motocykl prosto i unikaj nagłego skręcania",
+            "explanationPl": "Płynne sterowanie pomaga oponom odzyskać przyczepność."
           },
           {
             "label": "Bóp phanh trước thật mạnh để dừng ngay",
             "labelEn": "Grab front brake hard to stop immediately",
             "isCorrect": false,
             "explanation": "Phanh gấp trên đường trơn dễ khóa bánh và ngã.",
-            "explanationEn": "Hard braking on wet roads can lock wheels and cause falls."
+            "explanationEn": "Hard braking on wet roads can lock wheels and cause falls.",
+            "labelPl": "Mocno chwyć przedni hamulec, aby natychmiast się zatrzymać",
+            "explanationPl": "Gwałtowne hamowanie na mokrej nawierzchni może zablokować koła i spowodować upadek."
           },
           {
             "label": "Nghiêng xe nhiều hơn để ôm cua nhanh",
             "labelEn": "Lean more aggressively to corner faster",
             "isCorrect": false,
             "explanation": "Góc nghiêng lớn khi đường ướt làm tăng nguy cơ trượt.",
-            "explanationEn": "Large lean angles on wet surfaces increase slip risk."
+            "explanationEn": "Large lean angles on wet surfaces increase slip risk.",
+            "labelPl": "Bardziej agresywnie pochyl się, aby szybciej pokonać zakręt",
+            "explanationPl": "Duże kąty przechylenia na mokrych nawierzchniach zwiększają ryzyko poślizgu."
           }
-        ]
+        ],
+        "questionPl": "Gdy motocykl się ślizga, które działanie jest bezpieczniejsze?"
       },
       {
         "question": "Để phòng trượt trong mưa, thói quen nào tốt nhất?",
@@ -840,23 +1043,30 @@
             "labelEn": "Increase following distance and ride slower than usual",
             "isCorrect": true,
             "explanation": "Đường phanh dài hơn khi mặt đường ướt.",
-            "explanationEn": "Braking distance is longer on wet roads."
+            "explanationEn": "Braking distance is longer on wet roads.",
+            "labelPl": "Zwiększ odległość od poprzedniego pojazdu i jedź wolniej niż zwykle",
+            "explanationPl": "Droga hamowania jest dłuższa na mokrej nawierzchni."
           },
           {
             "label": "Đi sát xe trước để tránh nước bắn",
             "labelEn": "Ride close behind to avoid splash",
             "isCorrect": false,
             "explanation": "Đi sát làm giảm thời gian phản ứng khi xe trước phanh.",
-            "explanationEn": "Tailgating reduces reaction time when front vehicles brake."
+            "explanationEn": "Tailgating reduces reaction time when front vehicles brake.",
+            "labelPl": "Jedź blisko poprzedniego pojazdu, aby uniknąć chlapania",
+            "explanationPl": "Zbyt mała odległość skraca czas reakcji, gdy pojazd przed tobą hamuje."
           },
           {
             "label": "Tăng tốc qua vũng nước để nhanh thoát",
             "labelEn": "Accelerate through puddles to get out quickly",
             "isCorrect": false,
             "explanation": "Tăng tốc qua vũng dễ mất lái do trượt nước.",
-            "explanationEn": "Speeding through puddles increases hydroplaning risk."
+            "explanationEn": "Speeding through puddles increases hydroplaning risk.",
+            "labelPl": "Przyspiesz przez kałuże, aby szybko się z nich wydostać",
+            "explanationPl": "Szybkie przejeżdżanie przez kałuże zwiększa ryzyko aquaplaningu."
           }
-        ]
+        ],
+        "questionPl": "Aby zapobiec poślizgowi w deszczu, który nawyk jest najlepszy?"
       },
       {
         "question": "Nếu bị ngã xe trong mưa, bạn nên làm gì?",
@@ -867,25 +1077,35 @@
             "labelEn": "Check for injuries, move to safety, call for help if needed",
             "isCorrect": true,
             "explanation": "Xử lý đúng giúp giảm nguy cơ tai nạn thứ cấp và tổn thương.",
-            "explanationEn": "Proper handling reduces secondary accident and injury risk."
+            "explanationEn": "Proper handling reduces secondary accident and injury risk.",
+            "labelPl": "Sprawdź obrażenia, przesuń się w bezpieczne miejsce i w razie potrzeby wezwij pomoc",
+            "explanationPl": "Właściwe postępowanie zmniejsza ryzyko wypadku wtórnego i obrażeń."
           },
           {
             "label": "Lập tức lên xe chạy tiếp bất chấp đau",
             "labelEn": "Get back on and ride immediately regardless of pain",
             "isCorrect": false,
             "explanation": "Cần kiểm tra kỹ sức khỏe trước khi tiếp tục di chuyển.",
-            "explanationEn": "Check health before continuing to ride."
+            "explanationEn": "Check health before continuing to ride.",
+            "labelPl": "Natychmiast wróć na motocykl i jedź dalej bez względu na ból",
+            "explanationPl": "Sprawdź stan zdrowia przed kontynuowaniem jazdy."
           },
           {
             "label": "Đứng giữa đường chờ người giúp",
             "labelEn": "Stand in the middle of the road waiting for help",
             "isCorrect": false,
             "explanation": "Di chuyển vào nơi an toàn trước khi chờ hỗ trợ.",
-            "explanationEn": "Move to safety before waiting for help."
+            "explanationEn": "Move to safety before waiting for help.",
+            "labelPl": "Stój pośrodku drogi czekając na pomoc",
+            "explanationPl": "Przesuń się w bezpieczne miejsce przed oczekiwaniem na pomoc."
           }
-        ]
+        ],
+        "questionPl": "Jeśli przewrócisz motocykl w deszczu, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku poślizgu motocykla w deszczu",
+    "descriptionPl": "Jedziesz motocyklem w deszczu i koła zaczynają się ślizgać. Wybierz profesjonalne działania, aby zmniejszyć ryzyko wypadku i chronić siebie.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-forest-snakebite",
@@ -907,23 +1127,30 @@
             "labelEn": "Keep victim still and limit movement of the bitten limb",
             "isCorrect": true,
             "explanation": "Cử động mạnh có thể làm nọc lan nhanh hơn.",
-            "explanationEn": "Movement may spread venom faster."
+            "explanationEn": "Movement may spread venom faster.",
+            "labelPl": "Utrzymuj ofiarę w bezruchu i ogranicz ruch ugryzionej kończyny",
+            "explanationPl": "Ruch może przyspieszyć rozprzestrzenianie się jadu."
           },
           {
             "label": "Rạch vết cắn để hút nọc",
             "labelEn": "Cut the wound and suck out venom",
             "isCorrect": false,
             "explanation": "Cách này nguy hiểm và không hiệu quả.",
-            "explanationEn": "This is dangerous and ineffective."
+            "explanationEn": "This is dangerous and ineffective.",
+            "labelPl": "Natnij ranę i wysyp jad",
+            "explanationPl": "Jest to niebezpieczne i nieskuteczne."
           },
           {
             "label": "Chạy nhanh về trạm y tế",
             "labelEn": "Run quickly to the nearest clinic",
             "isCorrect": false,
             "explanation": "Vận động mạnh làm tăng hấp thu nọc.",
-            "explanationEn": "Heavy activity increases venom circulation."
+            "explanationEn": "Heavy activity increases venom circulation.",
+            "labelPl": "Biegnij szybko do najbliższego ośrodka medycznego",
+            "explanationPl": "Intensywna aktywność zwiększa krążenie jadu."
           }
-        ]
+        ],
+        "questionPl": "Co jest właściwe natychmiast po podejrzeniu ukąszenia węża?"
       },
       {
         "question": "Điều nào nên làm trong lúc chờ hỗ trợ y tế?",
@@ -934,23 +1161,30 @@
             "labelEn": "Call emergency, note bite time, and monitor symptoms",
             "isCorrect": true,
             "explanation": "Thông tin thời điểm và diễn tiến giúp bác sĩ xử trí chính xác.",
-            "explanationEn": "Timeline and symptom progression aid medical treatment."
+            "explanationEn": "Timeline and symptom progression aid medical treatment.",
+            "labelPl": "Zadzwoń po pomoc, zanotuj czas ukąszenia i monitoruj objawy",
+            "explanationPl": "Harmonogram i postęp objawów pomagają w leczeniu medycznym."
           },
           {
             "label": "Buộc garo thật chặt phía trên vết cắn",
             "labelEn": "Apply a very tight tourniquet above the bite",
             "isCorrect": false,
             "explanation": "Garo chặt có thể gây tổn thương mô nặng.",
-            "explanationEn": "A tight tourniquet can cause severe tissue damage."
+            "explanationEn": "A tight tourniquet can cause severe tissue damage.",
+            "labelPl": "Nałóż bardzo mocną opaskę uciskową powyżej ukąszenia",
+            "explanationPl": "Mocna opaska może powodować poważne uszkodzenia tkanek."
           },
           {
             "label": "Uống rượu để giảm đau",
             "labelEn": "Drink alcohol to reduce pain",
             "isCorrect": false,
             "explanation": "Rượu có thể làm tình trạng nặng hơn.",
-            "explanationEn": "Alcohol can worsen the condition."
+            "explanationEn": "Alcohol can worsen the condition.",
+            "labelPl": "Pij alkohol, aby zmniejszyć ból",
+            "explanationPl": "Alkohol może pogorszyć stan."
           }
-        ]
+        ],
+        "questionPl": "Co należy zrobić podczas oczekiwania na pomoc medyczną?"
       },
       {
         "question": "Nếu nạn nhân có dấu hiệu sốc hoặc khó thở, bạn nên làm gì?",
@@ -961,25 +1195,35 @@
             "labelEn": "Lay victim with head low, keep warm, call emergency immediately",
             "isCorrect": true,
             "explanation": "Xử lý sốc đúng cách giúp tăng cơ hội sống sót.",
-            "explanationEn": "Proper shock management increases survival chances."
+            "explanationEn": "Proper shock management increases survival chances.",
+            "labelPl": "Połóż ofiarę z nisko opuszczoną głową, utrzymuj ciepło i natychmiast wezwij pomoc",
+            "explanationPl": "Właściwe zarządzanie wstrząsem zwiększa szanse na przeżycie."
           },
           {
             "label": "Để nạn nhân tự ngồi dậy và đi lại",
             "labelEn": "Let victim sit up and walk around",
             "isCorrect": false,
             "explanation": "Cần hạn chế vận động để giảm hấp thu nọc.",
-            "explanationEn": "Limit movement to reduce venom spread."
+            "explanationEn": "Limit movement to reduce venom spread.",
+            "labelPl": "Pozwól ofierze usiąść i chodzić",
+            "explanationPl": "Ogranicz ruch, aby zmniejszyć rozprzestrzenianie się jadu."
           },
           {
             "label": "Chờ tự hồi phục không cần can thiệp",
             "labelEn": "Wait for self-recovery without intervention",
             "isCorrect": false,
             "explanation": "Cần hỗ trợ y tế ngay khi có dấu hiệu nguy hiểm.",
-            "explanationEn": "Seek medical help at first sign of danger."
+            "explanationEn": "Seek medical help at first sign of danger.",
+            "labelPl": "Czekaj na samodzielny powrót do zdrowia bez interwencji",
+            "explanationPl": "Przy pierwszych oznakach niebezpieczeństwa szukaj pomocy medycznej."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ofiara wykazuje oznaki wstrząsu lub trudności w oddychaniu, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku podejrzenia ukąszenia węża w lesie",
+    "descriptionPl": "Zostałeś ugryziony w nogę podczas trekkingu w lesie. Wybierz profesjonalne kroki, aby zminimalizować niebezpieczeństwo, chronić zdrowie i skoordynować pomoc w nagłych przypadkach.",
+    "difficultyPl": "Zaawansowany"
   },
   {
     "id": "scenario-earthquake-school",
@@ -1001,23 +1245,30 @@
             "labelEn": "Drop - cover - hold on in place",
             "isCorrect": true,
             "explanation": "Đây là nguyên tắc an toàn cơ bản khi đang có rung chấn.",
-            "explanationEn": "This is the core safety rule during active shaking."
+            "explanationEn": "This is the core safety rule during active shaking.",
+            "labelPl": "Upuść - przykryj - trzymaj na miejscu",
+            "explanationPl": "To podstawowa zasada bezpieczeństwa podczas aktywnych wstrząsów."
           },
           {
             "label": "Chen nhau chạy xuống cầu thang ngay",
             "labelEn": "Rush to the stairs immediately",
             "isCorrect": false,
             "explanation": "Di chuyển vội khi đang rung dễ té ngã và giẫm đạp.",
-            "explanationEn": "Rushing during shaking increases fall and stampede risk."
+            "explanationEn": "Rushing during shaking increases fall and stampede risk.",
+            "labelPl": "Natychmiast pędź na schody",
+            "explanationPl": "Pośpiech podczas wstrząsów zwiększa ryzyko upadku i tratowania."
           },
           {
             "label": "Đứng sát cửa kính để quan sát bên ngoài",
             "labelEn": "Stand by glass windows to observe outside",
             "isCorrect": false,
             "explanation": "Kính có thể vỡ gây thương tích.",
-            "explanationEn": "Glass may shatter and cause injury."
+            "explanationEn": "Glass may shatter and cause injury.",
+            "labelPl": "Stań przy szklanych oknach, aby obserwować na zewnątrz",
+            "explanationPl": "Szkło może się rozbić i spowodować obrażenia."
           }
-        ]
+        ],
+        "questionPl": "Podczas silnych wstrząsów w szkole, jakie jest pierwsze profesjonalne działanie?"
       },
       {
         "question": "Sau khi rung lắc dừng lại, quy trình chuyên nghiệp tiếp theo là gì?",
@@ -1028,23 +1279,30 @@
             "labelEn": "Follow teacher instructions and evacuate orderly to assembly area",
             "isCorrect": true,
             "explanation": "Sơ tán có tổ chức giúp giảm hỗn loạn và tai nạn thứ cấp.",
-            "explanationEn": "Organized evacuation reduces chaos and secondary injuries."
+            "explanationEn": "Organized evacuation reduces chaos and secondary injuries.",
+            "labelPl": "Postępuj zgodnie z instrukcjami nauczyciela i ewakuuj się w sposób uporządkowany do miejsca zbiórki",
+            "explanationPl": "Zorganizowana ewakuacja zmniejsza chaos i wtórne obrażenia."
           },
           {
             "label": "Quay lại lấy đồ cá nhân trước",
             "labelEn": "Go back first to collect personal belongings",
             "isCorrect": false,
             "explanation": "Không quay lại khu vực có nguy cơ khi chưa an toàn.",
-            "explanationEn": "Do not re-enter risky areas before clearance."
+            "explanationEn": "Do not re-enter risky areas before clearance.",
+            "labelPl": "Wróć najpierw po osobiste rzeczy",
+            "explanationPl": "Nie wchodź ponownie do niebezpiecznych obszarów przed udzieleniem pozwolenia."
           },
           {
             "label": "Đứng tụ tập gần tòa nhà",
             "labelEn": "Gather near the building",
             "isCorrect": false,
             "explanation": "Cần tránh khu vực có nguy cơ rơi đổ vật liệu.",
-            "explanationEn": "Stay away from potential falling debris zones."
+            "explanationEn": "Stay away from potential falling debris zones.",
+            "labelPl": "Zbierz się w pobliżu budynku",
+            "explanationPl": "Trzymaj się z dala od potencjalnych stref z gruzami."
           }
-        ]
+        ],
+        "questionPl": "Po ustaniu wstrząsów, jaki jest następny profesjonalny protokół?"
       },
       {
         "question": "Nếu có học sinh bị thương hoặc hoảng loạn, quy trình chuyên nghiệp cần thực hiện là gì?",
@@ -1055,25 +1313,35 @@
             "labelEn": "Inform teacher, provide first aid, calm them, call emergency if needed",
             "isCorrect": true,
             "explanation": "Hỗ trợ đúng cách giúp giảm nguy cơ biến chứng và hoảng loạn.",
-            "explanationEn": "Proper support reduces risk of complications and panic."
+            "explanationEn": "Proper support reduces risk of complications and panic.",
+            "labelPl": "Poinformuj nauczyciela, udziel pierwszej pomocy, uspokój go i w razie potrzeby zadzwoń po pomoc",
+            "explanationPl": "Właściwe wsparcie zmniejsza ryzyko powikłań i paniki."
           },
           {
             "label": "Bỏ mặc học sinh gặp vấn đề",
             "labelEn": "Ignore the student in trouble",
             "isCorrect": false,
             "explanation": "Hỗ trợ người khác khi an toàn là trách nhiệm cộng đồng.",
-            "explanationEn": "Helping others safely is a community responsibility."
+            "explanationEn": "Helping others safely is a community responsibility.",
+            "labelPl": "Zignoruj ucznia mającego problemy",
+            "explanationPl": "Bezpieczna pomoc innym jest odpowiedzialnością społeczności."
           },
           {
             "label": "Tự ý di chuyển học sinh ra ngoài không báo ai",
             "labelEn": "Move student outside without informing anyone",
             "isCorrect": false,
             "explanation": "Cần phối hợp với giáo viên và chuyên môn khi xử lý khẩn cấp.",
-            "explanationEn": "Coordinate with teachers and professionals for emergencies."
+            "explanationEn": "Coordinate with teachers and professionals for emergencies.",
+            "labelPl": "Przenieś ucznia na zewnątrz bez informowania kogokolwiek",
+            "explanationPl": "Koordynuj z nauczycielami i profesjonalistami w nagłych przypadkach."
           }
-        ]
+        ],
+        "questionPl": "Jeśli uczeń jest ranny lub panikuje, jaki jest profesjonalny protokół?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku trzęsienia ziemi w szkole",
+    "descriptionPl": "W klasie czujesz silne wstrząsy spowodowane trzęsieniem ziemi. Wybierz profesjonalne działania, aby zapewnić bezpieczeństwo sobie, kolegom z klasy i przestrzegać protokołów ewakuacji szkolnej.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-ai-scam-call",
@@ -1095,23 +1363,30 @@
             "labelEn": "Ask for private info or an unexpected question",
             "isCorrect": true,
             "explanation": "Thông tin riêng tư hoặc câu hỏi bất ngờ giúp kiểm tra danh tính thực tế.",
-            "explanationEn": "Private info or surprise questions help verify real identity."
+            "explanationEn": "Private info or surprise questions help verify real identity.",
+            "labelPl": "Zapytaj o prywatne informacje lub zadaj nieoczekiwane pytanie",
+            "explanationPl": "Prywatne informacje lub niespodziewane pytania pomagają zweryfikować prawdziwą tożsamość."
           },
           {
             "label": "Làm theo yêu cầu chuyển tiền ngay",
             "labelEn": "Follow the request and transfer money immediately",
             "isCorrect": false,
             "explanation": "Không xác minh mà chuyển tiền dễ bị lừa đảo. Nếu đã chuyển, hãy xử lý khẩn cấp ở bước tiếp theo.",
-            "explanationEn": "Transferring money without verification is risky. If you already transferred, see next step for emergency actions."
+            "explanationEn": "Transferring money without verification is risky. If you already transferred, see next step for emergency actions.",
+            "labelPl": "Postępuj zgodnie z prośbą i natychmiast prześlij pieniądze",
+            "explanationPl": "Przekazywanie pieniędzy bez weryfikacji jest ryzykowne. Jeśli już przelałeś, przejdź do kolejnego kroku, aby podjąć działania awaryjne."
           },
           {
             "label": "Cắt cuộc gọi và không báo ai",
             "labelEn": "Hang up and tell no one",
             "isCorrect": false,
             "explanation": "Nên cảnh báo người thân và báo cơ quan chức năng để phòng ngừa cho người khác.",
-            "explanationEn": "Warn family and report to authorities to prevent further scams."
+            "explanationEn": "Warn family and report to authorities to prevent further scams.",
+            "labelPl": "Rozłącz się i nikomu nie mów",
+            "explanationPl": "Ostrzeż rodzinę i zgłoś władzom, aby zapobiec dalszym oszustwom."
           }
-        ]
+        ],
+        "questionPl": "Otrzymujesz połączenie wideo od członka rodziny, ale podejrzewasz, że to deepfake. Co powinieneś zrobić?"
       },
       {
         "question": "Bạn đã lỡ chuyển tiền cho kẻ lừa đảo. Hành động khẩn cấp nào là đúng nhất?",
@@ -1122,23 +1397,30 @@
             "labelEn": "Call your bank to freeze transaction, report to police, save all evidence",
             "isCorrect": true,
             "explanation": "Xử lý càng sớm càng tăng cơ hội thu hồi tiền và ngăn chặn lừa đảo tiếp diễn.",
-            "explanationEn": "The sooner you act, the better chance to recover funds and stop further scams."
+            "explanationEn": "The sooner you act, the better chance to recover funds and stop further scams.",
+            "labelPl": "Zadzwoń do banku, aby zamrozić transakcję, zgłoś na policję i zachowaj wszystkie dowody",
+            "explanationPl": "Im szybciej działasz, tym większa szansa na odzyskanie środków i powstrzymanie dalszych oszustw."
           },
           {
             "label": "Chờ xem có bị mất tiền không rồi mới xử lý",
             "labelEn": "Wait to see if you lose money before acting",
             "isCorrect": false,
             "explanation": "Phản ứng chậm có thể khiến tiền không lấy lại được.",
-            "explanationEn": "Slow response can make it impossible to recover money."
+            "explanationEn": "Slow response can make it impossible to recover money.",
+            "labelPl": "Poczekaj, aby zobaczyć, czy stracisz pieniądze przed działaniem",
+            "explanationPl": "Powolna reakcja może uniemożliwić odzyskanie pieniędzy."
           },
           {
             "label": "Đăng lên mạng xã hội để hỏi ý kiến",
             "labelEn": "Post on social media for advice",
             "isCorrect": false,
             "explanation": "Nên xử lý bảo mật và báo cơ quan chức năng trước khi công khai thông tin.",
-            "explanationEn": "Handle security and report to authorities before sharing publicly."
+            "explanationEn": "Handle security and report to authorities before sharing publicly.",
+            "labelPl": "Opublikuj post w mediach społecznościowych, aby uzyskać poradę",
+            "explanationPl": "Zajmij się bezpieczeństwem i zgłoś władzom przed publicznym dzieleniem się."
           }
-        ]
+        ],
+        "questionPl": "Przelałeś już pieniądze oszustowi. Jakie jest najlepsze działanie awaryjne?"
       },
       {
         "question": "Kẻ lừa đảo tiếp tục gọi lại, đe doạ phát tán thông tin cá nhân bạn đã cung cấp. Bạn nên xử lý thế nào?",
@@ -1149,23 +1431,30 @@
             "labelEn": "Stay calm, do not comply, save evidence, report to police",
             "isCorrect": true,
             "explanation": "Không nhượng bộ, phối hợp với cơ quan chức năng để bảo vệ bản thân và người thân.",
-            "explanationEn": "Do not give in, work with authorities to protect yourself and family."
+            "explanationEn": "Do not give in, work with authorities to protect yourself and family.",
+            "labelPl": "Zachowaj spokój, nie spełniaj żądań, zachowaj dowody i zgłoś na policję",
+            "explanationPl": "Nie ustępuj – współpracuj z władzami, aby chronić siebie i swoją rodzinę."
           },
           {
             "label": "Chuyển thêm tiền để kẻ xấu không làm hại mình",
             "labelEn": "Send more money so the scammer won't harm you",
             "isCorrect": false,
             "explanation": "Nhượng bộ sẽ khiến bạn tiếp tục bị tống tiền.",
-            "explanationEn": "Complying will only lead to more extortion."
+            "explanationEn": "Complying will only lead to more extortion.",
+            "labelPl": "Wyślij więcej pieniędzy, aby oszust cię nie skrzywdził",
+            "explanationPl": "Uleganie prowadzi tylko do dalszego szantażu."
           },
           {
             "label": "Im lặng, xoá hết tin nhắn và không báo ai",
             "labelEn": "Stay silent, delete all messages, tell no one",
             "isCorrect": false,
             "explanation": "Cần lưu lại bằng chứng và báo cơ quan chức năng để được hỗ trợ.",
-            "explanationEn": "Save evidence and report to authorities for help."
+            "explanationEn": "Save evidence and report to authorities for help.",
+            "labelPl": "Milcz, usuń wszystkie wiadomości i nikomu nie mów",
+            "explanationPl": "Zachowaj dowody i zgłoś władzom, aby uzyskać pomoc."
           }
-        ]
+        ],
+        "questionPl": "Oszust dzwoni ponownie, grożąc ujawnieniem twoich danych osobowych. Jak powinieneś zareagować?"
       },
       {
         "question": "Sau khi xử lý khẩn cấp, bạn nên làm gì để phòng tránh lừa đảo AI deepfake trong tương lai?",
@@ -1176,25 +1465,35 @@
             "labelEn": "Warn family, stay alert, update knowledge on new tech scams",
             "isCorrect": true,
             "explanation": "Chủ động phòng ngừa giúp bảo vệ bản thân và cộng đồng.",
-            "explanationEn": "Proactive prevention protects you and your community."
+            "explanationEn": "Proactive prevention protects you and your community.",
+            "labelPl": "Ostrzeż rodzinę, zachowaj czujność i zaktualizuj wiedzę o nowych oszustwach technologicznych",
+            "explanationPl": "Proaktywne zapobieganie chroni ciebie i twoją społeczność."
           },
           {
             "label": "Không dùng điện thoại thông minh nữa",
             "labelEn": "Stop using smartphones altogether",
             "isCorrect": false,
             "explanation": "Không thực tế, nên dùng công nghệ an toàn và thông minh.",
-            "explanationEn": "Not practical, use technology safely and smartly."
+            "explanationEn": "Not practical, use technology safely and smartly.",
+            "labelPl": "Przestań całkowicie używać smartfonów",
+            "explanationPl": "Niepraktyczne – używaj technologii bezpiecznie i mądrze."
           },
           {
             "label": "Chỉ tin vào các cuộc gọi video, không cần xác minh",
             "labelEn": "Trust all video calls, no need to verify",
             "isCorrect": false,
             "explanation": "Video call cũng có thể bị giả mạo, luôn cần xác minh.",
-            "explanationEn": "Video calls can be faked, always verify."
+            "explanationEn": "Video calls can be faked, always verify.",
+            "labelPl": "Ufaj wszystkim połączeniom wideo, nie ma potrzeby weryfikacji",
+            "explanationPl": "Połączenia wideo mogą być fałszowane – zawsze weryfikuj."
           }
-        ]
+        ],
+        "questionPl": "Po rozwiązaniu sytuacji awaryjnej, co powinieneś zrobić, aby zapobiec przyszłym oszustwom AI deepfake?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku oszustwa przez deepfake AI",
+    "descriptionPl": "Otrzymujesz połączenie wideo od członka rodziny z nieznormalizowanym głosem i obrazem. Wybierz sposób weryfikacji tożsamości, radzenia sobie z nagłymi wypadkami i zapobiegania oszustwom high-tech.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-heatwave-blackout",
@@ -1216,23 +1515,30 @@
             "labelEn": "Find cool places, stay hydrated, avoid going out",
             "isCorrect": true,
             "explanation": "Giảm nguy cơ sốc nhiệt và mất nước.",
-            "explanationEn": "Reduces risk of heatstroke and dehydration."
+            "explanationEn": "Reduces risk of heatstroke and dehydration.",
+            "labelPl": "Znajdź chłodne miejsca, nawadniaj się i unikaj wychodzenia na zewnątrz",
+            "explanationPl": "Zmniejsza ryzyko udaru cieplnego i odwodnienia."
           },
           {
             "label": "Mở hết cửa sổ và bật nến cho sáng",
             "labelEn": "Open all windows and light candles",
             "isCorrect": false,
             "explanation": "Nến dễ gây cháy, mở cửa khi ngoài trời nóng có thể làm tăng nhiệt.",
-            "explanationEn": "Candles are a fire risk, open windows may increase heat."
+            "explanationEn": "Candles are a fire risk, open windows may increase heat.",
+            "labelPl": "Otwórz wszystkie okna i zapal świece",
+            "explanationPl": "Świece stanowią ryzyko pożaru, a otwieranie okien przy gorącym powietrzu może zwiększać temperaturę."
           },
           {
             "label": "Ăn thực phẩm dễ hỏng trong tủ lạnh ngay",
             "labelEn": "Eat all perishable food from the fridge immediately",
             "isCorrect": false,
             "explanation": "Chỉ nên ăn khi thực phẩm có dấu hiệu hỏng, ưu tiên bảo quản.",
-            "explanationEn": "Only eat if food is spoiling, prioritize preservation."
+            "explanationEn": "Only eat if food is spoiling, prioritize preservation.",
+            "labelPl": "Natychmiast zjedz wszystkie łatwo psujące się produkty z lodówki",
+            "explanationPl": "Jedz tylko wtedy, gdy jedzenie się psuje; priorytetem jest przechowywanie."
           }
-        ]
+        ],
+        "questionPl": "Co powinieneś priorytetowo traktować podczas przerwy w dostawie prądu w trakcie fali upałów?"
       },
       {
         "question": "Nếu có người có dấu hiệu sốc nhiệt, bạn nên làm gì?",
@@ -1243,25 +1549,35 @@
             "labelEn": "Move to cool place, cool body, call emergency",
             "isCorrect": true,
             "explanation": "Sốc nhiệt cần xử lý nhanh để tránh nguy hiểm tính mạng.",
-            "explanationEn": "Heatstroke requires urgent action to prevent fatality."
+            "explanationEn": "Heatstroke requires urgent action to prevent fatality.",
+            "labelPl": "Przenieś go w chłodne miejsce, schłódź ciało i zadzwoń po pomoc",
+            "explanationPl": "Udar cieplny wymaga pilnego działania, aby zapobiec śmierci."
           },
           {
             "label": "Cho uống nước đá thật lạnh liên tục",
             "labelEn": "Give lots of ice-cold water to drink",
             "isCorrect": false,
             "explanation": "Nước quá lạnh có thể gây sốc, nên làm mát từ từ.",
-            "explanationEn": "Very cold water may cause shock, cool gradually."
+            "explanationEn": "Very cold water may cause shock, cool gradually.",
+            "labelPl": "Podawaj dużo lodowatej wody do picia",
+            "explanationPl": "Bardzo zimna woda może powodować wstrząs – schładzaj stopniowo."
           },
           {
             "label": "Đợi tự hồi phục, không cần can thiệp",
             "labelEn": "Wait for self-recovery, no intervention needed",
             "isCorrect": false,
             "explanation": "Không xử lý kịp thời có thể nguy hiểm đến tính mạng.",
-            "explanationEn": "Delayed action can be life-threatening."
+            "explanationEn": "Delayed action can be life-threatening.",
+            "labelPl": "Czekaj na samodzielny powrót do zdrowia bez interwencji",
+            "explanationPl": "Opóźnione działanie może zagrażać życiu."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ktoś wykazuje oznaki udaru cieplnego, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku rozległej awarii prądu podczas fali upałów",
+    "descriptionPl": "Twój obszar doświadcza przerwy w dostawie prądu podczas przedłużonej fali upałów. Wybierz profesjonalne działania, aby chronić zdrowie, zapobiegać udarowi cieplnemu i zapewnić bezpieczeństwo rodziny.",
+    "difficultyPl": "Średni"
   },
   {
     "id": "scenario-cyberbullying-teen",
@@ -1283,23 +1599,30 @@
             "labelEn": "Tell an adult, teacher, or counselor",
             "isCorrect": true,
             "explanation": "Người lớn giúp bảo vệ và hướng dẫn xử lý đúng.",
-            "explanationEn": "Adults can protect and guide you."
+            "explanationEn": "Adults can protect and guide you.",
+            "labelPl": "Powiedz dorosłemu, nauczycielowi lub doradcy",
+            "explanationPl": "Dorośli mogą cię chronić i poprowadzić."
           },
           {
             "label": "Tự trả đũa lại trên mạng",
             "labelEn": "Fight back online yourself",
             "isCorrect": false,
             "explanation": "Phản ứng tiêu cực có thể làm tình hình tệ hơn.",
-            "explanationEn": "Negative reaction may worsen the situation."
+            "explanationEn": "Negative reaction may worsen the situation.",
+            "labelPl": "Sam walcz w sieci",
+            "explanationPl": "Negatywna reakcja może pogorszyć sytuację."
           },
           {
             "label": "Xóa tài khoản và cắt liên lạc với mọi người",
             "labelEn": "Delete your account and cut off everyone",
             "isCorrect": false,
             "explanation": "Cô lập bản thân không giải quyết được vấn đề.",
-            "explanationEn": "Isolation does not solve the problem."
+            "explanationEn": "Isolation does not solve the problem.",
+            "labelPl": "Usuń konto i odetnij się od wszystkich",
+            "explanationPl": "Izolacja nie rozwiązuje problemu."
           }
-        ]
+        ],
+        "questionPl": "Co powinieneś zrobić jako pierwsze, jeśli doświadczasz cyberprzemocy?"
       },
       {
         "question": "Nếu bị đe dọa hoặc tống tiền qua mạng, bạn nên làm gì?",
@@ -1310,23 +1633,30 @@
             "labelEn": "Save evidence and report to police/authorities",
             "isCorrect": true,
             "explanation": "Bằng chứng giúp xử lý pháp lý và bảo vệ bản thân.",
-            "explanationEn": "Evidence helps legal action and self-protection."
+            "explanationEn": "Evidence helps legal action and self-protection.",
+            "labelPl": "Zachowaj dowody i zgłoś na policję/władze",
+            "explanationPl": "Dowody pomagają w działaniach prawnych i ochronie."
           },
           {
             "label": "Chuyển tiền hoặc làm theo yêu cầu để tránh rắc rối",
             "labelEn": "Send money or comply to avoid trouble",
             "isCorrect": false,
             "explanation": "Làm theo yêu cầu sẽ khiến bạn bị lạm dụng tiếp.",
-            "explanationEn": "Complying leads to further abuse."
+            "explanationEn": "Complying leads to further abuse.",
+            "labelPl": "Wyślij pieniądze lub zastosuj się, aby uniknąć kłopotów",
+            "explanationPl": "Zastosowanie się prowadzi do dalszego nadużycia."
           },
           {
             "label": "Im lặng và chờ mọi chuyện tự qua",
             "labelEn": "Stay silent and hope it goes away",
             "isCorrect": false,
             "explanation": "Không hành động sẽ làm kéo dài hậu quả.",
-            "explanationEn": "Inaction prolongs the problem."
+            "explanationEn": "Inaction prolongs the problem.",
+            "labelPl": "Milcz i miej nadzieję, że samo minie",
+            "explanationPl": "Bierność przedłuża problem."
           }
-        ]
+        ],
+        "questionPl": "Jeśli jesteś grożony lub szantażowany online, co powinieneś zrobić?"
       },
       {
         "question": "Nếu bạn hoặc bạn bè có dấu hiệu trầm cảm, lo âu do bị bắt nạt, nên làm gì?",
@@ -1337,24 +1667,34 @@
             "labelEn": "Seek help from counselors, family, school",
             "isCorrect": true,
             "explanation": "Hỗ trợ tâm lý giúp vượt qua khủng hoảng và bảo vệ sức khỏe tinh thần.",
-            "explanationEn": "Psychological support helps overcome crisis and protect mental health."
+            "explanationEn": "Psychological support helps overcome crisis and protect mental health.",
+            "labelPl": "Szukaj pomocy u doradców, rodziny i szkoły",
+            "explanationPl": "Wsparcie psychologiczne pomaga pokonać kryzys i chronić zdrowie psychiczne."
           },
           {
             "label": "Giấu kín cảm xúc, không chia sẻ với ai",
             "labelEn": "Hide feelings, do not share with anyone",
             "isCorrect": false,
             "explanation": "Chia sẻ giúp nhận được sự hỗ trợ kịp thời.",
-            "explanationEn": "Sharing brings timely support."
+            "explanationEn": "Sharing brings timely support.",
+            "labelPl": "Ukrywaj uczucia, nie dziel się z nikim",
+            "explanationPl": "Dzielenie się przyciąga terminowe wsparcie."
           },
           {
             "label": "Tự ý bỏ học hoặc rời khỏi nhà",
             "labelEn": "Drop out of school or leave home without notice",
             "isCorrect": false,
             "explanation": "Cần phối hợp với người lớn để xử lý đúng cách.",
-            "explanationEn": "Coordinate with adults for proper handling."
+            "explanationEn": "Coordinate with adults for proper handling.",
+            "labelPl": "Rzuć szkołę lub ucieknij z domu bez powiadomienia",
+            "explanationPl": "Koordynuj z dorosłymi w celu właściwego postępowania."
           }
-        ]
+        ],
+        "questionPl": "Jeśli ty lub przyjaciel wykazujecie oznaki depresji lub lęku z powodu prześladowania, co powinieneś zrobić?"
       }
-    ]
+    ],
+    "titlePl": "Postępowanie w przypadku cyberprzemocy w mediach społecznościowych (uczeń)",
+    "descriptionPl": "Jesteś uczniem, który doświadcza plotek i fałszywych zdjęć w mediach społecznościowych. Wybierz profesjonalne działania, aby się chronić, radzić sobie z kryzysem psychologicznym i współpracować z rodziną, szkołą i ekspertami.",
+    "difficultyPl": "Średni"
   }
 ]

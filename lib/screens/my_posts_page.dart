@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:meo_sinhton/app/app_controller.dart';
-import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:intl/intl.dart';
+
+String _tr(AppLanguage language, String vi, String en, String pl) {
+  switch (language) {
+    case AppLanguage.english:
+      return en;
+    case AppLanguage.polish:
+      return pl;
+    case AppLanguage.vietnamese:
+      return vi;
+  }
+}
 
 class MyPostsPage extends StatefulWidget {
   final AppController appController;
@@ -34,12 +44,13 @@ class _MyPostsPageState extends State<MyPostsPage> {
   Future<void> _fetchMyTips() async {
     setState(() {
       _isLoading = true;
-      _errorMessage = null; 
+      _errorMessage = null;
     });
     try {
-      final url = '${_baseUrl}get_my_community_tips.php?user_id=${widget.appController.userId}';
+      final url =
+          '${_baseUrl}get_my_community_tips.php?user_id=${widget.appController.userId}';
       print('>>> URL: $url');
-      
+
       final response = await http.get(Uri.parse(url));
       print('>>> Status Code: ${response.statusCode}');
       print('>>> Response Body: ${response.body}');
@@ -52,7 +63,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
             _isLoading = false;
           });
         } else {
-           setState(() {
+          setState(() {
             _myTips = [];
             _errorMessage = data['message'] ?? 'Lỗi không xác định';
             _isLoading = false;
@@ -60,7 +71,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
         }
       } else {
         setState(() {
-          _errorMessage = 'Lỗi máy chủ: ${response.statusCode}. (Nghiêm trọng: Bạn chưa upload file API này lên web)';
+          _errorMessage =
+              'Lỗi máy chủ: ${response.statusCode}. (Nghiêm trọng: Bạn chưa upload file API này lên web)';
           _isLoading = false;
         });
       }
@@ -76,20 +88,20 @@ class _MyPostsPageState extends State<MyPostsPage> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    
+    final language = widget.appController.language;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEnglish ? 'My Shared Posts' : 'Bài viết của bạn'),
+        title: Text(
+          _tr(language, 'Bài viết của bạn', 'My Shared Posts', 'Twoje posty'),
+        ),
       ),
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              scheme.surface,
-              scheme.surfaceContainerLowest,
-            ],
+            colors: [scheme.surface, scheme.surfaceContainerLowest],
           ),
         ),
         child: RefreshIndicator(
@@ -97,29 +109,42 @@ class _MyPostsPageState extends State<MyPostsPage> {
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : _myTips.isEmpty
-                  ? _buildEmptyState()
-                  : _buildTipsList(),
+              ? _buildEmptyState()
+              : _buildTipsList(),
         ),
       ),
     );
   }
 
   Widget _buildEmptyState() {
-    return ListView( // Sử dụng ListView để RefreshIndicator hoạt động được
+    final language = widget.appController.language;
+    return ListView(
+      // Sử dụng ListView để RefreshIndicator hoạt động được
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.2),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.post_add_rounded, size: 80, color: Theme.of(context).colorScheme.outlineVariant),
+              Icon(
+                Icons.post_add_rounded,
+                size: 80,
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
               const SizedBox(height: 16),
               Text(
-                _errorMessage != null 
-                    ? _errorMessage! 
-                    : (widget.isEnglish ? 'No posts yet' : 'Chưa có bài viết nào'),
+                _errorMessage != null
+                    ? _errorMessage!
+                    : _tr(
+                        language,
+                        'Chưa có bài viết nào',
+                        'No posts yet',
+                        'Brak postów',
+                      ),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _errorMessage != null ? Theme.of(context).colorScheme.error : null,
+                  color: _errorMessage != null
+                      ? Theme.of(context).colorScheme.error
+                      : null,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -128,16 +153,18 @@ class _MyPostsPageState extends State<MyPostsPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(
-                    widget.isEnglish
-                        ? 'Shared tips based on your current device/IP will appear here.'
-                        : 'Các mẹo bạn đã chia sẻ từ thiết bị này sẽ hiển thị tại đây.',
+                    _tr(
+                      language,
+                      'Các mẹo bạn đã chia sẻ từ thiết bị này sẽ hiển thị tại đây.',
+                      'Shared tips from this device will appear here.',
+                      'Udostępnione porady z tego urządzenia pojawią się tutaj.',
+                    ),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),
-
             ],
           ),
         ),
@@ -146,18 +173,21 @@ class _MyPostsPageState extends State<MyPostsPage> {
   }
 
   Widget _buildTipsList() {
+    final language = widget.appController.language;
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: _myTips.length,
       itemBuilder: (context, index) {
         final tip = _myTips[index];
         final int status = int.tryParse(tip['status'].toString()) ?? 1;
-        
+
         return Card(
           margin: const EdgeInsets.only(bottom: 16),
           elevation: 0,
           color: Theme.of(context).colorScheme.surfaceContainer,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: ExpansionTile(
             shape: const RoundedRectangleBorder(side: BorderSide.none),
             collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
@@ -165,15 +195,16 @@ class _MyPostsPageState extends State<MyPostsPage> {
               clipBehavior: Clip.none,
               children: [
                 CircleAvatar(
-                  backgroundColor: _getCategoryColor(tip['category']).withOpacity(0.2),
-                  child: Icon(_getCategoryIcon(tip['category']), 
-                    color: _getCategoryColor(tip['category']), size: 20),
+                  backgroundColor: _getCategoryColor(
+                    tip['category'],
+                  ).withOpacity(0.2),
+                  child: Icon(
+                    _getCategoryIcon(tip['category']),
+                    color: _getCategoryColor(tip['category']),
+                    size: 20,
+                  ),
                 ),
-                Positioned(
-                  right: -4,
-                  top: -4,
-                  child: _getStatusIcon(status),
-                ),
+                Positioned(right: -4, top: -4, child: _getStatusIcon(status)),
               ],
             ),
             title: Column(
@@ -181,7 +212,10 @@ class _MyPostsPageState extends State<MyPostsPage> {
               children: [
                 Text(
                   tip['title'],
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Row(
@@ -189,8 +223,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
                     _getStatusChip(status),
                     const SizedBox(width: 8),
                     Text(
-                      DateFormat('dd/MM/yyyy').format(DateTime.parse(tip['created_at'])),
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 10),
+                      DateFormat(
+                        'dd/MM/yyyy',
+                      ).format(DateTime.parse(tip['created_at'])),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelSmall?.copyWith(fontSize: 10),
                     ),
                   ],
                 ),
@@ -202,7 +240,10 @@ class _MyPostsPageState extends State<MyPostsPage> {
                 children: [
                   Icon(Icons.favorite, size: 14, color: Colors.red.shade400),
                   const SizedBox(width: 4),
-                  Text('${tip['likes_count']} likes', style: const TextStyle(fontSize: 12)),
+                  Text(
+                    '${tip['likes_count']} likes',
+                    style: const TextStyle(fontSize: 12),
+                  ),
                   const SizedBox(width: 12),
                   Icon(Icons.comment, size: 14, color: Colors.blue.shade400),
                   const SizedBox(width: 4),
@@ -218,14 +259,17 @@ class _MyPostsPageState extends State<MyPostsPage> {
                   children: [
                     const Divider(),
                     Text(
-                      widget.isEnglish ? 'Content:' : 'Nội dung:',
+                      _tr(language, 'Nội dung:', 'Content:', 'Treść:'),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
                     Text(tip['content']),
-                    if (tip['images'] != null && (tip['images'] as List).isNotEmpty) ...[
+                    if (tip['images'] != null &&
+                        (tip['images'] as List).isNotEmpty) ...[
                       const SizedBox(height: 12),
-                      _MyTipImageCarousel(images: List<String>.from(tip['images'])),
+                      _MyTipImageCarousel(
+                        images: List<String>.from(tip['images']),
+                      ),
                     ] else if (tip['image_url'] != null) ...[
                       const SizedBox(height: 12),
                       _MyTipImageCarousel(images: [tip['image_url']]),
@@ -258,28 +302,32 @@ class _MyPostsPageState extends State<MyPostsPage> {
     }
     return Container(
       padding: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
       child: Icon(icon, size: 14, color: color),
     );
   }
 
   Widget _getStatusChip(int status) {
+    final language = widget.appController.language;
     String label;
     Color color;
     switch (status) {
       case 1:
-        label = widget.isEnglish ? 'Published' : 'Đã duyệt';
+        label = _tr(language, 'Đã duyệt', 'Published', 'Opublikowane');
         color = Colors.green;
         break;
       case 2:
-        label = widget.isEnglish ? 'Rejected' : 'Từ chối';
+        label = _tr(language, 'Từ chối', 'Rejected', 'Odrzucone');
         color = Colors.red;
         break;
       default:
-        label = widget.isEnglish ? 'Pending' : 'Chờ duyệt';
+        label = _tr(language, 'Chờ duyệt', 'Pending', 'Oczekuje');
         color = Colors.orange;
     }
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
@@ -289,28 +337,42 @@ class _MyPostsPageState extends State<MyPostsPage> {
       ),
       child: Text(
         label,
-        style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: color,
+          fontSize: 9,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
   Color _getCategoryColor(String category) {
     switch (category) {
-      case 'tip': return Colors.amber;
-      case 'experience': return Colors.teal;
-      case 'first_aid': return Colors.red;
-      case 'feedback': return Colors.blue;
-      default: return Colors.blueGrey;
+      case 'tip':
+        return Colors.amber;
+      case 'experience':
+        return Colors.teal;
+      case 'first_aid':
+        return Colors.red;
+      case 'feedback':
+        return Colors.blue;
+      default:
+        return Colors.blueGrey;
     }
   }
 
   IconData _getCategoryIcon(String category) {
     switch (category) {
-      case 'tip': return Icons.lightbulb_outline;
-      case 'experience': return Icons.verified_user_rounded;
-      case 'first_aid': return Icons.medical_services_rounded;
-      case 'feedback': return Icons.feedback_rounded;
-      default: return Icons.more_horiz_rounded;
+      case 'tip':
+        return Icons.lightbulb_outline;
+      case 'experience':
+        return Icons.verified_user_rounded;
+      case 'first_aid':
+        return Icons.medical_services_rounded;
+      case 'feedback':
+        return Icons.feedback_rounded;
+      default:
+        return Icons.more_horiz_rounded;
     }
   }
 }
@@ -349,7 +411,10 @@ class _MyTipImageCarouselState extends State<_MyTipImageCarousel> {
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
                         color: Colors.grey.shade200,
-                        child: const Icon(Icons.broken_image, color: Colors.grey),
+                        child: const Icon(
+                          Icons.broken_image,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   );
@@ -368,7 +433,9 @@ class _MyTipImageCarouselState extends State<_MyTipImageCarousel> {
                         width: _currentIndex == index ? 8 : 4,
                         height: 4,
                         decoration: BoxDecoration(
-                          color: _currentIndex == index ? Colors.blue : Colors.white70,
+                          color: _currentIndex == index
+                              ? Colors.blue
+                              : Colors.white70,
                           borderRadius: BorderRadius.circular(2),
                         ),
                       );

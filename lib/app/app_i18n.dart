@@ -21,7 +21,25 @@ class AppI18n {
     return _difficultyMap[value] ?? value;
   }
 
-  static String tag(String value, bool isEnglish) {
+  static String tag(String value, bool isEnglish, {bool isPolish = false}) {
+    if (isPolish) {
+      // Map tiếng Việt sang tiếng Ba Lan cho các tag phổ biến
+      switch (value) {
+        case 'khẩn cấp':
+          return 'Alarm';
+        case 'sinh tồn':
+          return 'Przetrwanie';
+        case 'nước uống':
+          return 'Woda pitna';
+        case 'rừng':
+          return 'Las';
+        case 'sơ cứu':
+          return 'Pierwsza pomoc';
+        // ...bổ sung thêm nếu cần
+        default:
+          return value;
+      }
+    }
     if (!isEnglish) {
       return value;
     }

@@ -25,6 +25,17 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isLoadingRewardedAd = false;
 
+  String _tr({required String vi, required String en, required String pl}) {
+    switch (widget.appController.language) {
+      case AppLanguage.english:
+        return en;
+      case AppLanguage.polish:
+        return pl;
+      case AppLanguage.vietnamese:
+        return vi;
+    }
+  }
+
   Widget _tileIcon({
     required IconData icon,
     required Color background,
@@ -105,10 +116,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _handleRewardAction() async {
     final isEnglish = widget.appController.isEnglish;
+    final isPolish = widget.appController.isPolish;
 
     if (!_adsSupported) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppStrings.adsNotSupported(isEnglish))),
+        SnackBar(
+          content: Text(
+            isPolish
+                ? 'AdMob nie jest obslugiwany na tym urzadzeniu.'
+                : AppStrings.adsNotSupported(isEnglish),
+          ),
+        ),
       );
       return;
     }
@@ -124,7 +142,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() => _isLoadingRewardedAd = true);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(AppStrings.loadingRewardAd(isEnglish))),
+      SnackBar(
+        content: Text(
+          isPolish
+              ? 'Ladowanie reklamy z nagroda...'
+              : AppStrings.loadingRewardAd(isEnglish),
+        ),
+      ),
     );
 
     final earned = await _showRewardedAd();
@@ -141,23 +165,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppStrings.rewardGranted(isEnglish))),
+        SnackBar(
+          content: Text(
+            isPolish
+                ? 'Reklamy sa wylaczone na 1 godzine.'
+                : AppStrings.rewardGranted(isEnglish),
+          ),
+        ),
       );
       return;
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(AppStrings.rewardNotCompleted(isEnglish))),
+      SnackBar(
+        content: Text(
+          isPolish
+              ? 'Aby otrzymac nagrode, obejrzyj reklame do konca.'
+              : AppStrings.rewardNotCompleted(isEnglish),
+        ),
+      ),
     );
   }
 
   Future<void> _openContactEmail() async {
     final isEnglish = widget.appController.isEnglish;
+    final isPolish = widget.appController.isPolish;
     final emailUri = Uri(
       scheme: 'mailto',
       path: 'trongh138@gmail.com',
       queryParameters: {
-        'subject': isEnglish
+        'subject': isPolish
+            ? 'Opinie o aplikacji Meo Sinh Ton'
+            : isEnglish
             ? 'Feedback for Meo Sinh Ton'
             : 'Góp ý cho ứng dụng Mẹo Sinh Tồn',
       },
@@ -174,6 +213,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             content: Text(
               isEnglish
                   ? 'No email app found on this device.'
+                  : isPolish
+                  ? 'Na tym urzadzeniu nie znaleziono aplikacji e-mail.'
                   : 'Thiết bị này chưa có ứng dụng email.',
             ),
           ),
@@ -191,6 +232,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             content: Text(
               isEnglish
                   ? 'Could not open email app on this device.'
+                  : isPolish
+                  ? 'Nie mozna otworzyc aplikacji e-mail na tym urzadzeniu.'
                   : 'Không mở được ứng dụng email trên thiết bị này.',
             ),
           ),
@@ -205,6 +248,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           content: Text(
             isEnglish
                 ? 'Email feature is not ready yet. Please restart the app and try again.'
+                : isPolish
+                ? 'Funkcja e-mail nie jest jeszcze gotowa. Uruchom ponownie aplikacje i sprobuj ponownie.'
                 : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
           ),
         ),
@@ -218,6 +263,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           content: Text(
             isEnglish
                 ? 'Email feature is not ready yet. Please restart the app and try again.'
+                : isPolish
+                ? 'Funkcja e-mail nie jest jeszcze gotowa. Uruchom ponownie aplikacje i sprobuj ponownie.'
                 : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
           ),
         ),
@@ -231,17 +278,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
       animation: widget.appController,
       builder: (context, _) {
         final isEnglish = widget.appController.isEnglish;
+        final isPolish = widget.appController.isPolish;
         final adRemaining = widget.appController.adFreeRemaining;
         final scheme = Theme.of(context).colorScheme;
         final adSubtitle = widget.appController.areAdsTemporarilyDisabled
-            ? AppStrings.adsDisabledRemaining(
-                isEnglish,
-                adRemaining ?? Duration.zero,
-              )
-            : AppStrings.watchRewardToDisableAds(isEnglish);
+            ? isPolish
+                  ? 'Reklamy wylaczone jeszcze przez ${adRemaining?.inHours ?? 0} godz. ${(adRemaining?.inMinutes.remainder(60)) ?? 0} min'
+                  : AppStrings.adsDisabledRemaining(
+                      isEnglish,
+                      adRemaining ?? Duration.zero,
+                    )
+            : _tr(
+                vi: 'Xem quảng cáo thưởng để tắt toàn bộ quảng cáo trong 1 giờ.',
+                en: 'Watch a rewarded ad to disable all ads for 1 hour.',
+                pl: 'Obejrzyj reklame z nagroda, aby wylaczyc wszystkie reklamy na 1 godzine.',
+              );
 
         return Scaffold(
-          appBar: AppBar(title: Text(AppStrings.settings(isEnglish))),
+          appBar: AppBar(
+            title: Text(_tr(vi: 'Cài đặt', en: 'Settings', pl: 'Ustawienia')),
+          ),
           body: ListView(
             padding: const EdgeInsets.all(12),
             children: [
@@ -251,7 +307,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: _openContactEmail,
                   leading: Icon(Icons.mail_outline, color: Colors.red.shade500),
                   title: Text(
-                    isEnglish ? 'Feedback & Contact' : 'Phản hồi & Liên hệ',
+                    _tr(
+                      vi: 'Phản hồi & Liên hệ',
+                      en: 'Feedback & Contact',
+                      pl: 'Opinie i kontakt',
+                    ),
                   ),
                   subtitle: RichText(
                     text: TextSpan(
@@ -263,6 +323,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         TextSpan(
                           text: isEnglish
                               ? 'Your feedback and app rating are very important to me. Please contact me at Gmail: '
+                              : isPolish
+                              ? 'Twoja opinia i ocena aplikacji sa dla mnie bardzo wazne. Skontaktuj sie ze mna przez Gmail: '
                               : 'Mọi ý kiến đóng góp và đánh giá app của bạn đều rất quan trọng với tôi. Hãy liên lạc qua Gmail: ',
                         ),
                         WidgetSpan(
@@ -294,6 +356,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         TextSpan(
                           text: isEnglish
                               ? '. Sincerely ❤️'
+                              : isPolish
+                              ? '. Z wyrazami szacunku ❤️'
                               : '. Trân trọng ❤️',
                         ),
                       ],
@@ -315,9 +379,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     background: scheme.primaryContainer,
                     foreground: scheme.onPrimaryContainer,
                   ),
-                  title: Text(AppStrings.language(isEnglish)),
+                  title: Text(_tr(vi: 'Ngôn ngữ', en: 'Language', pl: 'Jezyk')),
                   subtitle: Text(
-                    AppStrings.languageDesc(isEnglish),
+                    _tr(
+                      vi: 'Chọn ngôn ngữ hiển thị',
+                      en: 'Select display language',
+                      pl: 'Wybierz jezyk wyswietlania',
+                    ),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   trailing: SegmentedButton<AppLanguage>(
@@ -336,6 +404,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ButtonSegment<AppLanguage>(
                         value: AppLanguage.english,
                         label: Text('🇺🇸 EN'),
+                      ),
+                      ButtonSegment<AppLanguage>(
+                        value: AppLanguage.polish,
+                        label: Text('🇵🇱 PL'),
                       ),
                     ],
                     selected: {widget.appController.language},
@@ -368,13 +440,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   title: Text(
                     widget.appController.themeMode == ThemeMode.dark
-                        ? (isEnglish ? 'Dark Theme' : 'Giao diện tối')
-                        : (isEnglish ? 'Light Theme' : 'Giao diện sáng'),
+                        ? _tr(
+                            vi: 'Giao diện tối',
+                            en: 'Dark Theme',
+                            pl: 'Motyw ciemny',
+                          )
+                        : _tr(
+                            vi: 'Giao diện sáng',
+                            en: 'Light Theme',
+                            pl: 'Motyw jasny',
+                          ),
                   ),
                   subtitle: Text(
                     widget.appController.themeMode == ThemeMode.dark
-                        ? (isEnglish ? 'Optimized for low light' : 'Tối ưu cho môi trường thiếu sáng')
-                        : (isEnglish ? 'Clean and clear appearance' : 'Giao diện sáng sủa, rõ ràng'),
+                        ? _tr(
+                            vi: 'Tối ưu cho môi trường thiếu sáng',
+                            en: 'Optimized for low light',
+                            pl: 'Zoptymalizowany do slabego oswietlenia',
+                          )
+                        : _tr(
+                            vi: 'Giao diện sáng sủa, rõ ràng',
+                            en: 'Clean and clear appearance',
+                            pl: 'Jasny i przejrzysty wyglad',
+                          ),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   value: widget.appController.themeMode == ThemeMode.dark,
@@ -395,7 +483,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     background: scheme.tertiaryContainer,
                     foreground: scheme.onTertiaryContainer,
                   ),
-                  title: Text(AppStrings.ads(isEnglish)),
+                  title: Text(_tr(vi: 'Quảng cáo', en: 'Ads', pl: 'Reklamy')),
                   subtitle: Text(
                     adSubtitle,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -406,7 +494,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onPressed: _isLoadingRewardedAd
                               ? null
                               : _handleRewardAction,
-                          child: Text(AppStrings.watchNow(isEnglish)),
+                          child: Text(
+                            _tr(
+                              vi: 'Xem ngay',
+                              en: 'Watch now',
+                              pl: 'Obejrzyj teraz',
+                            ),
+                          ),
                         ),
                 ),
               ),
@@ -456,9 +550,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     background: Colors.orange.shade100,
                     foreground: Colors.orange.shade700,
                   ),
-                  title: Text(AppStrings.tabSaved(isEnglish)),
+                  title: Text(_tr(vi: 'Đã lưu', en: 'Saved', pl: 'Zapisane')),
                   subtitle: Text(
-                    isEnglish ? 'View your bookmarked survival tips' : 'Xem lại các mẹo sinh tồn bạn đã lưu',
+                    _tr(
+                      vi: 'Xem lại các mẹo sinh tồn bạn đã lưu',
+                      en: 'View your bookmarked survival tips',
+                      pl: 'Zobacz zapisane porady survivalowe',
+                    ),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   trailing: const Icon(Icons.chevron_right, size: 20),
@@ -489,9 +587,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     background: Colors.blue.shade100,
                     foreground: Colors.blue.shade700,
                   ),
-                  title: Text(isEnglish ? 'My Shared Posts' : 'Bài viết của bạn'),
+                  title: Text(
+                    _tr(
+                      vi: 'Bài viết của bạn',
+                      en: 'My Shared Posts',
+                      pl: 'Twoje udostepnione posty',
+                    ),
+                  ),
                   subtitle: Text(
-                    isEnglish ? 'Check status of your shared survival tips' : 'Theo dõi trạng thái các bài đóng góp của bạn',
+                    _tr(
+                      vi: 'Theo dõi trạng thái các bài đóng góp của bạn',
+                      en: 'Check status of your shared survival tips',
+                      pl: 'Sprawdz status udostepnionych porad survivalowych',
+                    ),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   trailing: const Icon(Icons.chevron_right, size: 20),
@@ -590,10 +698,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),

@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
-import 'package:meo_sinhton/app/app_i18n.dart';
-import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/models/survival_tip.dart';
 import 'package:meo_sinhton/repositories/tip_repository.dart';
 import 'package:meo_sinhton/screens/tip_detail_screen.dart';
 import 'package:meo_sinhton/widgets/tip_preview_card.dart';
+
+String _tr(AppLanguage language, String vi, String en, String pl) {
+  switch (language) {
+    case AppLanguage.english:
+      return en;
+    case AppLanguage.polish:
+      return pl;
+    case AppLanguage.vietnamese:
+      return vi;
+  }
+}
 
 class TipFeedView extends StatefulWidget {
   const TipFeedView({
@@ -67,20 +76,23 @@ class TipFeedViewState extends State<TipFeedView> {
       final matchQuery =
           lowerQuery.isEmpty ||
           tip.title.toLowerCase().contains(lowerQuery) ||
-          tip.titleText(widget.isEnglish).toLowerCase().contains(lowerQuery) ||
+          tip
+              .titleText(widget.appController.language)
+              .toLowerCase()
+              .contains(lowerQuery) ||
           tip.summary.toLowerCase().contains(lowerQuery) ||
           tip
-              .summaryText(widget.isEnglish)
+              .summaryText(widget.appController.language)
               .toLowerCase()
               .contains(lowerQuery) ||
           tip.subCategory.toLowerCase().contains(lowerQuery) ||
           tip
-              .subCategoryText(widget.isEnglish)
+              .subCategoryText(widget.appController.language)
               .toLowerCase()
               .contains(lowerQuery) ||
           tip.tags.any((tag) => tag.toLowerCase().contains(lowerQuery)) ||
           tip
-              .tagsText(widget.isEnglish)
+              .tagsText(widget.appController.language)
               .any((tag) => tag.toLowerCase().contains(lowerQuery));
       return matchCategory && matchQuery;
     }).toList();
@@ -88,6 +100,8 @@ class TipFeedViewState extends State<TipFeedView> {
 
   @override
   Widget build(BuildContext context) {
+    final language = widget.appController.language;
+    final useEnglishContent = language != AppLanguage.vietnamese;
     return FutureBuilder<List<SurvivalTip>>(
       future: _tipsFuture,
       builder: (context, snapshot) {
@@ -97,7 +111,14 @@ class TipFeedViewState extends State<TipFeedView> {
 
         if (snapshot.hasError) {
           return Center(
-            child: Text(AppStrings.offlineDataError(widget.isEnglish)),
+            child: Text(
+              _tr(
+                language,
+                'Không đọc được dữ liệu offline. Vui lòng kiểm tra JSON.',
+                'Unable to load offline data. Please check JSON.',
+                'Nie można wczytać danych offline. Sprawdź JSON.',
+              ),
+            ),
           );
         }
 
@@ -134,26 +155,51 @@ class TipFeedViewState extends State<TipFeedView> {
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: InputDecoration(
                               isDense: true,
-                              hintText: AppStrings.searchHint(widget.isEnglish),
+                              hintText: _tr(
+                                language,
+                                'Tìm mẹo theo từ khóa...',
+                                'Search tips by keyword...',
+                                'Szukaj porad według słowa kluczowego...',
+                              ),
                               prefixIcon: const Icon(Icons.search, size: 18),
-                              prefixIconConstraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                              prefixIconConstraints: const BoxConstraints(
+                                minWidth: 34,
+                                minHeight: 34,
+                              ),
                               suffixIcon: widget.emergencyOnly
-                                  ? const Icon(Icons.warning_amber_rounded, size: 18)
-                                  : const Icon(Icons.tips_and_updates_outlined, size: 18),
-                              suffixIconConstraints: const BoxConstraints(minWidth: 34, minHeight: 34),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                  ? const Icon(
+                                      Icons.warning_amber_rounded,
+                                      size: 18,
+                                    )
+                                  : const Icon(
+                                      Icons.tips_and_updates_outlined,
+                                      size: 18,
+                                    ),
+                              suffixIconConstraints: const BoxConstraints(
+                                minWidth: 34,
+                                minHeight: 34,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                              fillColor: Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withValues(alpha: 0.3),
                             ),
-                            onChanged: (value) => setState(() => _query = value),
+                            onChanged: (value) =>
+                                setState(() => _query = value),
                           ),
                         ),
                       ),
-                      if (widget.showCategoryChips && widget.lockedCategory == null) ...[
+                      if (widget.showCategoryChips &&
+                          widget.lockedCategory == null) ...[
                         const SizedBox(height: 12),
                         SizedBox(
                           height: 34,
@@ -161,22 +207,36 @@ class TipFeedViewState extends State<TipFeedView> {
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             scrollDirection: Axis.horizontal,
                             itemCount: categories.length,
-                            separatorBuilder: (_, __) => const SizedBox(width: 8),
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(width: 8),
                             itemBuilder: (context, cIndex) {
                               final category = categories[cIndex];
                               return ChoiceChip(
                                 visualDensity: VisualDensity.compact,
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
                                 showCheckmark: false,
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
                                 label: Text(
-                                  AppI18n.category(category, widget.isEnglish),
-                                  style: Theme.of(context).textTheme.labelMedium,
+                                  _categoryLabel(category, language),
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.labelMedium,
                                 ),
                                 selected: _selectedCategory == category,
-                                side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
-                                selectedColor: Theme.of(context).colorScheme.secondaryContainer,
-                                onSelected: (_) => setState(() => _selectedCategory = category),
+                                side: BorderSide(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.outlineVariant,
+                                ),
+                                selectedColor: Theme.of(
+                                  context,
+                                ).colorScheme.secondaryContainer,
+                                onSelected: (_) => setState(
+                                  () => _selectedCategory = category,
+                                ),
                               );
                             },
                           ),
@@ -187,7 +247,7 @@ class TipFeedViewState extends State<TipFeedView> {
                 ),
               ),
             ),
-            
+
             // List of Tips
             Expanded(
               child: RefreshIndicator(
@@ -202,13 +262,23 @@ class TipFeedViewState extends State<TipFeedView> {
                   itemBuilder: (context, index) {
                     final tip = filteredTips[index];
                     final isSaved = widget.appController.isTipSaved(tip.id);
-                    
+
                     return TipPreviewCard(
                       tip: tip,
-                      isEnglish: widget.isEnglish,
+                      language: widget.appController.language,
                       isSaved: isSaved,
-                      saveTooltip: AppStrings.saveTip(widget.isEnglish),
-                      unsaveTooltip: AppStrings.unsaveTip(widget.isEnglish),
+                      saveTooltip: _tr(
+                        language,
+                        'Lưu mẹo',
+                        'Save tip',
+                        'Zapisz poradę',
+                      ),
+                      unsaveTooltip: _tr(
+                        language,
+                        'Bỏ lưu mẹo',
+                        'Unsave tip',
+                        'Usuń zapis',
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -216,7 +286,7 @@ class TipFeedViewState extends State<TipFeedView> {
                             builder: (_) => TipDetailScreen(
                               tip: tip,
                               appController: widget.appController,
-                              isEnglish: widget.isEnglish,
+                              language: widget.appController.language,
                             ),
                           ),
                         );
@@ -234,5 +304,22 @@ class TipFeedViewState extends State<TipFeedView> {
         );
       },
     );
+  }
+
+  String _categoryLabel(String category, AppLanguage language) {
+    switch (category) {
+      case 'Tất cả':
+        return _tr(language, 'Tất cả', 'All', 'Wszystkie');
+      case 'Sơ cứu':
+        return _tr(language, 'Sơ cứu', 'First aid', 'Pierwsza pomoc');
+      case 'Kinh nghiệm':
+        return _tr(language, 'Kinh nghiệm', 'Experience', 'Doświadczenie');
+      case 'Mẹo':
+        return _tr(language, 'Mẹo', 'Tips', 'Porady');
+      case 'Phản hồi':
+        return _tr(language, 'Phản hồi', 'Feedback', 'Opinie');
+      default:
+        return category;
+    }
   }
 }

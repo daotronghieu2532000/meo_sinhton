@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meo_sinhton/app/app_strings.dart';
+import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:meo_sinhton/models/survival_tip.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -7,7 +7,7 @@ class TipPreviewCard extends StatelessWidget {
   const TipPreviewCard({
     super.key,
     required this.tip,
-    required this.isEnglish,
+    required this.language,
     required this.isSaved,
     required this.onTap,
     required this.onToggleSaved,
@@ -16,12 +16,25 @@ class TipPreviewCard extends StatelessWidget {
   });
 
   final SurvivalTip tip;
-  final bool isEnglish;
+  final AppLanguage language;
   final bool isSaved;
   final VoidCallback onTap;
   final VoidCallback onToggleSaved;
   final String saveTooltip;
   final String unsaveTooltip;
+
+  // Đã truyền trực tiếp AppLanguage, không cần getter bool nữa
+
+  String _tr({required String vi, required String en, required String pl}) {
+    switch (language) {
+      case AppLanguage.english:
+        return en;
+      case AppLanguage.polish:
+        return pl;
+      case AppLanguage.vietnamese:
+        return vi;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +54,19 @@ class TipPreviewCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                  CircleAvatar(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.1),
                     radius: 20,
                     child: Icon(
-                      tip.isEmergency ? Icons.warning_amber_rounded : Icons.tips_and_updates_outlined, 
-                      color: tip.isEmergency ? Colors.red : Theme.of(context).colorScheme.primary, 
-                      size: 24
+                      tip.isEmergency
+                          ? Icons.warning_amber_rounded
+                          : Icons.tips_and_updates_outlined,
+                      color: tip.isEmergency
+                          ? Colors.red
+                          : Theme.of(context).colorScheme.primary,
+                      size: 24,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -56,10 +75,13 @@ class TipPreviewCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tip.categoryText(isEnglish),
+                          tip.categoryText(language),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                         const SizedBox(height: 2),
                         // Metadata Row with ellipsis protection
@@ -69,28 +91,41 @@ class TipPreviewCard extends StatelessWidget {
                           child: Row(
                             children: [
                               ConstrainedBox(
-                                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.5),
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                ),
                                 child: Text(
-                                  '${tip.subCategoryText(isEnglish)} • ${AppStrings.minuteUnit(isEnglish, tip.estimatedMinutes, compact: true)}',
+                                  '${tip.subCategoryText(language)} • ${_tr(vi: '${tip.estimatedMinutes} phút', en: '${tip.estimatedMinutes} min', pl: '${tip.estimatedMinutes} min')}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
+                                      ),
                                 ),
                               ),
                               if (tip.isEmergency) ...[
                                 const SizedBox(width: 4),
                                 Text(
-                                  '• ${AppStrings.emergencyChip(isEnglish)}',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  '• ${_tr(vi: 'Khẩn cấp', en: 'Emergency', pl: 'Alarm')}',
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ],
                               const SizedBox(width: 4),
-                              Icon(Icons.public, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                              Icon(
+                                Icons.public,
+                                size: 12,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
                             ],
                           ),
                         ),
@@ -106,7 +141,7 @@ class TipPreviewCard extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             // Title and Content
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -114,12 +149,15 @@ class TipPreviewCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tip.titleText(isEnglish),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    tip.titleText(language),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    tip.summaryText(isEnglish),
+                    tip.summaryText(language),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 15),
@@ -130,7 +168,8 @@ class TipPreviewCard extends StatelessWidget {
             ),
 
             // Image
-            if (tip.imageAsset != null && tip.imageAsset!.trim().isNotEmpty) ...[
+            if (tip.imageAsset != null &&
+                tip.imageAsset!.trim().isNotEmpty) ...[
               const SizedBox(height: 4),
               Image.asset(
                 tip.imageAsset!,
@@ -139,7 +178,9 @@ class TipPreviewCard extends StatelessWidget {
                 errorBuilder: (_, __, ___) {
                   return Container(
                     height: 200,
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     child: Center(
                       child: Icon(
                         Icons.image_not_supported_outlined,
@@ -160,23 +201,28 @@ class TipPreviewCard extends StatelessWidget {
                 children: [
                   _buildActionButton(
                     context,
-                    icon: isSaved ? Icons.thumb_up_alt : Icons.thumb_up_alt_outlined,
-                    label: isEnglish ? 'Like' : 'Thích',
-                    color: isSaved ? Colors.blue : Theme.of(context).colorScheme.onSurfaceVariant,
+                    icon: isSaved
+                        ? Icons.thumb_up_alt
+                        : Icons.thumb_up_alt_outlined,
+                    label: _tr(vi: 'Thích', en: 'Like', pl: 'Polub'),
+                    color: isSaved
+                        ? Colors.blue
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                     onTap: onToggleSaved, // Now Like button handles saving
                   ),
                   _buildActionButton(
                     context,
                     icon: Icons.share_outlined,
-                    label: isEnglish ? 'Share' : 'Chia sẻ',
+                    label: _tr(vi: 'Chia sẻ', en: 'Share', pl: 'Udostepnij'),
                     onTap: () {
-                      final content = """
-${tip.titleText(isEnglish)}
+                      final content =
+                          """
+            ${tip.titleText(language)}
 
-${tip.summaryText(isEnglish)}
+            ${tip.summaryText(language)}
 
-${isEnglish ? 'More details in the Mẹo Sinh Tồn app!' : 'Xem chi tiết trong ứng dụng Mẹo Sinh Tồn!'}
-""";
+            ${_tr(vi: 'Xem chi tiết trong ứng dụng Mẹo Sinh Tồn!', en: 'More details in the Mẹo Sinh Tồn app!', pl: 'Szczegoly w aplikacji Mẹo Sinh Tồn!')}
+            """;
                       Share.share(content);
                     },
                   ),
@@ -190,11 +236,12 @@ ${isEnglish ? 'More details in the Mẹo Sinh Tồn app!' : 'Xem chi tiết tron
     );
   }
 
-  Widget _buildActionButton(BuildContext context, {
-    required IconData icon, 
-    required String label, 
+  Widget _buildActionButton(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
     Color? color,
-    required VoidCallback onTap
+    required VoidCallback onTap,
   }) {
     final finalColor = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
     return Expanded(

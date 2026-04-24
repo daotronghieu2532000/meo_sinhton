@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
+import 'package:meo_sinhton/app/app_controller.dart';
 
 class TipImagePlaceholder extends StatelessWidget {
   const TipImagePlaceholder({
     super.key,
     required this.imageAsset,
-    required this.isEnglish,
+    required this.language,
   });
 
   final String? imageAsset;
-  final bool isEnglish;
+  final AppLanguage language;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class TipImagePlaceholder extends StatelessWidget {
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       alignment: Alignment.center,
-      child: Text(AppStrings.imagePlaceholder(isEnglish)),
+      child: Text(AppStrings.imagePlaceholder(language == AppLanguage.english)),
     );
   }
 }

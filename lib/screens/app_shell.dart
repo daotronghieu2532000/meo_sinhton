@@ -39,6 +39,17 @@ class _AppShellState extends State<AppShell> {
         defaultTargetPlatform == TargetPlatform.iOS;
   }
 
+  String _tr(AppLanguage language, String vi, String en, String pl) {
+    switch (language) {
+      case AppLanguage.english:
+        return en;
+      case AppLanguage.polish:
+        return pl;
+      case AppLanguage.vietnamese:
+        return vi;
+    }
+  }
+
   void _ensureBannerLoaded(double width) {
     if (!_adsSupported ||
         _isBannerLoading ||
@@ -90,20 +101,22 @@ class _AppShellState extends State<AppShell> {
 
   final Set<int> _initializedPages = {0};
   final GlobalKey<TipFeedViewState> _tipFeedKey = GlobalKey<TipFeedViewState>();
-  final GlobalKey<CommunityPageState> _communityKey = GlobalKey<CommunityPageState>();
+  final GlobalKey<CommunityPageState> _communityKey =
+      GlobalKey<CommunityPageState>();
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: widget.appController,
       builder: (context, _) {
-        final isEnglish = widget.appController.isEnglish;
+        final language = widget.appController.language;
+        final isEnglish = language == AppLanguage.english;
         final titles = [
           AppStrings.appName(),
-          AppStrings.tabCommunity(isEnglish),
-          AppStrings.tabTop10(isEnglish),
-          AppStrings.tabScenario(isEnglish),
-          AppStrings.tabMap(isEnglish),
+          _tr(language, 'Góp ý', 'Community', 'Społeczność'),
+          _tr(language, 'Top 10', 'Top 10', 'Top 10'),
+          _tr(language, 'Tình huống', 'Scenarios', 'Scenariusze'),
+          _tr(language, 'Bản đồ', 'Map', 'Mapa'),
         ];
 
         final pages = [
@@ -113,30 +126,39 @@ class _AppShellState extends State<AppShell> {
             appController: widget.appController,
             isEnglish: isEnglish,
           ),
-          
+
           // Index 1: Community (Lazy)
-          _initializedPages.contains(1) 
-            ? CommunityPage(
-                key: _communityKey,
-                appController: widget.appController, 
-                isEnglish: isEnglish,
-              )
-            : const Center(child: CircularProgressIndicator()),
-            
+          _initializedPages.contains(1)
+              ? CommunityPage(
+                  key: _communityKey,
+                  appController: widget.appController,
+                  isEnglish: isEnglish,
+                )
+              : const Center(child: CircularProgressIndicator()),
+
           // Index 2: Top 10 (Lazy)
-          _initializedPages.contains(2) 
-            ? TopTipsPage(appController: widget.appController, isEnglish: isEnglish)
-            : const Center(child: CircularProgressIndicator()),
-            
+          _initializedPages.contains(2)
+              ? TopTipsPage(
+                  appController: widget.appController,
+                  isEnglish: isEnglish,
+                )
+              : const Center(child: CircularProgressIndicator()),
+
           // Index 3: Scenario (Lazy)
-          _initializedPages.contains(3) 
-            ? ScenarioModePage(appController: widget.appController, isEnglish: isEnglish)
-            : const Center(child: CircularProgressIndicator()),
-            
+          _initializedPages.contains(3)
+              ? ScenarioModePage(
+                  appController: widget.appController,
+                  isEnglish: isEnglish,
+                )
+              : const Center(child: CircularProgressIndicator()),
+
           // Index 4: Map (Lazy - quan trọng nhất để tránh hỏi quyền ngay khi mở app)
-          _initializedPages.contains(4) 
-            ? EmergencyMapScreen(appController: widget.appController, isEnglish: isEnglish)
-            : const Center(child: CircularProgressIndicator()),
+          _initializedPages.contains(4)
+              ? EmergencyMapScreen(
+                  appController: widget.appController,
+                  isEnglish: isEnglish,
+                )
+              : const Center(child: CircularProgressIndicator()),
         ];
         final shouldShowAds =
             _adsSupported && !widget.appController.areAdsTemporarilyDisabled;
@@ -154,7 +176,8 @@ class _AppShellState extends State<AppShell> {
             ),
             title: Text(titles[_currentIndex]),
             actions: [
-              if (_currentIndex == 0 || _currentIndex == 1) // Show on Home and Community tabs
+              if (_currentIndex == 0 ||
+                  _currentIndex == 1) // Show on Home and Community tabs
                 IconButton(
                   icon: const Icon(Icons.search),
                   tooltip: isEnglish ? 'Toggle Search' : 'Bật/Tắt tìm kiếm',
@@ -172,7 +195,12 @@ class _AppShellState extends State<AppShell> {
                   size: 28,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                tooltip: isEnglish ? 'My Shared Posts' : 'Bài viết của bạn',
+                tooltip: _tr(
+                  language,
+                  'Bài viết của bạn',
+                  'My Shared Posts',
+                  'Twoje posty',
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -191,7 +219,7 @@ class _AppShellState extends State<AppShell> {
                   size: 28,
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
-                tooltip: AppStrings.settings(isEnglish),
+                tooltip: _tr(language, 'Cài đặt', 'Settings', 'Ustawienia'),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -238,12 +266,12 @@ class _AppShellState extends State<AppShell> {
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.home_outlined),
                     activeIcon: const Icon(Icons.home),
-                    label: AppStrings.tabHome(isEnglish),
+                    label: _tr(language, 'Trang chủ', 'Home', 'Strona główna'),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.forum_outlined),
                     activeIcon: const Icon(Icons.forum),
-                    label: AppStrings.tabCommunity(isEnglish),
+                    label: _tr(language, 'Góp ý', 'Community', 'Społeczność'),
                   ),
                   BottomNavigationBarItem(
                     icon: Stack(
@@ -256,30 +284,49 @@ class _AppShellState extends State<AppShell> {
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.amber, width: 2),
                           ),
-                          child: const Icon(Icons.emoji_events, color: Colors.amber, size: 28),
+                          child: const Icon(
+                            Icons.emoji_events,
+                            color: Colors.amber,
+                            size: 28,
+                          ),
                         ),
                         Positioned(
                           right: -4,
                           top: -4,
                           child: Container(
                             padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                            child: const Text('10', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold)),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Text(
+                              '10',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    label: AppStrings.tabTop10(isEnglish),
+                    label: _tr(language, 'Top 10', 'Top 10', 'Top 10'),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.quiz_outlined),
                     activeIcon: const Icon(Icons.quiz),
-                    label: AppStrings.tabScenario(isEnglish),
+                    label: _tr(
+                      language,
+                      'Tình huống',
+                      'Scenarios',
+                      'Scenariusze',
+                    ),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.map_outlined),
                     activeIcon: const Icon(Icons.map),
-                    label: AppStrings.tabMap(isEnglish),
+                    label: _tr(language, 'Bản đồ', 'Map', 'Mapa'),
                   ),
                 ],
               ),

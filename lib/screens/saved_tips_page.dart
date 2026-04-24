@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
-import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/models/survival_tip.dart';
 import 'package:meo_sinhton/repositories/tip_repository.dart';
 import 'package:meo_sinhton/screens/tip_detail_screen.dart';
@@ -16,6 +15,21 @@ class SavedTipsPage extends StatelessWidget {
   final AppController appController;
   final bool isEnglish;
 
+  AppLanguage get _language => appController.language;
+
+  bool get _isEnglishContent => _language != AppLanguage.vietnamese;
+
+  String _tr({required String vi, required String en, required String pl}) {
+    switch (_language) {
+      case AppLanguage.english:
+        return en;
+      case AppLanguage.polish:
+        return pl;
+      case AppLanguage.vietnamese:
+        return vi;
+    }
+  }
+
   Widget _emptyState(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Center(
@@ -27,7 +41,7 @@ class SavedTipsPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: scheme.primary.withOpacity(0.08),
+                color: scheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -38,29 +52,48 @@ class SavedTipsPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              AppStrings.noSavedTips(isEnglish),
+              _tr(
+                vi: 'Chưa có mẹo đã lưu',
+                en: 'No saved tips yet',
+                pl: 'Brak zapisanych porad',
+              ),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: scheme.onSurface,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: scheme.onSurface,
+              ),
             ),
             const SizedBox(height: 12),
             Text(
-              AppStrings.savedPlaceholderDesc(isEnglish),
+              _tr(
+                vi: 'Lưu mẹo để xem lại nhanh ở đây.',
+                en: 'Save tips to quickly review them here.',
+                pl: 'Zapisz porady, aby szybko je tutaj przegladac.',
+              ),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurfaceVariant,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: scheme.onSurfaceVariant),
             ),
             const SizedBox(height: 32),
             ElevatedButton.icon(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.home),
-              label: Text(isEnglish ? 'Explore Tips' : 'Khám phá mẹo'),
+              label: Text(
+                _tr(
+                  vi: 'Khám phá mẹo',
+                  en: 'Explore tips',
+                  pl: 'Przegladaj porady',
+                ),
+              ),
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ],
@@ -73,7 +106,7 @@ class SavedTipsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.tabSaved(isEnglish)),
+        title: Text(_tr(vi: 'Đã lưu', en: 'Saved', pl: 'Zapisane')),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -99,7 +132,15 @@ class SavedTipsPage extends StatelessWidget {
               }
 
               if (snapshot.hasError) {
-                return Center(child: Text(AppStrings.offlineDataError(isEnglish)));
+                return Center(
+                  child: Text(
+                    _tr(
+                      vi: 'Không đọc được dữ liệu offline. Vui lòng kiểm tra JSON.',
+                      en: 'Unable to load offline data. Please check JSON.',
+                      pl: 'Nie mozna wczytac danych offline. Sprawdz JSON.',
+                    ),
+                  ),
+                );
               }
 
               final allTips = snapshot.data ?? const <SurvivalTip>[];
@@ -119,10 +160,18 @@ class SavedTipsPage extends StatelessWidget {
                   final tip = savedTips[index];
                   return TipPreviewCard(
                     tip: tip,
-                    isEnglish: isEnglish,
+                    language: _language,
                     isSaved: true,
-                    saveTooltip: AppStrings.saveTip(isEnglish),
-                    unsaveTooltip: AppStrings.unsaveTip(isEnglish),
+                    saveTooltip: _tr(
+                      vi: 'Lưu mẹo',
+                      en: 'Save tip',
+                      pl: 'Zapisz poradę',
+                    ),
+                    unsaveTooltip: _tr(
+                      vi: 'Bỏ lưu mẹo',
+                      en: 'Unsave tip',
+                      pl: 'Usun zapis',
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -130,7 +179,9 @@ class SavedTipsPage extends StatelessWidget {
                           builder: (_) => TipDetailScreen(
                             tip: tip,
                             appController: appController,
-                            isEnglish: isEnglish,
+                            language: _isEnglishContent
+                                ? AppLanguage.english
+                                : AppLanguage.vietnamese,
                           ),
                         ),
                       );
@@ -143,7 +194,13 @@ class SavedTipsPage extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(milliseconds: 1200),
-                          content: Text(AppStrings.tipUnsaved(isEnglish)),
+                          content: Text(
+                            _tr(
+                              vi: 'Đã bỏ lưu mẹo',
+                              en: 'Tip removed from saved',
+                              pl: 'Porada usunieta z zapisanych',
+                            ),
+                          ),
                         ),
                       );
                     },

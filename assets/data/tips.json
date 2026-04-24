@@ -37,6 +37,23 @@
       "desert",
       "navigation",
       "emergency"
+    ],
+    "titlePl": "Zagubiony na pustyni: nawigacja wedlug slonca",
+    "summaryPl": "Najpierw oszczedzaj sily i wyznacz krotki, bezpieczny kierunek marszu, unikajac ruchu w najwiekszym upale.",
+    "stepsPl": [
+      "Najpierw znajdz cien, ogranicz utrate wody i spokojnie ocen otoczenie.",
+      "Wykorzystaj polozenie slonca rano i po poludniu, aby orientacyjnie wyznaczyc Wschod i Zachod.",
+      "Oznaczaj trase kamieniami lub galeziami, aby nie chodzic w kolko.",
+      "Przemieszczaj sie wczesnym rankiem lub poznym popoludniem, odpoczywaj w szczycie upalu.",
+      "Jesli masz telefon, wlacz oszczedzanie baterii i uzywaj go tylko do lokalizacji lub kontaktu, gdy to konieczne."
+    ],
+    "categoryPl": "Przetrwanie w naturze",
+    "subCategoryPl": "Pustynia",
+    "difficultyPl": "Sredni",
+    "tagsPl": [
+      "pustynia",
+      "nawigacja",
+      "awaryjne"
     ]
   },
   {
@@ -77,6 +94,23 @@
       "desert",
       "drinking water",
       "survival"
+    ],
+    "titlePl": "Zagubiony na pustyni: rozsadne racjonowanie wody",
+    "summaryPl": "Nie pij naraz duzej ilosci; podziel wode na male porcje, aby dluzej zachowac czujnosc.",
+    "stepsPl": [
+      "Oszacuj calkowita ilosc pozostalej wody i czas, na jaki moze wystarczyc.",
+      "Podziel wode na male porcje i pij co 30-45 minut.",
+      "Unikaj nadmiernego mowienia i intensywnego ruchu, aby zmniejszyc odwodnienie.",
+      "Zakryj glowe i szyje jasna tkanina, aby ograniczyc pochlanianie ciepla.",
+      "Znajdz wyzszy punkt obserwacyjny, aby wypatrzec droge, zabudowania lub ludzi."
+    ],
+    "categoryPl": "Przetrwanie w naturze",
+    "subCategoryPl": "Pustynia",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "pustynia",
+      "woda pitna",
+      "przetrwanie"
     ]
   },
   {
@@ -117,6 +151,23 @@
       "forest",
       "navigation",
       "emergency"
+    ],
+    "titlePl": "Zagubiony w lesie: dzialania w pierwszych 60 minutach",
+    "summaryPl": "Zatrzymaj sie, uspokoj i zaplanuj kolejne kroki, zanim ruszysz dalej.",
+    "stepsPl": [
+      "Zatrzymaj sie i zastosuj zasade STOP: Stop, Think, Observe, Plan.",
+      "Sprawdz niezbedne rzeczy: wode, kurtke, baterie, gwizdek i telefon.",
+      "Oznacz obecna lokalizacje tasma lub dobrze widocznym znakiem.",
+      "Jesli zbliza sie zmrok, najpierw znajdz bezpieczne schronienie zamiast isc dalej.",
+      "Nadawaj sygnal alarmowy w sekwencjach po trzy (gwizdek lub swiatlo)."
+    ],
+    "categoryPl": "Przetrwanie w naturze",
+    "subCategoryPl": "Las i gory",
+    "difficultyPl": "Sredni",
+    "tagsPl": [
+      "las",
+      "nawigacja",
+      "awaryjne"
     ]
   },
   {
@@ -358,6 +409,24 @@
       "organized",
       "travel"
     ]
+    ,
+    "titlePl": "Złóż koszulkę szybko i bez zagnieceń",
+    "summaryPl": "Składaj wzdłuż linii ramion i tułowia, aby koszulki były gładsze i gotowe do walizki.",
+    "stepsPl": [
+      "Rozłóż koszulkę na płaskiej powierzchni i wygładź ją.",
+      "Złóż oba rękawy do środka wzdłuż linii ramion.",
+      "Złóż na pół od dołu do góry, wyrównując krawędzie.",
+      "W podróży delikatnie zwiń zamiast zgniatać, aby zmniejszyć zagniecenia.",
+      "Pakuj cięższe rzeczy na dole, a lżejsze koszulki na górze, aby uniknąć zagnieceń."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Organizacja",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "składanie ubrań",
+      "organizacja",
+      "podróż"
+    ]
   },
   {
     "id": "fold-pants-travel",
@@ -398,6 +467,24 @@
       "travel",
       "suitcase"
     ]
+    ,
+    "titlePl": "Złóż spodnie na podróż bez zagnieceń",
+    "summaryPl": "Zachowaj linie zgięć i zwiń lekko, aby zaoszczędzić miejsce.",
+    "stepsPl": [
+      "Ułóż spodnie wzdłuż, wyrównaj obie nogawki.",
+      "Złóż krok do środka, aby uzyskać zwarty kształt.",
+      "Złóż od dołu do kolan, a następnie do pasa.",
+      "Zwiń luźno, jeśli trzeba zaoszczędzić miejsce, unikaj zbyt mocnego zwijania.",
+      "Po przyjeździe wyjmij z walizki i powieś jak najszybciej."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Organizacja",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "składanie ubrań",
+      "podróż",
+      "walizka"
+    ]
   },
   {
     "id": "unlock-door-safe",
@@ -437,6 +524,24 @@
       "door lock",
       "family",
       "safety"
+    ]
+    ,
+    "titlePl": "Otwórz drzwi bez klucza w bezpieczny sposób",
+    "summaryPl": "Wybieraj legalne metody i minimalizuj uszkodzenia mienia.",
+    "stepsPl": [
+      "Potwierdź prawo do wejścia do domu/pokoju.",
+      "Najpierw skontaktuj się z rodziną, która może mieć zapasowy klucz.",
+      "Unikaj siłowego otwierania zamków antywłamaniowych – to ryzykowne i kosztowne.",
+      "Wezwij zaufanego ślusarza i poproś o jasną wycenę przed pracą.",
+      "Po otwarciu dorób zapasowy klucz i przechowuj go w bezpiecznym miejscu."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Dom",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "zamek drzwi",
+      "rodzina",
+      "bezpieczeństwo"
     ]
   },
   {
@@ -988,6 +1093,22 @@
       "food",
       "storage"
     ]
+    ,
+    "titlePl": "Ożyw cytryny wysuszone na zewnątrz",
+    "summaryPl": "Namocz wysuszone cytryny w wodzie, aby przywrócić im soczystość.",
+    "stepsPl": [
+      "Włóż cytrynę do miski z czystą wodą.",
+      "Mocz przez około 2 godziny.",
+      "Wyjmij, osusz i używaj jak zwykle."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Żywność",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "cytryna",
+      "żywność",
+      "przechowywanie"
+    ]
   },
   {
     "id": "lifehack-23-store-avocado-with-onion",
@@ -1024,6 +1145,22 @@
       "refrigerator",
       "storage"
     ]
+    ,
+    "titlePl": "Przechowuj awokado w lodówce",
+    "summaryPl": "Aby awokado nie ciemniało zbyt szybko, przechowuj je z cebulą.",
+    "stepsPl": [
+      "Włóż połówkę niewykorzystanego awokado do szczelnego pojemnika.",
+      "Dodaj kawałek cebuli do pojemnika.",
+      "Przechowuj w lodówce i spożyj wkrótce."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Żywność",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "awokado",
+      "lodówka",
+      "przechowywanie"
+    ]
   },
   {
     "id": "lifehack-24-deodorize-shoes-teabag",
@@ -1059,6 +1196,22 @@
       "shoes",
       "deodorize",
       "tea bag"
+    ]
+    ,
+    "titlePl": "Przechowuj buty bez nieprzyjemnego zapachu",
+    "summaryPl": "Użyj suchych torebek herbaty, aby pochłonąć wilgoć i zredukować zapach w butach.",
+    "stepsPl": [
+      "Włóż suchą torebkę herbaty do każdego buta na noc.",
+      "Jeśli buty są wilgotne, dodaj ryż i sodę oczyszczoną.",
+      "Pozostaw na 1-2 dni, następnie wyrzuć mieszankę."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Obuwie",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "buty",
+      "odświeżanie",
+      "herbata"
     ]
   },
   {
@@ -1312,6 +1465,22 @@
       "cleaning",
       "sugar"
     ]
+    ,
+    "titlePl": "Usuń rozlany lakier do paznokci z podłogi",
+    "summaryPl": "Posyp świeżą plamę lakieru cukrem, aby łatwiej ją zebrać i zamieść.",
+    "stepsPl": [
+      "Posyp warstwę cukru na świeżą plamę.",
+      "Odczekaj kilka minut, aż cukier wchłonie i zwiąże lakier.",
+      "Zamieć i przetrzyj podłogę do czysta."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Sprzątanie",
+    "difficultyPl": "Podstawowy",
+    "tagsPl": [
+      "lakier do paznokci",
+      "sprzątanie",
+      "cukier"
+    ]
   },
   {
     "id": "lifehack-32-open-vacuum-sealed-jar",
@@ -1348,6 +1517,22 @@
       "vacuum",
       "kitchen"
     ]
+    ,
+    "titlePl": "Otwórz słoik z próżniowym zamknięciem",
+    "summaryPl": "Delikatnie przerwij uszczelkę próżniową na brzegu pokrywki, aby łatwiej otworzyć słoik.",
+    "stepsPl": [
+      "Użyj noża, aby delikatnie podważyć brzeg pokrywki.",
+      "Lekko przekręć, aby przerwać uszczelkę próżniową.",
+      "Otwórz pokrywkę umiarkowaną siłą."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Kuchnia",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "pokrywka słoika",
+      "próżnia",
+      "kuchnia"
+    ]
   },
   {
     "id": "lifehack-33-clean-greasy-pot-lid",
@@ -1383,6 +1568,22 @@
       "pot lid",
       "grease",
       "cleaning"
+    ]
+    ,
+    "titlePl": "Umyj tłustą pokrywkę garnka",
+    "summaryPl": "Użyj pary i płynu do naczyń, aby rozpuścić i usunąć tłuszcz z pokrywki garnka.",
+    "stepsPl": [
+      "Natrzyj płynem do naczyń obie strony pokrywki.",
+      "Połóż pokrywkę na garnku z wrzącą wodą na 1-2 minuty, aby para zmiękczyła tłuszcz.",
+      "Odwróć i powtórz krótko, następnie dokładnie umyj."
+    ],
+    "categoryPl": "Życiowe triki",
+    "subCategoryPl": "Sprzątanie",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "pokrywka garnka",
+      "tłuszcz",
+      "sprzątanie"
     ]
   },
   {
@@ -1636,6 +1837,22 @@
       "first aid",
       "emergency care"
     ]
+    ,
+    "titlePl": "Głębokie skaleczenie – co robić?",
+    "summaryPl": "Przy głębokich ranach nie usuwaj ciał obcych; zatamuj krwawienie i natychmiast wezwij pomoc.",
+    "stepsPl": [
+      "Nie wyciągaj ciał obcych ani nie manipuluj głęboko w ranie.",
+      "Użyj czystej gazy do ucisku i utrzymaj kończynę w odpowiedniej pozycji.",
+      "Jak najszybciej udaj się do szpitala lub wezwij pogotowie."
+    ],
+    "categoryPl": "Podstawowa opieka medyczna",
+    "subCategoryPl": "Pierwsza pomoc",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "głębokie skaleczenie",
+      "pierwsza pomoc",
+      "nagła pomoc"
+    ]
   },
   {
     "id": "lifehack-41-break-car-window-emergency",
@@ -1672,6 +1889,22 @@
       "escape",
       "car window"
     ]
+    ,
+    "titlePl": "Wybicie szyby samochodu w nagłym wypadku",
+    "summaryPl": "Aby wydostać się z pojazdu, uderz w krawędź szyby ostrym narzędziem – to skuteczniejsze.",
+    "stepsPl": [
+      "Użyj ostrego przedmiotu, np. śrubokręta lub metalowego długopisu.",
+      "Celuj w krawędź szyby, nie w środek.",
+      "Uderzaj mocno kilka razy w jedno miejsce, aż szyba pęknie i wydostań się."
+    ],
+    "categoryPl": "Nagłe wypadki miejskie",
+    "subCategoryPl": "Samochód",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "samochód",
+      "ewakuacja",
+      "szyba samochodowa"
+    ]
   },
   {
     "id": "lifehack-42-encounter-bear",
@@ -1707,6 +1940,22 @@
       "bear",
       "wildlife",
       "escape"
+    ]
+    ,
+    "titlePl": "Spotkanie z niedźwiedziem – jak się zachować?",
+    "summaryPl": "Zachowaj spokój, nie prowokuj i wycofuj się powoli, by zmniejszyć ryzyko ataku.",
+    "stepsPl": [
+      "Stań w miejscu, nie uciekaj i unikaj groźnych gestów.",
+      "Wycofuj się powoli, obserwując niedźwiedzia i szukając dużych przeszkód.",
+      "Jeśli niedźwiedź nie atakuje, daj mu przestrzeń do odejścia."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Dzikie zwierzęta",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "niedźwiedź",
+      "dzikie zwierzęta",
+      "ucieczka"
     ]
   },
   {
@@ -1960,6 +2209,22 @@
       "open field",
       "safety"
     ]
+    ,
+    "titlePl": "Jak uniknąć porażenia piorunem na otwartym polu",
+    "summaryPl": "Obniż sylwetkę, unikaj wysokich obiektów i rozprosz grupę, by zmniejszyć ryzyko porażenia.",
+    "stepsPl": [
+      "Kucnij nisko, skul się i zakryj uszy.",
+      "Trzymaj się z dala od wysokich drzew, metalowych słupów i wzniesień.",
+      "Jeśli jesteś w grupie, rozproszcie się na czas burzy."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Burza",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "piorun",
+      "otwarte pole",
+      "bezpieczeństwo"
+    ]
   },
   {
     "id": "lifehack-50-sea-whirlpool",
@@ -1996,6 +2261,22 @@
       "sea",
       "escape"
     ]
+    ,
+    "titlePl": "Co robić, gdy widzisz wir morski?",
+    "summaryPl": "Przemieszczaj się w bok, by opuścić strefę wiru – nie próbuj płynąć pod prąd.",
+    "stepsPl": [
+      "Zachowaj spokój i określ kierunek prądu.",
+      "Płyń lub wiosłuj w bok, by wydostać się z wiru.",
+      "Jeśli zostaniesz wciągnięty, poczekaj na słabszy prąd przy dnie, a potem wydostań się na zewnątrz."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Morze",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "wir",
+      "morze",
+      "ucieczka"
+    ]
   },
   {
     "id": "lifehack-51-buried-alive",
@@ -2031,6 +2312,22 @@
       "buried",
       "oxygen",
       "escape"
+    ]
+    ,
+    "titlePl": "Co robić, gdy zostaniesz przysypany żywcem",
+    "summaryPl": "Zachowaj drożność dróg oddechowych i oszczędzaj tlen – to klucz do przeżycia.",
+    "stepsPl": [
+      "Zakryj nos i usta tkaniną, by ograniczyć wdychanie pyłu.",
+      "Zachowaj spokój, oddychaj wolno, by oszczędzać tlen.",
+      "Stwórz małą kieszeń powietrzną przed twarzą i sygnalizuj, jeśli to możliwe."
+    ],
+    "categoryPl": "Nagłe wypadki miejskie",
+    "subCategoryPl": "Zawalenie",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "przysypanie",
+      "tlen",
+      "ucieczka"
     ]
   },
   {
@@ -2248,6 +2545,22 @@
       "escape",
       "emergency"
     ]
+    ,
+    "titlePl": "Zamknięty w bagażniku samochodu",
+    "summaryPl": "Najpierw spróbuj użyć mechanizmu awaryjnego i dawaj sygnały, by zostać zauważonym.",
+    "stepsPl": [
+      "Poszukaj dźwigni awaryjnego otwarcia w bagażniku.",
+      "Jeśli jej nie ma, spróbuj podważyć zamek od środka.",
+      "Wytwarzaj sygnały świetlne/dźwiękowe, by zwrócić uwagę na zewnątrz."
+    ],
+    "categoryPl": "Nagłe wypadki miejskie",
+    "subCategoryPl": "Samochód",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "bagażnik samochodu",
+      "ucieczka",
+      "nagły wypadek"
+    ]
   },
   {
     "id": "lifehack-58-pants-life-float",
@@ -2284,6 +2597,22 @@
       "water",
       "survival"
     ]
+    ,
+    "titlePl": "Jak zrobić awaryjną bojkę z długich spodni",
+    "summaryPl": "Wykorzystaj długie spodnie, by zatrzymać powietrze i utrzymać się na wodzie, gdy nie możesz dopłynąć do brzegu.",
+    "stepsPl": [
+      "Zdejmij spodnie i mocno zawiąż nogawki.",
+      "Zamachnij spodniami, by złapać powietrze, a następnie załóż je na szyję.",
+      "Uzupełniaj powietrze w razie potrzeby i płyn do bezpiecznego miejsca."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Woda",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "bojka awaryjna",
+      "woda",
+      "przetrwanie"
+    ]
   },
   {
     "id": "lifehack-59-break-door-emergency",
@@ -2319,6 +2648,22 @@
       "break door",
       "fire",
       "escape"
+    ]
+    ,
+    "titlePl": "Jak wyważyć drzwi w sytuacji awaryjnej",
+    "summaryPl": "Kopnięcie w okolicę zamka jest zwykle skuteczniejsze niż w środek skrzydła drzwi.",
+    "stepsPl": [
+      "Zlokalizuj słaby punkt przy zamku.",
+      "Użyj pięty i kopnij zdecydowanie.",
+      "Otwórz drogę ucieczki i natychmiast opuść niebezpieczną strefę."
+    ],
+    "categoryPl": "Nagłe wypadki miejskie",
+    "subCategoryPl": "Ewakuacja",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "wyważanie drzwi",
+      "pożar",
+      "ucieczka"
     ]
   },
   {
@@ -2572,6 +2917,22 @@
       "wildlife",
       "safety"
     ]
+    ,
+    "titlePl": "Spotkanie z gorylem – jak się zachować?",
+    "summaryPl": "Zachowaj spokój, obniż sylwetkę i unikaj gwałtownych ruchów, by nie prowokować zwierzęcia.",
+    "stepsPl": [
+      "Zachowaj spokój, nie uciekaj ani nie krzycz nagle.",
+      "Obniż sylwetkę, przyjmij mniej groźną postawę.",
+      "Wycofuj się powoli, obserwując reakcję zwierzęcia."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Dzikie zwierzęta",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "goryl",
+      "dzikie zwierzęta",
+      "bezpieczeństwo"
+    ]
   },
   {
     "id": "lifehack-67-bull-encounter",
@@ -2607,6 +2968,22 @@
       "bull",
       "encounter",
       "safety"
+    ]
+    ,
+    "titlePl": "Spotkanie z bykiem – co robić?",
+    "summaryPl": "Zachowaj spokój, nie odwracaj się plecami i nie prowokuj zachowań pościgowych.",
+    "stepsPl": [
+      "Stań pewnie, unikaj nagłego biegu.",
+      "Nie patrz bykowi prosto w oczy.",
+      "Wycofuj się powoli, stale zachowując bezpieczny dystans."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Dzikie zwierzęta",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "byk",
+      "spotkanie",
+      "bezpieczeństwo"
     ]
   },
   {
@@ -2644,6 +3021,22 @@
       "wildlife",
       "escape"
     ]
+    ,
+    "titlePl": "Spotkanie ze słoniem – jak uniknąć ataku?",
+    "summaryPl": "Wykorzystaj duże przeszkody, wycofuj się powoli i nie prowokuj, by zmniejszyć ryzyko ataku.",
+    "stepsPl": [
+      "Znajdź przeszkodę między sobą a słoniem (duże drzewo, głaz).",
+      "Wycofuj się powoli, nie uciekaj, jeśli nie musisz.",
+      "W razie potrzeby wydaj głośny dźwięk, by odstraszyć i znaleźć drogę ucieczki."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Dzikie zwierzęta",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "słoń",
+      "dzikie zwierzęta",
+      "ucieczka"
+    ]
   },
   {
     "id": "lifehack-69-avoid-bees",
@@ -2679,6 +3072,22 @@
       "bees",
       "insects",
       "safety"
+    ]
+    ,
+    "titlePl": "Jak unikać ataku pszczół",
+    "summaryPl": "Noś jasne ubrania i nie prowokuj roju, aby zmniejszyć ryzyko ataku pszczół.",
+    "stepsPl": [
+      "W miejscach z pszczołami wybieraj jasne ubrania.",
+      "Unikaj gwałtownego machania rękami lub uderzania w pszczoły.",
+      "Powoli oddal się w bezpieczne miejsce."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Owady",
+    "difficultyPl": "Średni",
+    "tagsPl": [
+      "pszczoły",
+      "owady",
+      "bezpieczeństwo"
     ]
   },
   {
@@ -2716,6 +3125,22 @@
       "wildlife",
       "safety"
     ]
+    ,
+    "titlePl": "Spotkanie z hipopotamem – jak się zachować?",
+    "summaryPl": "Nie blokuj drogi hipopotamowi do wody i nie prowokuj go – są bardzo szybkie i agresywne.",
+    "stepsPl": [
+      "Zachowaj duży dystans, nigdy nie stawaj między hipopotamem a wodą.",
+      "Nie drażnij ani nie podchodź zbyt blisko.",
+      "W razie zagrożenia znajdź wyższy teren lub solidną przeszkodę."
+    ],
+    "categoryPl": "Przetrwanie w dziczy",
+    "subCategoryPl": "Dzikie zwierzęta",
+    "difficultyPl": "Zaawansowany",
+    "tagsPl": [
+      "hipopotam",
+      "dzikie zwierzęta",
+      "bezpieczeństwo"
+    ]
   },
    {
     "id": "life-motorbike-maintenance",
@@ -2736,6 +3161,21 @@
     "estimatedMinutes": 60,
     "isEmergency": false,
     "imageAsset": "assets/data_img/tips_img/baoduong_xemay.jpg"
+      ,
+      "titlePl": "Jak prawidłowo serwisować motocykl, by wydłużyć jego żywotność",
+      "summaryPl": "Regularny serwis zapewnia stabilną pracę motocykla, oszczędność paliwa i ogranicza drobne awarie.",
+      "stepsPl": [
+        "Wymieniaj olej silnikowy co 1 500–2 000 km (motocykl manualny) lub 1 000–1 500 km (skuter). Używaj oleju zalecanego przez producenta.",
+        "Czyść lub wymieniaj filtr powietrza co 6 000–8 000 km. Jeśli jeździsz po zakurzonych drogach, sprawdzaj częściej.",
+        "Sprawdzaj i smaruj łańcuch co 500–700 km, reguluj jego napięcie zgodnie z normą.",
+        "Sprawdzaj ciśnienie w oponach raz w miesiącu, pompuj zgodnie z danymi na oponie.",
+        "Kontroluj hamulce, wymieniaj klocki, gdy są zużyte lub słychać nietypowe dźwięki.",
+        "Serwis ogólny (świece, płyn chłodniczy, pasek napędowy…) co 10 000–12 000 km lub według zaleceń producenta."
+      ],
+      "categoryPl": "Życie codzienne",
+      "subCategoryPl": "Pojazdy osobiste",
+      "difficultyPl": "Podstawowy",
+      "tagsPl": ["serwis", "motocykl", "bezpieczeństwo"]
   },
   {
     "id": "life-car-maintenance",
@@ -2758,6 +3198,23 @@
     "estimatedMinutes": 120,
     "isEmergency": false,
     "imageAsset": "assets/data_img/tips_img/baoduong_oto.jpg"
+      ,
+      "titlePl": "Szczegółowy serwis samochodu według typu pojazdu",
+      "summaryPl": "Regularny serwis samochodu zapewnia bezpieczną jazdę i ogranicza koszty poważnych napraw.",
+      "stepsPl": [
+        "Wymieniaj olej silnikowy co 5 000–7 000 km (benzyna) lub 7 000–10 000 km (diesel). Używaj oleju odpowiedniego dla typu pojazdu (sedan, SUV, pickup…).",
+        "Wymieniaj filtr oleju razem z olejem.",
+        "Wymieniaj filtr powietrza co 15 000–20 000 km lub częściej, jeśli jeździsz po zakurzonych drogach.",
+        "Sprawdzaj i wymieniaj filtr kabinowy co 10 000–15 000 km, by zapewnić czyste powietrze w aucie.",
+        "Kontroluj płyn chłodniczy, uzupełniaj lub wymieniaj co 40 000 km.",
+        "Sprawdzaj klocki hamulcowe, wymieniaj, gdy mają mniej niż 2 mm lub słychać nietypowe dźwięki.",
+        "Serwisuj automatyczną skrzynię biegów co 40 000–60 000 km (zgodnie z typem pojazdu i zaleceniami producenta).",
+        "Sprawdzaj opony, rotuj co 10 000 km, wymieniaj, gdy są zużyte lub popękane."
+      ],
+      "categoryPl": "Życie codzienne",
+      "subCategoryPl": "Pojazdy osobiste",
+      "difficultyPl": "Średni",
+      "tagsPl": ["serwis", "samochód", "bezpieczeństwo"]
   },
   {
     "id": "life-remove-rusty-screw",
@@ -2777,6 +3234,20 @@
     "estimatedMinutes": 15,
     "isEmergency": false,
     "imageAsset": "assets/data_img/tips_img/thaooc_hangi.jpg"
+      ,
+      "titlePl": "Jak odkręcić zardzewiałą śrubę bez śrubokręta",
+      "summaryPl": "Stare, zardzewiałe śruby można łatwo odkręcić, stosując odpowiednie metody.",
+      "stepsPl": [
+        "Nanieś olej penetrujący (lub spożywczy) na śrubę, odczekaj 5–10 minut, aż wniknie w szczeliny.",
+        "Użyj szczypiec do mocnego uchwycenia śruby i delikatnie ją poluzuj.",
+        "Jeśli nadal trudno odkręcić, lekko opukaj śrubę młotkiem, by rozbić rdzę.",
+        "Możesz użyć coli lub octu, by dodatkowo zmiękczyć rdzę.",
+        "Po odkręceniu oczyść śrubę i posmaruj cienką warstwą oleju, by zapobiec korozji."
+      ],
+      "categoryPl": "Życie codzienne",
+      "subCategoryPl": "Naprawy domowe",
+      "difficultyPl": "Podstawowy",
+      "tagsPl": ["naprawa", "śruba", "rdza"]
   },
   {
     "id": "life-shoelace-style",
@@ -2795,5 +3266,18 @@
     "estimatedMinutes": 8,
     "isEmergency": false,
     "imageAsset": "assets/data_img/tips_img/xodaygiay_dep.jpg"
+      ,
+      "titlePl": "Jak wiązać sznurowadła estetycznie i pewnie, by się nie rozwiązywały",
+      "summaryPl": "Prawidłowe wiązanie sznurowadeł zapewnia wygodę, estetykę i zapobiega ich rozwiązywaniu podczas ruchu.",
+      "stepsPl": [
+        "Wybierz odpowiedni sposób wiązania: klasyczny zygzak do butów sportowych, prosty do eleganckich lub sneakersów.",
+        "Zacznij od najniższych oczek, przeciągaj równo po obu stronach, unikaj skręcania sznurówek.",
+        "Po zawiązaniu wykonaj podwójny węzeł, by sznurowadła nie rozwiązywały się podczas ruchu.",
+        "Dobierz długość i kolor sznurówek do butów i stroju."
+      ],
+      "categoryPl": "Życie codzienne",
+      "subCategoryPl": "Ubrania",
+      "difficultyPl": "Podstawowy",
+      "tagsPl": ["buty", "wiązanie", "moda"]
   }
 ]
