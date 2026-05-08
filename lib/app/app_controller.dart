@@ -158,8 +158,16 @@ class AppController extends ChangeNotifier {
     }
   }
 
-  Future<void> grantAdFreeForOneHour() async {
-    _adFreeUntil = DateTime.now().add(const Duration(hours: 1));
+  Future<void> grantAdFree(Duration duration) async {
+    final now = DateTime.now();
+    // Nếu đang trong thời gian tắt quảng cáo, cộng dồn thêm. 
+    // Nếu đã hết, bắt đầu tính từ bây giờ.
+    if (areAdsTemporarilyDisabled && _adFreeUntil != null) {
+      _adFreeUntil = _adFreeUntil!.add(duration);
+    } else {
+      _adFreeUntil = now.add(duration);
+    }
+    
     _scheduleAdFreeExpiryTimer();
     notifyListeners();
     if (_prefs != null) {
@@ -168,6 +176,10 @@ class AppController extends ChangeNotifier {
         _adFreeUntil!.millisecondsSinceEpoch,
       );
     }
+  }
+
+  Future<void> grantAdFreeForOneHour() async {
+    await grantAdFree(const Duration(hours: 1));
   }
 
   void _scheduleAdFreeExpiryTimer() {

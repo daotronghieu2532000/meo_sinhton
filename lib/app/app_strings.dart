@@ -3,6 +3,7 @@ import 'package:meo_sinhton/app/app_controller.dart';
 
 class AppStrings {
   static String appName() => 'LifeSpark: Survival & Tools';
+  static const String appVersion = '1.0.1+17';
 
   static String tabHome(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Trang chủ', en: 'Home');

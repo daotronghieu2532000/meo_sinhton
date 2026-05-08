@@ -12,8 +12,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'dart:async';
 
-const _isFlutterTest = bool.fromEnvironment('FLUTTER_TEST');
-
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, required this.appController});
 
@@ -27,8 +25,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _isLoadingRewardedAd = false;
   RewardedAd? _rewardedAd;
   int _adLoadAttempts = 0;
-
   bool _isUsingTestId = false;
+
+  final String _appStoreUrl = 'https://apps.apple.com/vn/app/lifespark-survival-tools/id6763969565?l=vi';
 
   @override
   void initState() {
@@ -53,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _loadRewardedAd({bool useTestId = false}) {
     final adUnitId = useTestId 
-        ? 'ca-app-pub-3940256099942544/1712485313' // Google Test ID
+        ? 'ca-app-pub-3940256099942544/1712485313' 
         : AdmobConfig.rewardedAdUnitId;
 
     _isUsingTestId = useTestId;
@@ -71,17 +70,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _rewardedAd = ad;
             _adLoadAttempts = 0;
           });
-          debugPrint('Rewarded Ad Loaded: ${useTestId ? "TEST" : "PROD"}');
         },
         onAdFailedToLoad: (error) {
-          debugPrint('Ad failed to load: $error');
           if (!mounted) return;
           setState(() {
             _rewardedAd = null;
             _adLoadAttempts++;
           });
-          
-          // Nếu mã thật lỗi, thử dùng mã test sau 2 lần thất bại
           if (_adLoadAttempts >= 2 && !useTestId) {
              _loadRewardedAd(useTestId: true);
           } else if (_adLoadAttempts < 5) {
@@ -100,47 +95,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   String _tr({required String vi, required String en, required String pl}) {
     switch (widget.appController.language) {
-      case AppLanguage.english:
-        return en;
-      case AppLanguage.polish:
-        return pl;
-      case AppLanguage.vietnamese:
-        return vi;
+      case AppLanguage.english: return en;
+      case AppLanguage.polish: return pl;
+      case AppLanguage.vietnamese: return vi;
     }
-  }
-
-  Widget _tileIcon({
-    required IconData icon,
-    required Color background,
-    required Color foreground,
-  }) {
-    return Container(
-      width: 30,
-      height: 30,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      alignment: Alignment.center,
-      child: Icon(icon, size: 16, color: foreground),
-    );
-  }
-
-  Widget _tileCard({required Widget child}) {
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: child,
-    );
   }
 
   bool get _adsSupported {
-    if (kIsWeb || _isFlutterTest) {
-      return false;
-    }
-    return defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS;
+    if (kIsWeb || (const bool.fromEnvironment('FLUTTER_TEST'))) return false;
+    return defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS;
   }
 
   Future<bool> _showRewardedAd() async {
@@ -148,20 +111,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (connectivityResult.contains(ConnectivityResult.none)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_tr(
-              vi: 'Không có kết nối Internet. Vui lòng kiểm tra lại mạng.',
-              en: 'No internet connection. Please check your network.',
-              pl: 'Brak połączenia z Internetem. Sprawdź swoją sieć.',
-            )),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text(_tr(
+            vi: 'Không có kết nối Internet.',
+            en: 'No internet connection.',
+            pl: 'Brak połączenia z Internetem.',
+          )), backgroundColor: Colors.red),
         );
       }
       return false;
     }
 
-    // Nếu chưa có ad, ép tải lại ngay và chờ tối đa 10s
     if (_rewardedAd == null) {
       _loadRewardedAd(useTestId: _adLoadAttempts >= 2);
       int waitCount = 0;
@@ -174,13 +133,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (_rewardedAd == null || !mounted) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_tr(
-              vi: 'Đang chuẩn bị quảng cáo, vui lòng đợi trong giây lát...',
-              en: 'Preparing ad, please wait a moment...',
-              pl: 'Przygotowywanie reklamy, proszę czờać chwilę...',
-            )),
-          ),
+          SnackBar(content: Text(_tr(
+            vi: 'Đang chuẩn bị quảng cáo, vui lòng đợi...',
+            en: 'Preparing ad, please wait...',
+            pl: 'Przygotowywanie reklamy...',
+          ))),
         );
       }
       return false;
@@ -194,173 +151,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ad.dispose();
         _rewardedAd = null;
         _loadRewardedAd();
-        if (!completer.isCompleted) {
-          completer.complete(earnedReward);
-        }
+        if (!completer.isCompleted) completer.complete(earnedReward);
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         ad.dispose();
         _rewardedAd = null;
         _loadRewardedAd();
-        if (!completer.isCompleted) {
-          completer.complete(false);
-        }
+        if (!completer.isCompleted) completer.complete(false);
       },
     );
 
-    await _rewardedAd!.show(
-      onUserEarnedReward: (_, __) {
-        earnedReward = true;
-      },
-    );
-
+    await _rewardedAd!.show(onUserEarnedReward: (_, __) => earnedReward = true);
     return completer.future;
   }
 
-  Future<void> _handleRewardAction() async {
-    final isEnglish = widget.appController.isEnglish;
-    final isPolish = widget.appController.isPolish;
-
-    if (!_adsSupported) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            isPolish
-                ? 'AdMob nie jest obslugiwany na tym urzadzeniu.'
-                : AppStrings.adsNotSupported(isEnglish),
-          ),
-        ),
-      );
-      return;
-    }
-
-    if (widget.appController.areAdsTemporarilyDisabled) {
-      return;
-    }
-
-    if (_isLoadingRewardedAd) {
-      return;
-    }
+  Future<void> _handleRewardAction(Duration duration) async {
+    if (!_adsSupported) return;
+    if (widget.appController.areAdsTemporarilyDisabled) return;
+    if (_isLoadingRewardedAd) return;
 
     setState(() => _isLoadingRewardedAd = true);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          isPolish
-              ? 'Ladowanie reklamy z nagroda...'
-              : AppStrings.loadingRewardAd(isEnglish),
-        ),
-      ),
-    );
-
     final earned = await _showRewardedAd();
-
-    if (!mounted) {
-      return;
-    }
-
+    if (!mounted) return;
     setState(() => _isLoadingRewardedAd = false);
 
     if (earned) {
-      await widget.appController.grantAdFreeForOneHour();
-      if (!mounted) {
-        return;
-      }
+      await widget.appController.grantAdFree(duration);
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            isPolish
-                ? 'Reklamy sa wylaczone na 1 godzine.'
-                : AppStrings.rewardGranted(isEnglish),
-          ),
-        ),
+        SnackBar(content: Text(_tr(
+          vi: 'Đã tắt quảng cáo trong ${duration.inMinutes} phút.',
+          en: 'Ads disabled for ${duration.inMinutes} minutes.',
+          pl: 'Reklamy wyłączone na ${duration.inMinutes} minut.',
+        ))),
       );
     }
   }
 
-  Future<void> _openContactEmail() async {
-    final isEnglish = widget.appController.isEnglish;
-    final isPolish = widget.appController.isPolish;
-    final emailUri = Uri(
-      scheme: 'mailto',
-      path: 'trongh138@gmail.com',
-      queryParameters: {
-        'subject': isPolish
-            ? 'Opinie o aplikacji Meo Sinh Ton'
-            : isEnglish
-            ? 'Feedback for Meo Sinh Ton'
-            : 'Góp ý cho ứng dụng Mẹo Sinh Tồn',
-      },
-    );
-
-    try {
-      final canOpen = await canLaunchUrl(emailUri);
-      if (!canOpen) {
-        if (!mounted) {
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isEnglish
-                  ? 'No email app found on this device.'
-                  : isPolish
-                  ? 'Na tym urzadzeniu nie znaleziono aplikacji e-mail.'
-                  : 'Thiết bị này chưa có ứng dụng email.',
-            ),
-          ),
-        );
-        return;
-      }
-
-      final launched = await launchUrl(
-        emailUri,
-        mode: LaunchMode.externalApplication,
-      );
-      if (!launched && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isEnglish
-                  ? 'Could not open email app on this device.'
-                  : isPolish
-                  ? 'Nie mozna otworzyc aplikacji e-mail na tym urzadzeniu.'
-                  : 'Không mở được ứng dụng email trên thiết bị này.',
-            ),
-          ),
-        );
-      }
-    } on PlatformException {
-      if (!mounted) {
-        return;
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            isEnglish
-                ? 'Email feature is not ready yet. Please restart the app and try again.'
-                : isPolish
-                ? 'Funkcja e-mail nie jest jeszcze gotowa. Uruchom ponownie aplikacje i sprobuj ponownie.'
-                : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
-          ),
-        ),
-      );
-    } on MissingPluginException {
-      if (!mounted) {
-        return;
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            isEnglish
-                ? 'Email feature is not ready yet. Please restart the app and try again.'
-                : isPolish
-                ? 'Funkcja e-mail nie jest jeszcze gotowa. Uruchom ponownie aplikacje i sprobuj ponownie.'
-                : 'Tính năng email chưa sẵn sàng. Hãy khởi động lại app rồi thử lại.',
-          ),
-        ),
-      );
+  Future<void> _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
   }
 
@@ -369,518 +200,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return AnimatedBuilder(
       animation: widget.appController,
       builder: (context, _) {
-        final isEnglish = widget.appController.isEnglish;
-        final isPolish = widget.appController.isPolish;
-        final adRemaining = widget.appController.adFreeRemaining;
+        final isDark = widget.appController.themeMode == ThemeMode.dark;
         final scheme = Theme.of(context).colorScheme;
-        final adSubtitle = widget.appController.areAdsTemporarilyDisabled
-            ? isPolish
-                  ? 'Reklamy wylaczone jeszcze przez ${adRemaining?.inHours ?? 0} godz. ${(adRemaining?.inMinutes.remainder(60)) ?? 0} min'
-                  : AppStrings.adsDisabledRemaining(
-                      isEnglish,
-                      adRemaining ?? Duration.zero,
-                    )
-            : _tr(
-                vi: 'Xem quảng cáo thưởng để tắt toàn bộ quảng cáo trong 1 giờ.',
-                en: 'Watch a rewarded ad to disable all ads for 1 hour.',
-                pl: 'Obejrzyj reklame z nagroda, aby wylaczyc wszystkie reklamy na 1 godzine.',
-              );
-
+        final adRemaining = widget.appController.adFreeRemaining;
+        
         return Scaffold(
+          backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF8F9FA),
           appBar: AppBar(
-            title: Text(_tr(vi: 'Cài đặt', en: 'Settings', pl: 'Ustawienia')),
+            elevation: 0,
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              _tr(vi: 'Cài đặt hệ thống', en: 'System Settings', pl: 'Ustawienia'),
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
+            ),
           ),
           body: ListView(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             children: [
-              const SizedBox(height: 12),
-              Card(
-                child: ListTile(
-                  onTap: _openContactEmail,
-                  leading: Icon(Icons.mail_outline, color: Colors.red.shade500),
-                  title: Text(
-                    _tr(
-                      vi: 'Phản hồi & Liên hệ',
-                      en: 'Feedback & Contact',
-                      pl: 'Opinie i kontakt',
-                    ),
-                  ),
-                  subtitle: RichText(
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        height: 1.35,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: isEnglish
-                              ? 'Your feedback and app rating are very important to me. Please contact me at Gmail: '
-                              : isPolish
-                              ? 'Twoja opinia i ocena aplikacji sa dla mnie bardzo wazne. Skontaktuj sie ze mna przez Gmail: '
-                              : 'Mọi ý kiến đóng góp và đánh giá app của bạn đều rất quan trọng với tôi. Hãy liên lạc qua Gmail: ',
-                        ),
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: GestureDetector(
-                            onTap: _openContactEmail,
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 2),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 3,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.red.shade50,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.red.shade200),
-                              ),
-                              child: Text(
-                                'trongh138@gmail.com',
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(
-                                      color: Colors.red.shade700,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        TextSpan(
-                          text: isEnglish
-                              ? '. Sincerely ❤️'
-                              : isPolish
-                              ? '. Z wyrazami szacunku ❤️'
-                              : '. Trân trọng ❤️',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  leading: _tileIcon(
-                    icon: Icons.translate_outlined,
-                    background: scheme.primaryContainer,
-                    foreground: scheme.onPrimaryContainer,
-                  ),
-                  title: Text(_tr(vi: 'Ngôn ngữ', en: 'Language', pl: 'Jezyk')),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Chọn ngôn ngữ hiển thị',
-                      en: 'Select display language',
-                      pl: 'Wybierz jezyk wyswietlania',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: SegmentedButton<AppLanguage>(
-                    style: ButtonStyle(
-                      visualDensity: VisualDensity.compact,
-                      padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                      ),
-                    ),
-                    showSelectedIcon: false,
-                    segments: const [
-                      ButtonSegment<AppLanguage>(
-                        value: AppLanguage.vietnamese,
-                        label: Text('🇻🇳 VI'),
-                      ),
-                      ButtonSegment<AppLanguage>(
-                        value: AppLanguage.english,
-                        label: Text('🇺🇸 EN'),
-                      ),
-                      ButtonSegment<AppLanguage>(
-                        value: AppLanguage.polish,
-                        label: Text('🇵🇱 PL'),
-                      ),
-                    ],
-                    selected: {widget.appController.language},
-                    onSelectionChanged: (selection) {
-                      final language = selection.first;
-                      widget.appController.setLanguage(language);
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: SwitchListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 2,
-                  ),
-                  secondary: _tileIcon(
-                    icon: widget.appController.themeMode == ThemeMode.dark
-                        ? Icons.dark_mode
-                        : Icons.light_mode,
-                    background: widget.appController.themeMode == ThemeMode.dark
-                        ? Colors.indigo.shade100
-                        : Colors.orange.shade100,
-                    foreground: widget.appController.themeMode == ThemeMode.dark
-                        ? Colors.indigo.shade700
-                        : Colors.orange.shade800,
-                  ),
-                  title: Text(
-                    widget.appController.themeMode == ThemeMode.dark
-                        ? _tr(
-                            vi: 'Giao diện tối',
-                            en: 'Dark Theme',
-                            pl: 'Motyw ciemny',
-                          )
-                        : _tr(
-                            vi: 'Giao diện sáng',
-                            en: 'Light Theme',
-                            pl: 'Motyw jasny',
-                          ),
-                  ),
-                  subtitle: Text(
-                    widget.appController.themeMode == ThemeMode.dark
-                        ? _tr(
-                            vi: 'Tối ưu cho môi trường thiếu sáng',
-                            en: 'Optimized for low light',
-                            pl: 'Zoptymalizowany do slabego oswietlenia',
-                          )
-                        : _tr(
-                            vi: 'Giao diện sáng sủa, rõ ràng',
-                            en: 'Clean and clear appearance',
-                            pl: 'Jasny i przejrzysty wyglad',
-                          ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  value: widget.appController.themeMode == ThemeMode.dark,
-                  onChanged: (value) => widget.appController.setDarkMode(value),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  leading: _tileIcon(
-                    icon: Icons.ondemand_video_outlined,
-                    background: scheme.tertiaryContainer,
-                    foreground: scheme.onTertiaryContainer,
-                  ),
-                  title: Text(_tr(vi: 'Quảng cáo', en: 'Ads', pl: 'Reklamy')),
-                  subtitle: Text(
-                    adSubtitle,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: widget.appController.areAdsTemporarilyDisabled
-                      ? null
-                      : ElevatedButton(
-                          onPressed: _isLoadingRewardedAd
-                              ? null
-                              : _handleRewardAction,
-                          child: Text(
-                            _tr(
-                              vi: 'Xem ngay',
-                              en: 'Watch now',
-                              pl: 'Obejrzyj teraz',
-                            ),
-                          ),
-                        ),
-                ),
-              ),
-              /* _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  leading: _tileIcon(
-                    icon: Icons.notifications_outlined,
-                    background: scheme.errorContainer,
-                    foreground: scheme.onErrorContainer,
-                  ),
-                  title: Text(AppStrings.notifications(isEnglish)),
-                  subtitle: Text(
-                    AppStrings.notificationsDesc(isEnglish),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6), */
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SavedTipsPage(
-                          appController: widget.appController,
-                          isEnglish: isEnglish,
-                        ),
-                      ),
-                    );
-                  },
-                  leading: _tileIcon(
-                    icon: Icons.bookmark_outline,
-                    background: Colors.orange.shade100,
-                    foreground: Colors.orange.shade700,
-                  ),
-                  title: Text(_tr(vi: 'Đã lưu', en: 'Saved', pl: 'Zapisane')),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Xem lại các mẹo sinh tồn bạn đã lưu',
-                      en: 'View your bookmarked survival tips',
-                      pl: 'Zobacz zapisane porady survivalowe',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => MyPostsPage(
-                          appController: widget.appController,
-                          isEnglish: isEnglish,
-                        ),
-                      ),
-                    );
-                  },
-                  leading: _tileIcon(
-                    icon: Icons.history_edu_outlined,
-                    background: Colors.blue.shade100,
-                    foreground: Colors.blue.shade700,
-                  ),
-                  title: Text(
-                    _tr(
-                      vi: 'Bài viết của bạn',
-                      en: 'My Shared Posts',
-                      pl: 'Twoje udostepnione posty',
-                    ),
-                  ),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Theo dõi trạng thái các bài đóng góp của bạn',
-                      en: 'Check status of your shared survival tips',
-                      pl: 'Sprawdz status udostepnionych porad survivalowych',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  _tr(vi: 'SAO LƯU ĐỊNH DANH', en: 'IDENTITY BACKUP', pl: 'KOPIA ZAPASOWA'),
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              const SizedBox(height: 4),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: widget.appController.userId));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(_tr(vi: 'Đã sao chép mã định danh', en: 'ID copied to clipboard', pl: 'ID skopiowane'))),
-                    );
-                  },
-                  leading: _tileIcon(
-                    icon: Icons.copy_rounded,
-                    background: Colors.indigo.shade100,
-                    foreground: Colors.indigo.shade700,
-                  ),
-                  title: Text(_tr(vi: 'Mã định danh của bạn', en: 'Your Identity Code', pl: 'Twój kod tożsamości')),
-                  subtitle: Text(
-                    widget.appController.userId,
-                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.content_copy, size: 18, color: Colors.grey),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  onTap: () => _showImportIdDialog(context),
-                  leading: _tileIcon(
-                    icon: Icons.restore_rounded,
-                    background: Colors.purple.shade100,
-                    foreground: Colors.purple.shade700,
-                  ),
-                  title: Text(_tr(vi: 'Nhập mã định danh cũ', en: 'Import Existing ID', pl: 'Importuj istniejące ID')),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Khôi phục bài đăng và lịch sử từ mã có sẵn',
-                      en: 'Restore posts and history from a code',
-                      pl: 'Przywróć posty i historię z kodu',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Divider(),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(_tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka prywatności')),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _tr(
-                                  vi: 'Chúng tôi cam kết bảo vệ dữ liệu của bạn. Ứng dụng thu thập ID thiết bị và vị trí để cung cấp dịch vụ tốt nhất. Chúng tôi không chia sẻ thông tin này cho mục đích quảng cáo từ bên thứ ba bên ngoài hệ thống của mình.',
-                                  en: 'We are committed to protecting your data. The app collects Device ID and Location to provide the best service. We do not share this information with third parties for external advertising purposes.',
-                                  pl: 'Dbamy o Twoje dane. Aplikacja zbiera ID urządzenia i lokalizację. Nie udostępniamy tych informacji osobom trzecim.',
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                _tr(
-                                  vi: 'Lưu ý: Thông tin trong ứng dụng chỉ mang tính chất tham khảo. Luôn liên hệ cơ quan chuyên môn trong tình huống khẩn cấp thực tế.',
-                                  en: 'Disclaimer: The information in this app is for reference only. Always contact professionals in real emergencies.',
-                                  pl: 'Zastrzeżenie: Informacje w tej aplikacji służą wyłącznie do celów informacyjnych. W sytuacjach awaryjnych zawsze kontaktuj się ze specjalistami.',
-                                ),
-                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: Text(_tr(vi: 'Đóng', en: 'Close', pl: 'Zamknij')),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  leading: _tileIcon(
-                    icon: Icons.privacy_tip_outlined,
-                    background: Colors.teal.shade100,
-                    foreground: Colors.teal.shade700,
-                  ),
-                  title: Text(_tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka prywatności')),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Xem cách chúng tôi bảo vệ quyền riêng tư của bạn',
-                      en: 'Learn how we protect your privacy',
-                      pl: 'Dowiedz się, jak chronimy Twoją prywatność',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                ),
-              ),
-              const SizedBox(height: 6),
-              _tileCard(
-                child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(_tr(vi: 'Xóa dữ liệu cá nhân?', en: 'Delete My Data?', pl: 'Usunąć moje dane?')),
-                        content: Text(_tr(
-                          vi: 'Hành động này sẽ xóa ID định danh, các bài viết đã lưu và lịch sử hoạt động của bạn trên thiết bị này. Bạn không thể hoàn tác.',
-                          en: 'This will delete your identity ID, saved posts, and activity history on this device. This action cannot be undone.',
-                          pl: 'To spowoduje usunięcie Twojego ID, zapisanych postów i historii aktywności na tym urządzeniu. Nie można tego cofnąć.',
-                        )),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              await widget.appController.deleteAccount();
-                              if (mounted) {
-                                Navigator.pop(ctx);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(_tr(vi: 'Đã xóa toàn bộ dữ liệu', en: 'All data deleted', pl: 'Wszystkie dane usunięte'))),
-                                );
-                              }
-                            },
-                            child: Text(_tr(vi: 'Xóa sạch', en: 'Clear All', pl: 'Usuń wszystko'), style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  leading: _tileIcon(
-                    icon: Icons.delete_outline,
-                    background: Colors.red.shade100,
-                    foreground: Colors.red.shade700,
-                  ),
-                  title: Text(_tr(vi: 'Xóa dữ liệu & Định danh', en: 'Delete Data & Identity', pl: 'Usuń dane i tożsamość')),
-                  subtitle: Text(
-                    _tr(
-                      vi: 'Gỡ bỏ toàn bộ dấu vết của bạn khỏi ứng dụng',
-                      en: 'Remove all your traces from the app',
-                      pl: 'Usuń wszystkie swoje ślady z aplikacji',
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                ),
-              ),
+              _buildAdSection(adRemaining, isDark),
+              const SizedBox(height: 16),
+              _buildActionRow(),
               const SizedBox(height: 24),
+              _buildSectionHeader(_tr(vi: 'CÁ NHÂN HÓA', en: 'PERSONALIZATION', pl: 'PERSONALIZACJA')),
+              _buildSettingCard([
+                _buildLanguageTile(scheme),
+                _buildDivider(),
+                _buildThemeTile(isDark),
+              ]),
+              const SizedBox(height: 24),
+              _buildSectionHeader(_tr(vi: 'TIỆN ÍCH & NỘI DUNG', en: 'UTILS & CONTENT', pl: 'TREŚĆ')),
+              _buildSettingCard([
+                _buildNavigationTile(
+                  icon: Icons.bookmark_rounded,
+                  color: Colors.orange,
+                  title: _tr(vi: 'Mẹo đã lưu', en: 'Saved Tips', pl: 'Zapisane'),
+                  subtitle: _tr(vi: 'Kho lưu trữ mẹo sinh tồn của bạn', en: 'Your survival library', pl: 'Twoja biblioteka'),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SavedTipsPage(appController: widget.appController, isEnglish: widget.appController.isEnglish))),
+                ),
+                _buildDivider(),
+                _buildNavigationTile(
+                  icon: Icons.edit_document,
+                  color: Colors.blue,
+                  title: _tr(vi: 'Bài viết của tôi', en: 'My Posts', pl: 'Moje posty'),
+                  subtitle: _tr(vi: 'Quản lý các bài đóng góp cộng đồng', en: 'Manage your contributions', pl: 'Zarządzaj postami'),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MyPostsPage(appController: widget.appController, isEnglish: widget.appController.isEnglish))),
+                ),
+              ]),
+              const SizedBox(height: 24),
+              _buildSectionHeader(_tr(vi: 'SAO LƯU & BẢO MẬT', en: 'BACKUP & SECURITY', pl: 'BEZPIECZEŃSTWO')),
+              _buildSettingCard([
+                _buildIdentityTile(isDark),
+                _buildDivider(),
+                _buildActionTile(
+                  icon: Icons.restore_rounded,
+                  color: Colors.purple,
+                  title: _tr(vi: 'Khôi phục định danh', en: 'Restore Identity', pl: 'Przywróć ID'),
+                  onTap: () => _showImportIdDialog(context),
+                ),
+                _buildDivider(),
+                _buildActionTile(
+                  icon: Icons.privacy_tip_rounded,
+                  color: Colors.teal,
+                  title: _tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka prywatności'),
+                  onTap: () => _showPrivacyDialog(context),
+                ),
+                _buildDivider(),
+                _buildActionTile(
+                  icon: Icons.delete_forever_rounded,
+                  color: Colors.red,
+                  title: _tr(vi: 'Xóa dữ liệu tài khoản', en: 'Delete Account Data', pl: 'Usuń dane'),
+                  isDestructive: true,
+                  onTap: () => _showDeleteDataDialog(context),
+                ),
+              ]),
+              const SizedBox(height: 40),
+              _buildFooter(isDark),
             ],
           ),
         );
@@ -888,45 +286,361 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Widget _buildAdSection(Duration? adRemaining, bool isDark) {
+    final isDisabled = widget.appController.areAdsTemporarilyDisabled;
+    
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark 
+            ? [const Color(0xFF1A237E), const Color(0xFF311B92)] 
+            : [const Color(0xFFE3F2FD), const Color(0xFFF3E5F5)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(isDark ? 0.1 : 0.6),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  isDisabled ? Icons.verified_user_rounded : Icons.ads_click_rounded,
+                  color: isDisabled ? Colors.green : Colors.blueAccent,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isDisabled ? _tr(vi: 'Đã tắt quảng cáo', en: 'Ads Disabled', pl: 'Reklamy wyłączone') : _tr(vi: 'Gói miễn phí', en: 'Free Plan', pl: 'Plan darmowy'),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                        color: isDark ? Colors.white : Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      isDisabled 
+                        ? _tr(
+                            vi: 'Còn lại: ${adRemaining?.inHours}h ${adRemaining?.inMinutes.remainder(60)}m',
+                            en: 'Remaining: ${adRemaining?.inHours}h ${adRemaining?.inMinutes.remainder(60)}m',
+                            pl: 'Pozostało: ${adRemaining?.inHours}h ${adRemaining?.inMinutes.remainder(60)}m',
+                          )
+                        : _tr(vi: 'Xem quảng cáo để ủng hộ tác giả', en: 'Watch ads to support us', pl: 'Wesprzyj nas'),
+                      style: TextStyle(
+                        color: isDark ? Colors.white70 : Colors.black54,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: _buildAdButton(
+                  label: _tr(vi: 'Tắt 30 phút', en: 'Off 30m', pl: 'Wyłącz 30m'),
+                  icon: Icons.timer_outlined,
+                  onTap: () => _handleRewardAction(const Duration(minutes: 30)),
+                  isDark: isDark,
+                  primaryColor: Colors.blue,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildAdButton(
+                  label: _tr(vi: 'Tắt 2 giờ', en: 'Off 2h', pl: 'Wyłącz 2h'),
+                  icon: Icons.bolt_rounded,
+                  onTap: () => _handleRewardAction(const Duration(hours: 2)),
+                  isDark: isDark,
+                  primaryColor: Colors.deepPurple,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdButton({
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+    required bool isDark,
+    required Color primaryColor,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: _isLoadingRewardedAd ? null : onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: primaryColor.withOpacity(0.3)),
+            color: primaryColor.withOpacity(isDark ? 0.2 : 0.1),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 18, color: primaryColor),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: primaryColor,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionRow() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildSmallActionButton(
+            label: _tr(vi: 'Đánh giá App', en: 'Rate App', pl: 'Oceń'),
+            icon: Icons.star_rounded,
+            color: Colors.amber.shade700,
+            onTap: () => _launchUrl(_appStoreUrl),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildSmallActionButton(
+            label: _tr(vi: 'Cập nhật', en: 'Check Updates', pl: 'Aktualizuj'),
+            icon: Icons.system_update_rounded,
+            color: Colors.blue.shade700,
+            onTap: () => _launchUrl(_appStoreUrl),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmallActionButton({
+    required String label,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onTap,
+      icon: Icon(icon, size: 18, color: Colors.white),
+      label: Text(label, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        elevation: 0,
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, bottom: 8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 1.2,
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSettingCard(List<Widget> children) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Column(children: children),
+    );
+  }
+
+  Widget _buildLanguageTile(ColorScheme scheme) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      leading: _tileIcon(Icons.translate_rounded, Colors.blue.shade50, Colors.blue.shade700),
+      title: Text(_tr(vi: 'Ngôn ngữ', en: 'Language', pl: 'Język'), style: const TextStyle(fontWeight: FontWeight.w700)),
+      trailing: SegmentedButton<AppLanguage>(
+        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+        segments: const [
+          ButtonSegment(value: AppLanguage.vietnamese, label: Text('VI')),
+          ButtonSegment(value: AppLanguage.english, label: Text('EN')),
+          ButtonSegment(value: AppLanguage.polish, label: Text('PL')),
+        ],
+        selected: {widget.appController.language},
+        onSelectionChanged: (selection) => widget.appController.setLanguage(selection.first),
+        showSelectedIcon: false,
+      ),
+    );
+  }
+
+  Widget _buildThemeTile(bool isDark) {
+    return SwitchListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      secondary: _tileIcon(
+        isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+        isDark ? Colors.indigo.shade50 : Colors.orange.shade50,
+        isDark ? Colors.indigo.shade700 : Colors.orange.shade800,
+      ),
+      title: Text(
+        isDark ? _tr(vi: 'Giao diện tối', en: 'Dark Mode', pl: 'Ciemny') : _tr(vi: 'Giao diện sáng', en: 'Light Mode', pl: 'Jasny'),
+        style: const TextStyle(fontWeight: FontWeight.w700),
+      ),
+      value: isDark,
+      onChanged: (v) => widget.appController.setDarkMode(v),
+    );
+  }
+
+  Widget _buildNavigationTile({
+    required IconData icon,
+    required Color color,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      leading: _tileIcon(icon, color.withOpacity(0.1), color),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+      subtitle: Text(subtitle, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+      trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey),
+    );
+  }
+
+  Widget _buildActionTile({
+    required IconData icon,
+    required Color color,
+    required String title,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      leading: _tileIcon(icon, color.withOpacity(0.1), color),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: isDestructive ? Colors.red : null,
+        ),
+      ),
+      trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey, size: 20),
+    );
+  }
+
+  Widget _buildIdentityTile(bool isDark) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      leading: _tileIcon(Icons.fingerprint_rounded, Colors.indigo.shade50, Colors.indigo.shade700),
+      title: Text(_tr(vi: 'ID của bạn', en: 'Your ID', pl: 'Twój ID'), style: const TextStyle(fontWeight: FontWeight.w700)),
+      subtitle: Text(widget.appController.userId, style: const TextStyle(fontFamily: 'monospace', fontSize: 13, fontWeight: FontWeight.bold)),
+      trailing: IconButton(
+        icon: const Icon(Icons.copy_all_rounded, size: 20),
+        onPressed: () {
+          Clipboard.setData(ClipboardData(text: widget.appController.userId));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_tr(vi: 'Đã sao chép', en: 'Copied', pl: 'Skopiowano'))));
+        },
+      ),
+    );
+  }
+
+  Widget _tileIcon(IconData icon, Color bg, Color fg) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(10)),
+      child: Icon(icon, color: fg, size: 20),
+    );
+  }
+
+  Widget _buildDivider() => const Divider(height: 1, indent: 64, endIndent: 20, thickness: 0.5);
+
+  Widget _buildFooter(bool isDark) {
+    return Column(
+      children: [
+        Text(
+          'LifeSpark Survival Guide',
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 16,
+            color: isDark ? Colors.white30 : Colors.black12,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'v${AppStrings.appVersion}',
+          style: TextStyle(
+            fontSize: 12,
+            color: isDark ? Colors.white24 : Colors.black26,
+          ),
+        ),
+      ],
+    );
+  }
+
   void _showImportIdDialog(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final controller = TextEditingController();
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(_tr(vi: 'Nhập mã định danh', en: 'Import ID', pl: 'Importuj ID')),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(_tr(
-              vi: 'Dán mã định danh cũ của bạn vào đây để khôi phục dữ liệu.',
-              en: 'Paste your old identity code here to restore data.',
-              pl: 'Wklej swój stary kod tożsamości tutaj.',
-            )),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                hintText: 'VD: 17144123456789',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ],
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(hintText: '1777...'),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj'))),
           ElevatedButton(
-            onPressed: () async {
-              final newId = _controller.text.trim();
-              if (newId.isNotEmpty && newId.length >= 10) {
-                await widget.appController.restoreIdentity(newId);
+            onPressed: () {
+              if (controller.text.isNotEmpty) {
+                widget.appController.restoreIdentity(controller.text);
                 Navigator.pop(ctx);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(_tr(vi: 'Đã khôi phục định danh thành công', en: 'Identity restored successfully', pl: 'Przywrócono tożsamość'))),
-                );
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_tr(vi: 'Đã khôi phục', en: 'Restored', pl: 'Przywrócono'))));
               }
             },
             child: Text(_tr(vi: 'Khôi phục', en: 'Restore', pl: 'Przywróć')),
@@ -935,52 +649,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
-}
 
-class ReferenceHeroBanner extends StatelessWidget {
-  const ReferenceHeroBanner({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    this.height = 148,
-  });
+  void _showPrivacyDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka')),
+        content: Text(_tr(
+          vi: 'Chúng tôi cam kết bảo vệ dữ liệu của bạn...',
+          en: 'We are committed to protecting your data...',
+          pl: 'Dbamy o Twoje dane...',
+        )),
+        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(_tr(vi: 'Đóng', en: 'Close', pl: 'Zamknij')))],
+      ),
+    );
+  }
 
-  final String title;
-  final String subtitle;
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return SizedBox(
-      height: height,
-      child: Card(
-        margin: EdgeInsets.zero,
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: scheme.onSurface,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                subtitle,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: scheme.onSurfaceVariant,
-                ),
-              ),
-            ],
+  void _showDeleteDataDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Xóa toàn bộ dữ liệu?', en: 'Delete All Data?', pl: 'Usuń dane?')),
+        content: Text(_tr(vi: 'Hành động này không thể hoàn tác.', en: 'This cannot be undone.', pl: 'Nie można cofnąć.')),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj'))),
+          TextButton(
+            onPressed: () {
+              widget.appController.deleteAccount();
+              Navigator.pop(ctx);
+            },
+            child: Text(_tr(vi: 'Xóa sạch', en: 'Delete', pl: 'Usuń'), style: const TextStyle(color: Colors.red)),
           ),
-        ),
+        ],
       ),
     );
   }
