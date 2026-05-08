@@ -11,6 +11,7 @@ import 'package:meo_sinhton/screens/top_tips_page.dart';
 import 'package:meo_sinhton/screens/my_posts_page.dart';
 import 'package:meo_sinhton/screens/survival_toolbox_screen.dart';
 import 'package:meo_sinhton/widgets/logo_placeholder.dart';
+import 'package:meo_sinhton/widgets/native_ad_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
 
@@ -351,10 +352,11 @@ class _AppShellState extends State<AppShell> {
                   },
                 ),
                 const Spacer(),
+                NativeAdWidget(appController: widget.appController),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Version 1.0.0 (8)',
+                    'Version ${AppStrings.appVersion}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 12,

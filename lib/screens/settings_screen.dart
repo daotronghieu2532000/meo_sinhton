@@ -507,9 +507,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       trailing: SegmentedButton<AppLanguage>(
         style: const ButtonStyle(visualDensity: VisualDensity.compact),
         segments: const [
-          ButtonSegment(value: AppLanguage.vietnamese, label: Text('VI')),
-          ButtonSegment(value: AppLanguage.english, label: Text('EN')),
-          ButtonSegment(value: AppLanguage.polish, label: Text('PL')),
+          ButtonSegment(value: AppLanguage.vietnamese, label: Text('🇻🇳 VI')),
+          ButtonSegment(value: AppLanguage.english, label: Text('🇺🇸 EN')),
+          ButtonSegment(value: AppLanguage.polish, label: Text('🇵🇱 PL')),
         ],
         selected: {widget.appController.language},
         onSelectionChanged: (selection) => widget.appController.setLanguage(selection.first),
