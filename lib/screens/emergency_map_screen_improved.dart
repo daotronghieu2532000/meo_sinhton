@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meo_sinhton/screens/emergency_profile_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/location_service.dart';
 import '../services/emergency_location_manager.dart';
@@ -292,9 +294,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             },
             child: Text(
               _tr(
-                vi: 'Bat vi tri',
-                en: 'Enable location',
-                pl: 'Wlacz lokalizacje',
+                vi: 'Tiep tuc',
+                en: 'Continue',
+                pl: 'Kontynuuj',
               ),
             ),
           ),
@@ -482,14 +484,36 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () async {
+                      if (widget.appController.emergencyPhone.isEmpty) {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(_tr(
+                              vi: 'Bạn chưa thiết lập số điện thoại khẩn cấp trong Hồ sơ!',
+                              en: 'Emergency contact not set in your Profile!',
+                              pl: 'Kontakt alarmowy nie został ustawiony!',
+                            )),
+                            action: SnackBarAction(
+                              label: _tr(vi: 'Thiết lập', en: 'Set up', pl: 'Ustaw'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => EmergencyProfileScreen(appController: widget.appController)),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                        return;
+                      }
                       Navigator.pop(context);
                       try {
                         await EmergencyLocationManager.sendEmergencyLocationViaSMS(
-                          emergencyContacts: ['0912345678'], // Lấy từ settings
+                          emergencyContacts: [widget.appController.emergencyPhone], 
                           message: _tr(
-                            vi: 'Toi can su giup do khan cap!',
+                            vi: 'Tôi cần sự giúp đỡ khẩn cấp!',
                             en: 'I need emergency help!',
-                            pl: 'Potrzebuje natychmiastowej pomocy!',
+                            pl: 'Potrzebuję natychmiastowej pomocy!',
                           ),
                         );
                         if (mounted) {
@@ -572,7 +596,7 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
           const SizedBox(height: 16),
           Text(
             _tr(
-              vi: 'Dang lay vi tri cua ban...',
+              vi: 'Đang xác định vị trí của bạn...',
               en: 'Getting your location...',
               pl: 'Pobieranie Twojej lokalizacji...',
             ),
@@ -605,7 +629,7 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             const SizedBox(height: 24),
             Text(
               _tr(
-                vi: 'Can quyen truy cap vi tri',
+                vi: 'Cần quyền truy cập vị trí',
                 en: 'Location permission required',
                 pl: 'Wymagane uprawnienie lokalizacji',
               ),
@@ -617,9 +641,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             const SizedBox(height: 12),
             Text(
               _tr(
-                vi: 'Vui long bat quyen truy cap vi tri de su dung tinh nang khan cap. Dieu nay co the cuu mang ban!',
-                en: 'Please enable location access to use emergency features. This could save your life!',
-                pl: 'Wlacz dostep do lokalizacji, aby korzystac z funkcji awaryjnych. To moze uratowac Ci zycie!',
+                vi: 'Vui lòng cấp quyền truy cập vị trí để sử dụng các tính năng khẩn cấp. Điều này có thể cứu mạng bạn trong tình huống nguy hiểm!',
+                en: 'Please enable location access to use emergency features. This could save your life in dangerous situations!',
+                pl: 'Włącz dostęp do lokalizacji, aby korzystać z funkcji awaryjnych. To może uratować Ci życie!',
               ),
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
@@ -635,9 +659,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
               icon: const Icon(Icons.security),
               label: Text(
                 _tr(
-                  vi: 'Bat vi tri',
-                  en: 'Enable location',
-                  pl: 'Wlacz lokalizacje',
+                  vi: 'Tiep tuc',
+                  en: 'Continue',
+                  pl: 'Kontynuuj',
                 ),
               ),
               style: ElevatedButton.styleFrom(
@@ -678,9 +702,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             const SizedBox(height: 24),
             Text(
               _tr(
-                vi: 'Khong the lay vi tri',
+                vi: 'Không thể xác định vị trí',
                 en: 'Location unavailable',
-                pl: 'Lokalizacja niedostepna',
+                pl: 'Lokalizacja niedostępna',
               ),
               style: Theme.of(
                 context,
@@ -690,9 +714,9 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
             const SizedBox(height: 12),
             Text(
               _tr(
-                vi: 'Khong the lay vi tri hien tai. Vui long kiem tra cai dat GPS.',
-                en: 'Unable to get your current location. Please check your GPS settings.',
-                pl: 'Nie mozna pobrac biezacej lokalizacji. Sprawdz ustawienia GPS.',
+                vi: 'Không thể lấy vị trí hiện tại của bạn. Vui lòng kiểm tra lại cài đặt GPS và kết nối mạng.',
+                en: 'Unable to get your current location. Please check your GPS settings and network connection.',
+                pl: 'Nie można pobrać bieżącej lokalizacji. Sprawdź ustawienia GPS.',
               ),
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
@@ -702,7 +726,7 @@ class _EmergencyMapScreenState extends State<EmergencyMapScreen> {
               onPressed: _refreshLocation,
               icon: const Icon(Icons.refresh),
               label: Text(
-                _tr(vi: 'Thu lai', en: 'Try again', pl: 'Sprobuj ponownie'),
+                _tr(vi: 'Thử lại', en: 'Try again', pl: 'Spróbuj ponownie'),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,

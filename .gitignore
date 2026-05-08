@@ -43,3 +43,22 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# iOS related
+ios/build/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.h
+ios/Runner/GeneratedPluginRegistrant.m
+*.xcworkspace
+!ios/Runner.xcworkspace
+
+# Mac related
+.DS_Store
+DerivedData/
+
+# Image files in root (usually temporary)
+z77894188*.jpg

@@ -17,19 +17,32 @@ class AppController extends ChangeNotifier {
   static const String _adFreeUntilKey = 'ad_free_until_epoch_ms';
   static const String _savedTipIdsKey = 'saved_tip_ids';
   static const String _userIdKey = 'app_user_id';
+  static const String _privacyPolicyKey = 'privacy_policy_accepted';
+  static const String _blockedUsersKey = 'blocked_user_ids';
+  static const String _emergencyNameKey = 'emergency_name';
+  static const String _emergencyPhoneKey = 'emergency_phone';
+  static const String _emergencyBloodTypeKey = 'emergency_blood_type';
+  static const String _emergencyMedicalKey = 'emergency_medical';
 
   final SharedPreferences? _prefs;
-  final String userId;
+  String userId;
   AppLanguage language;
   ThemeMode themeMode;
   DateTime? _adFreeUntil;
   Timer? _adFreeExpiryTimer;
+  bool privacyPolicyAccepted = false;
   final Set<String> _savedTipIds = <String>{};
+  final Set<String> _blockedUserIds = <String>{};
+  String emergencyName = '';
+  String emergencyPhone = '';
+  String emergencyBloodType = '';
+  String emergencyMedical = '';
 
   bool get isEnglish => language == AppLanguage.english;
   bool get isPolish => language == AppLanguage.polish;
   DateTime? get adFreeUntil => _adFreeUntil;
   Set<String> get savedTipIds => Set.unmodifiable(_savedTipIds);
+  Set<String> get blockedUserIds => Set.unmodifiable(_blockedUserIds);
 
   bool isTipSaved(String tipId) => _savedTipIds.contains(tipId);
 
@@ -71,18 +84,13 @@ class AppController extends ChangeNotifier {
     final darkModeEnabled = prefs.getBool(_darkModeKey) ?? false;
     final savedTipIds = prefs.getStringList(_savedTipIdsKey) ?? const [];
     final adFreeUntilEpochMs = prefs.getInt(_adFreeUntilKey);
+    final privacyAccepted = prefs.getBool(_privacyPolicyKey) ?? false;
+    final blockedUsers = prefs.getStringList(_blockedUsersKey) ?? const [];
     final adFreeUntil = adFreeUntilEpochMs == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(adFreeUntilEpochMs);
 
-    String? userId = prefs.getString(_userIdKey);
-    if (userId == null || userId.startsWith('user_')) {
-      // Pure numeric ID: timestamp + 4 random digits (Total ~17 digits, fits in BIGINT)
-      final now = DateTime.now().millisecondsSinceEpoch;
-      final random = (1000 + (DateTime.now().microsecond % 9000)).toString();
-      userId = '$now$random';
-      await prefs.setString(_userIdKey, userId);
-    }
+    String userId = await _generateAndSaveNewUserId(prefs);
 
     final controller = AppController._(
       language: savedLanguage == 'en'
@@ -95,10 +103,18 @@ class AppController extends ChangeNotifier {
       prefs: prefs,
     );
 
-    controller._adFreeUntil = adFreeUntil;
+    controller.privacyPolicyAccepted = privacyAccepted;
+    controller._blockedUserIds.addAll(blockedUsers);
+
     controller._savedTipIds
       ..clear()
       ..addAll(savedTipIds);
+
+    controller.emergencyName = prefs.getString(_emergencyNameKey) ?? '';
+    controller.emergencyPhone = prefs.getString(_emergencyPhoneKey) ?? '';
+    controller.emergencyBloodType = prefs.getString(_emergencyBloodTypeKey) ?? '';
+    controller.emergencyMedical = prefs.getString(_emergencyMedicalKey) ?? '';
+
     controller._scheduleAdFreeExpiryTimer();
     return controller;
   }
@@ -174,6 +190,83 @@ class AppController extends ChangeNotifier {
       unawaited(_prefs?.remove(_adFreeUntilKey));
       notifyListeners();
     });
+  }
+
+  Future<void> acceptPrivacyPolicy() async {
+    privacyPolicyAccepted = true;
+    notifyListeners();
+    if (_prefs != null) {
+      await _prefs.setBool(_privacyPolicyKey, true);
+    }
+  }
+
+  Future<void> blockUser(String otherUserId) async {
+    _blockedUserIds.add(otherUserId);
+    notifyListeners();
+    if (_prefs != null) {
+      await _prefs.setStringList(_blockedUsersKey, _blockedUserIds.toList());
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    if (_prefs == null) return;
+
+    // 1. Clear physical storage
+    await _prefs!.clear();
+
+    // 2. Reset local state to defaults
+    _savedTipIds.clear();
+    _blockedUserIds.clear();
+    _adFreeUntil = null;
+    privacyPolicyAccepted = false;
+    language = AppLanguage.vietnamese;
+    themeMode = ThemeMode.light;
+
+    // 3. Generate a brand new Identity immediately
+    userId = await _generateAndSaveNewUserId(_prefs!);
+
+    // 4. Update UI
+    notifyListeners();
+  }
+
+  static Future<String> _generateAndSaveNewUserId(SharedPreferences prefs) async {
+    String? existingId = prefs.getString(_userIdKey);
+    if (existingId != null && !existingId.startsWith('user_')) {
+      return existingId;
+    }
+    
+    // Pure numeric ID: timestamp + 4 random digits
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final random = (1000 + (DateTime.now().microsecond % 9000)).toString();
+    final newId = '$now$random';
+    await prefs.setString(_userIdKey, newId);
+    return newId;
+  }
+
+  Future<void> restoreIdentity(String newId) async {
+    if (_prefs == null) return;
+    userId = newId;
+    await _prefs!.setString(_userIdKey, newId);
+    notifyListeners();
+  }
+
+  Future<void> updateEmergencyProfile({
+    required String name,
+    required String phone,
+    required String bloodType,
+    required String medical,
+  }) async {
+    emergencyName = name;
+    emergencyPhone = phone;
+    emergencyBloodType = bloodType;
+    emergencyMedical = medical;
+    notifyListeners();
+    if (_prefs != null) {
+      await _prefs.setString(_emergencyNameKey, name);
+      await _prefs.setString(_emergencyPhoneKey, phone);
+      await _prefs.setString(_emergencyBloodTypeKey, bloodType);
+      await _prefs.setString(_emergencyMedicalKey, medical);
+    }
   }
 
   @override

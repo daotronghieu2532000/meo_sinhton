@@ -2,7 +2,7 @@ import 'package:meo_sinhton/app/app_i18n.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
 
 class AppStrings {
-  static String appName() => 'MXH : Share Tips and Tricks';
+  static String appName() => 'LifeSpark: Survival & Tools';
 
   static String tabHome(bool isEnglish) =>
       AppI18n.text(isEnglish: isEnglish, vi: 'Trang chủ', en: 'Home');
@@ -70,7 +70,6 @@ class AppStrings {
         }
         return compact ? '$minutes min' : '~$minutes min';
       case AppLanguage.vietnamese:
-      default:
         return compact ? '$minutes phút' : '~$minutes phút';
     }
   }
@@ -82,7 +81,6 @@ class AppStrings {
       case AppLanguage.polish:
         return 'Awaryjne';
       case AppLanguage.vietnamese:
-      default:
         return 'Khẩn cấp';
     }
   }
@@ -223,7 +221,6 @@ class AppStrings {
       case AppLanguage.polish:
         return 'Szczegółowa instrukcja';
       case AppLanguage.vietnamese:
-      default:
         return 'Hướng dẫn chi tiết';
     }
   }

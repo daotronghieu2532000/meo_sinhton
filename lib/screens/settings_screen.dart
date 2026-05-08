@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:meo_sinhton/app/app_controller.dart';
 import 'package:meo_sinhton/app/app_strings.dart';
 import 'package:meo_sinhton/app/admob_config.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:meo_sinhton/screens/saved_tips_page.dart';
 import 'package:meo_sinhton/screens/my_posts_page.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'dart:async';
 
 const _isFlutterTest = bool.fromEnvironment('FLUTTER_TEST');
@@ -24,6 +25,78 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isLoadingRewardedAd = false;
+  RewardedAd? _rewardedAd;
+  int _adLoadAttempts = 0;
+
+  bool _isUsingTestId = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initATT());
+  }
+
+  Future<void> _initATT() async {
+    if (_adsSupported) {
+      try {
+        final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+        if (status == TrackingStatus.notDetermined) {
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await AppTrackingTransparency.requestTrackingAuthorization();
+        }
+      } catch (e) {
+        debugPrint('Error requesting ATT: $e');
+      }
+      _loadRewardedAd();
+    }
+  }
+
+  void _loadRewardedAd({bool useTestId = false}) {
+    final adUnitId = useTestId 
+        ? 'ca-app-pub-3940256099942544/1712485313' // Google Test ID
+        : AdmobConfig.rewardedAdUnitId;
+
+    _isUsingTestId = useTestId;
+
+    RewardedAd.load(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
+          setState(() {
+            _rewardedAd = ad;
+            _adLoadAttempts = 0;
+          });
+          debugPrint('Rewarded Ad Loaded: ${useTestId ? "TEST" : "PROD"}');
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('Ad failed to load: $error');
+          if (!mounted) return;
+          setState(() {
+            _rewardedAd = null;
+            _adLoadAttempts++;
+          });
+          
+          // Nếu mã thật lỗi, thử dùng mã test sau 2 lần thất bại
+          if (_adLoadAttempts >= 2 && !useTestId) {
+             _loadRewardedAd(useTestId: true);
+          } else if (_adLoadAttempts < 5) {
+            Future.delayed(const Duration(seconds: 5), () => _loadRewardedAd(useTestId: useTestId));
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _rewardedAd?.dispose();
+    super.dispose();
+  }
 
   String _tr({required String vi, required String en, required String pl}) {
     switch (widget.appController.language) {
@@ -71,47 +144,77 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<bool> _showRewardedAd() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult.contains(ConnectivityResult.none)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_tr(
+              vi: 'Không có kết nối Internet. Vui lòng kiểm tra lại mạng.',
+              en: 'No internet connection. Please check your network.',
+              pl: 'Brak połączenia z Internetem. Sprawdź swoją sieć.',
+            )),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      return false;
+    }
+
+    // Nếu chưa có ad, ép tải lại ngay và chờ tối đa 10s
+    if (_rewardedAd == null) {
+      _loadRewardedAd(useTestId: _adLoadAttempts >= 2);
+      int waitCount = 0;
+      while (_rewardedAd == null && waitCount < 20 && mounted) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        waitCount++;
+      }
+    }
+
+    if (_rewardedAd == null || !mounted) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_tr(
+              vi: 'Đang chuẩn bị quảng cáo, vui lòng đợi trong giây lát...',
+              en: 'Preparing ad, please wait a moment...',
+              pl: 'Przygotowywanie reklamy, proszę czờać chwilę...',
+            )),
+          ),
+        );
+      }
+      return false;
+    }
+
     final completer = Completer<bool>();
     bool earnedReward = false;
 
-    await RewardedAd.load(
-      adUnitId: AdmobConfig.rewardedAdUnitId,
-      request: const AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              ad.dispose();
-              if (!completer.isCompleted) {
-                completer.complete(earnedReward);
-              }
-            },
-            onAdFailedToShowFullScreenContent: (ad, error) {
-              ad.dispose();
-              if (!completer.isCompleted) {
-                completer.complete(false);
-              }
-            },
-          );
-
-          ad.show(
-            onUserEarnedReward: (_, __) {
-              earnedReward = true;
-            },
-          );
-        },
-        onAdFailedToLoad: (_) {
-          if (!completer.isCompleted) {
-            completer.complete(false);
-          }
-        },
-      ),
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        _rewardedAd = null;
+        _loadRewardedAd();
+        if (!completer.isCompleted) {
+          completer.complete(earnedReward);
+        }
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        ad.dispose();
+        _rewardedAd = null;
+        _loadRewardedAd();
+        if (!completer.isCompleted) {
+          completer.complete(false);
+        }
+      },
     );
 
-    return completer.future.timeout(
-      const Duration(minutes: 2),
-      onTimeout: () => false,
+    await _rewardedAd!.show(
+      onUserEarnedReward: (_, __) {
+        earnedReward = true;
+      },
     );
+
+    return completer.future;
   }
 
   Future<void> _handleRewardAction() async {
@@ -173,18 +276,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       );
-      return;
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          isPolish
-              ? 'Aby otrzymac nagrode, obejrzyj reklame do konca.'
-              : AppStrings.rewardNotCompleted(isEnglish),
-        ),
-      ),
-    );
   }
 
   Future<void> _openContactEmail() async {
@@ -605,7 +697,70 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   trailing: const Icon(Icons.chevron_right, size: 20),
                 ),
               ),
-              /* _tileCard(
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  _tr(vi: 'SAO LƯU ĐỊNH DANH', en: 'IDENTITY BACKUP', pl: 'KOPIA ZAPASOWA'),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              _tileCard(
+                child: ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: widget.appController.userId));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(_tr(vi: 'Đã sao chép mã định danh', en: 'ID copied to clipboard', pl: 'ID skopiowane'))),
+                    );
+                  },
+                  leading: _tileIcon(
+                    icon: Icons.copy_rounded,
+                    background: Colors.indigo.shade100,
+                    foreground: Colors.indigo.shade700,
+                  ),
+                  title: Text(_tr(vi: 'Mã định danh của bạn', en: 'Your Identity Code', pl: 'Twój kod tożsamości')),
+                  subtitle: Text(
+                    widget.appController.userId,
+                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+                  ),
+                  trailing: const Icon(Icons.content_copy, size: 18, color: Colors.grey),
+                ),
+              ),
+              const SizedBox(height: 6),
+              _tileCard(
+                child: ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  onTap: () => _showImportIdDialog(context),
+                  leading: _tileIcon(
+                    icon: Icons.restore_rounded,
+                    background: Colors.purple.shade100,
+                    foreground: Colors.purple.shade700,
+                  ),
+                  title: Text(_tr(vi: 'Nhập mã định danh cũ', en: 'Import Existing ID', pl: 'Importuj istniejące ID')),
+                  subtitle: Text(
+                    _tr(
+                      vi: 'Khôi phục bài đăng và lịch sử từ mã có sẵn',
+                      en: 'Restore posts and history from a code',
+                      pl: 'Przywróć posty i historię z kodu',
+                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: const Icon(Icons.chevron_right, size: 20),
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Divider(),
+              const SizedBox(height: 6),
+              _tileCard(
                 child: ListTile(
                   dense: true,
                   visualDensity: VisualDensity.compact,
@@ -613,75 +768,119 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     horizontal: 12,
                     vertical: 4,
                   ),
-                  leading: _tileIcon(
-                    icon: Icons.info_outline,
-                    background: scheme.surfaceContainerHighest,
-                    foreground: scheme.onSurfaceVariant,
-                  ),
-                  title: Text(AppStrings.about(isEnglish)),
-                  subtitle: Text(
-                    AppStrings.aboutDesc(isEnglish),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
                   onTap: () {
-                    showModalBottomSheet(
+                    showDialog(
                       context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                        ),
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Container(
-                                width: 40,
-                                height: 4,
-                                margin: const EdgeInsets.only(bottom: 24),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.4),
-                                  borderRadius: BorderRadius.circular(2),
+                      builder: (ctx) => AlertDialog(
+                        title: Text(_tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka prywatności')),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _tr(
+                                  vi: 'Chúng tôi cam kết bảo vệ dữ liệu của bạn. Ứng dụng thu thập ID thiết bị và vị trí để cung cấp dịch vụ tốt nhất. Chúng tôi không chia sẻ thông tin này cho mục đích quảng cáo từ bên thứ ba bên ngoài hệ thống của mình.',
+                                  en: 'We are committed to protecting your data. The app collects Device ID and Location to provide the best service. We do not share this information with third parties for external advertising purposes.',
+                                  pl: 'Dbamy o Twoje dane. Aplikacja zbiera ID urządzenia i lokalizację. Nie udostępniamy tych informacji osobom trzecim.',
                                 ),
                               ),
-                            ),
-                            Text(
-                              isEnglish ? 'About This App' : 'Về Ứng Dụng Này',
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              isEnglish 
-                                ? 'LifeSpark aims to be your reliable digital sidekick during emergencies and adventures. Here is what you can do:'
-                                : 'LifeSpark (Share Tips and Tricks) là ứng dụng cẩm nang tổng hợp các kỹ năng sinh tồn và xử lý tình huống khẩn cấp. Dưới đây là chức năng chính:',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            const SizedBox(height: 16),
-                            _buildFeatureRow(context, Icons.home, isEnglish ? 'Home: Browse all survival categories and tips.' : 'Trang chủ: Xem danh mục và chi tiết các kỹ năng.'),
-                            _buildFeatureRow(context, Icons.forum, isEnglish ? 'Community: Read and share tips with others.' : 'Góp ý: Xem và gửi chia sẻ bài viết, mẹo vặt.'),
-                            _buildFeatureRow(context, Icons.emoji_events, isEnglish ? 'Top 10: Best survival items/foods to pack.' : 'Top 10: Xem những vật dụng/thực phẩm sinh tồn tốt nhất.'),
-                            _buildFeatureRow(context, Icons.quiz, isEnglish ? 'Scenarios: Interactive survival stories with choices.' : 'Tình huống: Trải nghiệm các câu chuyện sinh tồn tương tác lấy quyết định.'),
-                            _buildFeatureRow(context, Icons.map, isEnglish ? 'Map: Find nearby shelters and rescue contacts.' : 'Bản đồ: Tìm trạm tị nạn và số điện thoại khẩn.'),
-                            const SizedBox(height: 24),
-                            SizedBox(
-                              width: double.infinity,
-                              child: FilledButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text(isEnglish ? 'Got it' : 'Đã hiểu'),
+                              const SizedBox(height: 12),
+                              Text(
+                                _tr(
+                                  vi: 'Lưu ý: Thông tin trong ứng dụng chỉ mang tính chất tham khảo. Luôn liên hệ cơ quan chuyên môn trong tình huống khẩn cấp thực tế.',
+                                  en: 'Disclaimer: The information in this app is for reference only. Always contact professionals in real emergencies.',
+                                  pl: 'Zastrzeżenie: Informacje w tej aplikacji służą wyłącznie do celów informacyjnych. W sytuacjach awaryjnych zawsze kontaktuj się ze specjalistami.',
+                                ),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                               ),
-                            ),
-                            SizedBox(height: MediaQuery.of(context).padding.bottom),
-                          ],
+                            ],
+                          ),
                         ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: Text(_tr(vi: 'Đóng', en: 'Close', pl: 'Zamknij')),
+                          ),
+                        ],
                       ),
                     );
                   },
+                  leading: _tileIcon(
+                    icon: Icons.privacy_tip_outlined,
+                    background: Colors.teal.shade100,
+                    foreground: Colors.teal.shade700,
+                  ),
+                  title: Text(_tr(vi: 'Chính sách bảo mật', en: 'Privacy Policy', pl: 'Polityka prywatności')),
+                  subtitle: Text(
+                    _tr(
+                      vi: 'Xem cách chúng tôi bảo vệ quyền riêng tư của bạn',
+                      en: 'Learn how we protect your privacy',
+                      pl: 'Dowiedz się, jak chronimy Twoją prywatność',
+                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: const Icon(Icons.chevron_right, size: 20),
                 ),
-              ), */
+              ),
+              const SizedBox(height: 6),
+              _tileCard(
+                child: ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(_tr(vi: 'Xóa dữ liệu cá nhân?', en: 'Delete My Data?', pl: 'Usunąć moje dane?')),
+                        content: Text(_tr(
+                          vi: 'Hành động này sẽ xóa ID định danh, các bài viết đã lưu và lịch sử hoạt động của bạn trên thiết bị này. Bạn không thể hoàn tác.',
+                          en: 'This will delete your identity ID, saved posts, and activity history on this device. This action cannot be undone.',
+                          pl: 'To spowoduje usunięcie Twojego ID, zapisanych postów i historii aktywności na tym urządzeniu. Nie można tego cofnąć.',
+                        )),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await widget.appController.deleteAccount();
+                              if (mounted) {
+                                Navigator.pop(ctx);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(_tr(vi: 'Đã xóa toàn bộ dữ liệu', en: 'All data deleted', pl: 'Wszystkie dane usunięte'))),
+                                );
+                              }
+                            },
+                            child: Text(_tr(vi: 'Xóa sạch', en: 'Clear All', pl: 'Usuń wszystko'), style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  leading: _tileIcon(
+                    icon: Icons.delete_outline,
+                    background: Colors.red.shade100,
+                    foreground: Colors.red.shade700,
+                  ),
+                  title: Text(_tr(vi: 'Xóa dữ liệu & Định danh', en: 'Delete Data & Identity', pl: 'Usuń dane i tożsamość')),
+                  subtitle: Text(
+                    _tr(
+                      vi: 'Gỡ bỏ toàn bộ dấu vết của bạn khỏi ứng dụng',
+                      en: 'Remove all your traces from the app',
+                      pl: 'Usuń wszystkie swoje ślady z aplikacji',
+                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: const Icon(Icons.chevron_right, size: 20),
+                ),
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         );
@@ -689,16 +888,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildFeatureRow(BuildContext context, IconData icon, String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+  void _showImportIdDialog(BuildContext context) {
+    final TextEditingController _controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Nhập mã định danh', en: 'Import ID', pl: 'Importuj ID')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(_tr(
+              vi: 'Dán mã định danh cũ của bạn vào đây để khôi phục dữ liệu.',
+              en: 'Paste your old identity code here to restore data.',
+              pl: 'Wklej swój stary kod tożsamości tutaj.',
+            )),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                hintText: 'VD: 17144123456789',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final newId = _controller.text.trim();
+              if (newId.isNotEmpty && newId.length >= 10) {
+                await widget.appController.restoreIdentity(newId);
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(_tr(vi: 'Đã khôi phục định danh thành công', en: 'Identity restored successfully', pl: 'Przywrócono tożsamość'))),
+                );
+              }
+            },
+            child: Text(_tr(vi: 'Khôi phục', en: 'Restore', pl: 'Przywróć')),
           ),
         ],
       ),

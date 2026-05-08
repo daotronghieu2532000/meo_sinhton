@@ -56,6 +56,73 @@ ${_tr(vi: 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn', en: 'Shared from Mẹo
     await Share.share(content);
   }
 
+  Future<void> _reportContent(int tipId) async {
+    // Thực tế gửi báo cáo lên Server để Admin xử lý
+    try {
+      await http.post(
+        Uri.parse('${_baseUrl}report_community_tip.php'),
+        body: {
+          'tip_id': tipId.toString(),
+          'reporter_id': widget.appController.userId,
+          'reason': 'User reported from iOS Top 10 app',
+        },
+      );
+    } catch (e) {
+      print('Error reporting content: $e');
+    }
+
+    if (!mounted) return;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Báo cáo nội dung', en: 'Report Content', pl: 'Zglos tresc')),
+        content: Text(_tr(
+          vi: 'Cảm ơn bạn đã báo cáo. Chúng tôi sẽ xem xét nội dung này trong vòng 24h. Nếu vi phạm chính sách, nội dung sẽ bị gỡ bỏ ngay lập tức.',
+          en: 'Thank you for reporting. We will review this content within 24h. If it violates our policy, it will be removed immediately.',
+          pl: 'Dziekujemy za zgloszenie. Przejrzymy te tresc w ciagu 24 godzin. Jesli narusza ona nasza polityke, zostanie natychmiast usunieta.',
+        )),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(_tr(vi: 'Đóng', en: 'Close', pl: 'Zamknij')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _blockUser(String userId) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Chặn người dùng?', en: 'Block User?', pl: 'Zablokuj uzytkownika?')),
+        content: Text(_tr(
+          vi: 'Bạn sẽ không thấy bất kỳ nội dung nào từ người dùng này nữa.',
+          en: 'You will no longer see any content from this user.',
+          pl: 'Nie bedziesz juz widziec zadnych tresci od tego uzytkownika.',
+        )),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
+          ),
+          TextButton(
+            onPressed: () {
+              widget.appController.blockUser(userId);
+              Navigator.pop(ctx);
+              _fetchTopTips(); // Reload to hide blocked user content
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(_tr(vi: 'Đã chặn người dùng', en: 'User blocked', pl: 'Uzytkownik zablokowany'))),
+              );
+            },
+            child: Text(_tr(vi: 'Chặn', en: 'Block', pl: 'Zablokuj'), style: const TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _likeTip(dynamic tipIdRaw) async {
     final int tipId = tipIdRaw is String ? int.parse(tipIdRaw) : tipIdRaw;
 
@@ -136,6 +203,9 @@ ${_tr(vi: 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn', en: 'Shared from Mẹo
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_tr(vi: 'Top 10 Góp ý', en: 'Top 10 Community', pl: 'Top 10 Społeczność')),
+      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -537,11 +607,37 @@ ${_tr(vi: 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn', en: 'Shared from Mẹo
                     ],
                   ),
                 ),
-                IconButton(
+                PopupMenuButton<String>(
                   icon: const Icon(Icons.more_horiz),
-                  onPressed: () {},
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  onSelected: (value) {
+                    if (value == 'report') {
+                      _reportContent(tip['id']);
+                    } else if (value == 'block') {
+                      _blockUser(tip['user_id'].toString());
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'report',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.report_problem_outlined, color: Colors.orange, size: 20),
+                          const SizedBox(width: 12),
+                          Text(_tr(vi: 'Báo cáo nội dung', en: 'Report Content', pl: 'Zglos tresc')),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'block',
+                      child: Row(
+                        children: [
+                          const Icon(Icons.block, color: Colors.red, size: 20),
+                          const SizedBox(width: 12),
+                          Text(_tr(vi: 'Chặn người dùng này', en: 'Block User', pl: 'Zablokuj uzytkownika')),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

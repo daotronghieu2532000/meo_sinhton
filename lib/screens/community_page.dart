@@ -128,10 +128,13 @@ class CommunityPageState extends State<CommunityPage> {
 
   void _filterTips(String query) {
     setState(() {
+      final blocked = widget.appController.blockedUserIds;
+      final visibleTips = _tips.where((tip) => !blocked.contains(tip['user_id'].toString())).toList();
+      
       if (query.isEmpty) {
-        _filteredTips = _tips;
+        _filteredTips = visibleTips;
       } else {
-        _filteredTips = _tips.where((tip) {
+        _filteredTips = visibleTips.where((tip) {
           final title = tip['title'].toString().toLowerCase();
           final content = tip['content'].toString().toLowerCase();
           final searchLower = query.toLowerCase();
@@ -139,6 +142,17 @@ class CommunityPageState extends State<CommunityPage> {
         }).toList();
       }
     });
+  }
+
+  bool _containsBadWords(String text) {
+    final badWords = [
+      'đm', 'vcl', 'đéo', 'chó', 'lồn', 'buồi', 'fuck', 'shit', 'asshole', 'bitch'
+    ];
+    final lowerText = text.toLowerCase();
+    for (var word in badWords) {
+      if (lowerText.contains(word)) return true;
+    }
+    return false;
   }
 
   void _showAddTipDialog() {
@@ -221,6 +235,22 @@ class CommunityPageState extends State<CommunityPage> {
                                   vi: 'Vui lòng điền tiêu đề và nội dung',
                                   en: 'Please fill title and content',
                                   pl: 'Wypelnij tytul i tresc',
+                                ),
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (_containsBadWords(titleController.text) ||
+                            _containsBadWords(contentController.text)) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                _tr(
+                                  vi: 'Nội dung chứa từ ngữ không phù hợp. Vui lòng kiểm tra lại.',
+                                  en: 'Content contains inappropriate language. Please review.',
+                                  pl: 'Tresc zawiera niewlasciwy jezyk. Sprawdz ponownie.',
                                 ),
                               ),
                             ),
@@ -960,11 +990,37 @@ class CommunityPageState extends State<CommunityPage> {
                         ],
                       ),
                     ),
-                    IconButton(
+                    PopupMenuButton<String>(
                       icon: const Icon(Icons.more_horiz),
-                      onPressed: () {},
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      onSelected: (value) {
+                        if (value == 'report') {
+                          _reportContent(tip['id']);
+                        } else if (value == 'block') {
+                          _blockUser(tip['user_id'].toString());
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'report',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.report_problem_outlined, color: Colors.orange, size: 20),
+                              const SizedBox(width: 12),
+                              Text(_tr(vi: 'Báo cáo nội dung', en: 'Report Content', pl: 'Zglos tresc')),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'block',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.block, color: Colors.red, size: 20),
+                              const SizedBox(width: 12),
+                              Text(_tr(vi: 'Chặn người dùng này', en: 'Block User', pl: 'Zablokuj uzytkownika')),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -1284,6 +1340,73 @@ ${_tr(vi: 'Chia sẻ từ ứng dụng Mẹo Sinh Tồn', en: 'Shared from Mẹo
         });
       }
     }
+  }
+
+  Future<void> _reportContent(int tipId) async {
+    // Thực tế gửi báo cáo lên Server để Admin xử lý
+    try {
+      await http.post(
+        Uri.parse('${_baseUrl}report_community_tip.php'),
+        body: {
+          'tip_id': tipId.toString(),
+          'reporter_id': widget.appController.userId,
+          'reason': 'User reported from iOS app',
+        },
+      );
+    } catch (e) {
+      print('Error reporting content: $e');
+    }
+
+    if (!mounted) return;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Báo cáo nội dung', en: 'Report Content', pl: 'Zglos tresc')),
+        content: Text(_tr(
+          vi: 'Cảm ơn bạn đã báo cáo. Chúng tôi sẽ xem xét nội dung này trong vòng 24h. Nếu vi phạm chính sách, nội dung sẽ bị gỡ bỏ ngay lập tức.',
+          en: 'Thank you for reporting. We will review this content within 24h. If it violates our policy, it will be removed immediately.',
+          pl: 'Dziekujemy za zgloszenie. Przejrzymy te tresc w ciagu 24 godzin. Jesli narusza ona nasza polityke, zostanie natychmiast usunieta.',
+        )),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(_tr(vi: 'Đóng', en: 'Close', pl: 'Zamknij')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _blockUser(String userId) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(_tr(vi: 'Chặn người dùng?', en: 'Block User?', pl: 'Zablokuj uzytkownika?')),
+        content: Text(_tr(
+          vi: 'Bạn sẽ không thấy bất kỳ nội dung nào từ người dùng này nữa.',
+          en: 'You will no longer see any content from this user.',
+          pl: 'Nie bedziesz juz widziec zadnych tresci od tego uzytkownika.',
+        )),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(_tr(vi: 'Hủy', en: 'Cancel', pl: 'Anuluj')),
+          ),
+          TextButton(
+            onPressed: () {
+              widget.appController.blockUser(userId);
+              Navigator.pop(ctx);
+              _filterTips(_searchController.text);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(_tr(vi: 'Đã chặn người dùng', en: 'User blocked', pl: 'Uzytkownik zablokowany'))),
+              );
+            },
+            child: Text(_tr(vi: 'Chặn', en: 'Block', pl: 'Zablokuj'), style: const TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showZoomedImage(
